@@ -21,5 +21,22 @@ public class ShapeNode extends AbstractNode{
         super(Children.LEAF, Lookups.fixed( new Object[] {key} ) );
         this.shape = key;
         setIconBaseWithExtension(key.getImage());
+        
+        // Set image label
+        String imagePath = key.getImage();
+        
+        if (imagePath.contains("/d.png"))
+            setDisplayName("<html><b> Dimension </b></html>");
+        else if (imagePath.contains("/f.png"))
+            setDisplayName("<html><b> Feature </b></html>");
+            
+        else if (imagePath.contains("/p.png"))
+            setDisplayName("<html><b> Perception </b></html>");
+            
+            
+        
+        
     }
+    
+    
 }

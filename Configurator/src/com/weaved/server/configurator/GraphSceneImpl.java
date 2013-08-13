@@ -384,14 +384,11 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
             ConfigNode cnSource = (ConfigNode) findObject(source);
             ConfigNode cnTarget = (ConfigNode) findObject(target);
 
-
-
             String cnSourceIdType = cnSource.getId().substring(0, 2);
             String cnTargetIdType = cnTarget.getId().substring(0, 2);
             
-            
-            System.out.println(cnSourceIdType);System.out.println(cnTargetIdType);
 
+            // filter relavent links only
             if ((cnSourceIdType.equals("L2") && cnTargetIdType.equals("L1"))
                     || (cnSourceIdType.equals("L1") && cnTargetIdType.equals("L0"))
                     || (cnSourceIdType.equals(cnTargetIdType))) {
