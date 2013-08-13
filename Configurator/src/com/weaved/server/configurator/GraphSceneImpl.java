@@ -306,14 +306,14 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
 
                                 connectionLayer.removeChild(conn);
                             }
-                            
-                            
+
+
                         }
-                        
+
 
                         GraphSceneImpl.this.removeNode(cn);
                         nodeMap.remove(cn.getId());
-                            
+
                     }
                 });
 
@@ -378,11 +378,36 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
         }
 
         public void createConnection(Widget source, Widget target) {
-            ConnectionWidget conn = new ConnectionWidget(GraphSceneImpl.this);
-            conn.setTargetAnchorShape(AnchorShape.TRIANGLE_FILLED);
-            conn.setTargetAnchor(AnchorFactory.createRectangularAnchor(target));
-            conn.setSourceAnchor(AnchorFactory.createRectangularAnchor(source));
-            connectionLayer.addChild(conn);
+
+            // Select necessary nodes only
+
+            ConfigNode cnSource = (ConfigNode) findObject(source);
+            ConfigNode cnTarget = (ConfigNode) findObject(target);
+
+
+
+            String cnSourceIdType = cnSource.getId().substring(0, 2);
+            String cnTargetIdType = cnTarget.getId().substring(0, 2);
+            
+            
+            System.out.println(cnSourceIdType);System.out.println(cnTargetIdType);
+
+            if ((cnSourceIdType.equals("L2") && cnTargetIdType.equals("L1"))
+                    || (cnSourceIdType.equals("L1") && cnTargetIdType.equals("L0"))
+                    || (cnSourceIdType.equals(cnTargetIdType))) {
+
+                ConnectionWidget conn = new ConnectionWidget(GraphSceneImpl.this);
+                conn.setTargetAnchorShape(AnchorShape.TRIANGLE_FILLED);
+                
+                // Double arrow head for cross features
+                if(cnSourceIdType.equals(cnTargetIdType)){
+                    conn.setSourceAnchorShape(AnchorShape.TRIANGLE_FILLED);
+                }
+                
+                conn.setTargetAnchor(AnchorFactory.createRectangularAnchor(target));
+                conn.setSourceAnchor(AnchorFactory.createRectangularAnchor(source));
+                connectionLayer.addChild(conn);
+            }
         }
     }
 
