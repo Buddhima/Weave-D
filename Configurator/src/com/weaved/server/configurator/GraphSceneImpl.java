@@ -149,7 +149,7 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
                     w = GraphSceneImpl.this.addNode(cn);
                 }
 
-//                Widget w = GraphSceneImpl.this.addNode(new ConfigNode(image, "2"));
+//                Widget w = GraphSceneImpl.this.addNode(new ConfigNode(image, "2"));//
 
                 w.getActions().addAction(selectAction);
 
