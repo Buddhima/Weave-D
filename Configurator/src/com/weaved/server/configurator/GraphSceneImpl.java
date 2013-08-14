@@ -43,11 +43,14 @@ import org.netbeans.api.visual.model.ObjectSceneEvent;
 import org.netbeans.api.visual.model.ObjectSceneEventType;
 import org.netbeans.api.visual.model.ObjectSceneListener;
 import org.netbeans.api.visual.model.ObjectState;
+//import org.netbeans.api.visual.router.CollisionsCollector;
+import org.netbeans.api.visual.router.RouterFactory;
 import org.netbeans.api.visual.widget.ConnectionWidget;
 import org.netbeans.api.visual.widget.LayerWidget;
 import org.netbeans.api.visual.widget.Scene;
 import org.netbeans.api.visual.widget.Widget;
 import org.netbeans.api.visual.widget.general.IconNodeWidget;
+//import org.netbeans.modules.visual.router.WidgetsCollisionCollector;
 import org.openide.explorer.ExplorerManager;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
@@ -74,6 +77,7 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
     private int featureCount = 0;
     private int perceptionCount = 0;
     public static HashMap<String, ConfigNode> nodeMap = new HashMap<String, ConfigNode>();
+//    public static CollisionsCollector widgetCollector = new WidgetsCollisionCollector(connectionLayer);
 
     public GraphSceneImpl() {
         mainLayer = new LayerWidget(this);
@@ -86,7 +90,7 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
 
         getActions().addAction(ActionFactory.createZoomAction());
         getActions().addAction(ActionFactory.createWheelPanAction());
-
+        
         //
         // the Childfactory creates Nodes for selected Objects 
         final FakeChildFactory childFactory = new FakeChildFactory();
@@ -395,12 +399,13 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
 
                 ConnectionWidget conn = new ConnectionWidget(GraphSceneImpl.this);
                 conn.setTargetAnchorShape(AnchorShape.TRIANGLE_FILLED);
-                
+                                
                 // Double arrow head for cross features
                 if(cnSourceIdType.equals(cnTargetIdType)){
                     conn.setSourceAnchorShape(AnchorShape.TRIANGLE_FILLED);
                 }
                 
+//                conn.setRouter(RouterFactory.createOrthogonalSearchRouter(GraphSceneImpl.widgetCollector));
                 conn.setTargetAnchor(AnchorFactory.createRectangularAnchor(target));
                 conn.setSourceAnchor(AnchorFactory.createRectangularAnchor(source));
                 connectionLayer.addChild(conn);

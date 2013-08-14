@@ -6,7 +6,9 @@ package com.weaved.server.configurator;
 
 import com.weaved.server.configurator.palette.PaletteSupport;
 import java.awt.BorderLayout;
+import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -51,6 +53,8 @@ public final class configuratorTopComponent extends TopComponent {
         setLayout(new BorderLayout());
         GraphSceneImpl scene = new GraphSceneImpl();
         JScrollPane shapePane = new JScrollPane();
+        HelpPane=new JEditorPane("text/html", "");
+        HelpPane.setEditable(false);
 
 
 //        associateLookup(ExplorerUtils.createLookup(scene.em, getActionMap()));
@@ -62,9 +66,18 @@ public final class configuratorTopComponent extends TopComponent {
 
         shapePane.setViewportView(scene.createView());
 
+        
+        
+        HelpPane.setSize(160, 100);
+        HelpPane.setText(getHelpText());
+
         add(shapePane, BorderLayout.CENTER);
         add(scene.createSatelliteView(), BorderLayout.WEST);
         add(jPanel1, BorderLayout.SOUTH);
+        add(HelpPane, BorderLayout.EAST);
+
+
+
     }
 
     /**
@@ -78,6 +91,9 @@ public final class configuratorTopComponent extends TopComponent {
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        helpLabel = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        HelpPane = new javax.swing.JEditorPane();
 
         jPanel1.setBackground(new java.awt.Color(45, 173, 220));
 
@@ -116,6 +132,12 @@ public final class configuratorTopComponent extends TopComponent {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        org.openide.awt.Mnemonics.setLocalizedText(helpLabel, org.openide.util.NbBundle.getMessage(configuratorTopComponent.class, "configuratorTopComponent.helpLabel.text")); // NOI18N
+
+        HelpPane.setEditable(false);
+        HelpPane.setMaximumSize(new java.awt.Dimension(160, 2147483647));
+        jScrollPane2.setViewportView(HelpPane);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,11 +145,24 @@ public final class configuratorTopComponent extends TopComponent {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(helpLabel)
+                        .addGap(77, 77, 77))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(251, 251, 251))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(211, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(helpLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
         );
@@ -152,12 +187,15 @@ public final class configuratorTopComponent extends TopComponent {
             tc.requestActive();
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JEditorPane HelpPane;
+    private javax.swing.JLabel helpLabel;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
+
     @Override
     public void componentOpened() {
         // TODO add custom code on component opening
@@ -178,5 +216,16 @@ public final class configuratorTopComponent extends TopComponent {
     void readProperties(java.util.Properties p) {
         String version = p.getProperty("version");
         // TODO read your settings according to their version
+    }
+
+    private String getHelpText() {
+        String help;
+        
+        help = "<html>"
+                + "<h1>Help Guide for Weave-D  </h1>"
+                + "<p> Through interface you can add components <br>and connect them as you wish </p>"
+                + "</html>";
+        
+        return help;
     }
 }
