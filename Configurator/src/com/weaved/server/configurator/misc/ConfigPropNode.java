@@ -4,9 +4,7 @@
  */
 package com.weaved.server.configurator.misc;
 
-import com.weaved.server.configurator.palette.Shape;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Date;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
 import org.openide.nodes.PropertySupport;
@@ -36,13 +34,31 @@ public class ConfigPropNode extends AbstractNode {
         
        try{ 
         // Other relavent properties
-        Property SFProp = new PropertySupport.Reflection<Float>(node, Float.class, "SF");
-        SFProp.setName("SF");       
+        Property SFProp = new PropertySupport.Reflection<Double>(node, Double.class, "SF");
+        SFProp.setName("Spread Factor");  
+        SFProp.setShortDescription("Spread Factor must be a value between 0 and 1");
         set.put(SFProp);
         
         Property ITRProp = new PropertySupport.Reflection<Integer>(node, Integer.class, "ITR");
-        ITRProp.setName("ITR");       
+        ITRProp.setName("Iterations");   
+        ITRProp.setShortDescription("Number of iterations that should go");
         set.put(ITRProp);
+        
+        Property NRProp = new PropertySupport.Reflection<Double>(node, Double.class, "NR");
+        NRProp.setName("Neighbourhood Radius");    
+        NRProp.setShortDescription("Neighbourhood radious of a node");
+        set.put(NRProp);
+        
+        Property LRProp = new PropertySupport.Reflection<Double>(node, Double.class, "LR");
+        LRProp.setName("Learning Rate");     
+        LRProp.setShortDescription("Learning Rate of the system should be between 0 and 1");
+        set.put(LRProp);
+        
+        
+        Property HTProp = new PropertySupport.Reflection<Integer>(node, Integer.class, "HT");
+        HTProp.setName("Hit Threshold"); 
+        HTProp.setShortDescription("Hit Threshold value of nodes");
+        set.put(HTProp);
         
         
 
