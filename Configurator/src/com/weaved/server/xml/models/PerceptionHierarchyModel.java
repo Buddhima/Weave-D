@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Lasindu
  */
-public class PerceptionHierarchyModel {
+public class PerceptionHierarchyModel extends ConfigModel{
 
     private ArrayList<PerceptionHierarchyNode> perceptionHierarchyNodes;
 

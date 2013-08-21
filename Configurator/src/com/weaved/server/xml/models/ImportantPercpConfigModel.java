@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * "CopyOneFeatureFusioner" The low-level perceptions which represent high level
  * perceptions will be found here
  */
-public class ImportantPercpConfigModel {
+public class ImportantPercpConfigModel extends ConfigModel{
 
     private ArrayList<ImportantPercpConfigModelElement> importantPercpConfigModelElements;
 
