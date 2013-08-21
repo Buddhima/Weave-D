@@ -222,7 +222,8 @@ public final class runtimeTopComponent extends TopComponent {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        TopComponent tc = WindowManager.getDefault().findTopComponent("summaryTopComponent");
+//        TopComponent tc = WindowManager.getDefault().findTopComponent("summaryTopComponent");
+        TopComponent tc = WindowManager.getDefault().findTopComponent("controlTopComponent");
 
         if (tc != null) {
             tc.open();

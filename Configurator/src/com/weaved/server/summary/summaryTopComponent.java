@@ -40,7 +40,7 @@ public final class summaryTopComponent extends TopComponent {
         initComponents();
         setName(Bundle.CTL_summaryTopComponent());
         setToolTipText(Bundle.HINT_summaryTopComponent());
-        putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
+//        putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
         putClientProperty(TopComponent.PROP_DRAGGING_DISABLED, Boolean.TRUE);
         
         setLayout(new BorderLayout());

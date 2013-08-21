@@ -4,6 +4,7 @@
  */
 package com.weaved.server.configurator.misc;
 
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.awt.Image;
 
 /**
@@ -21,6 +22,7 @@ public class ConfigNode {
     private Double NR = new Double(0);// neighbourhod radious
     private Double LR = new Double(0);// learning rate
     private Integer HT = new Integer(0);// hit threshold
+    private Boolean selected = new Boolean(false);// selected
     
     
 
@@ -155,6 +157,20 @@ public class ConfigNode {
         if(HT.intValue()>=0) {
             this.HT = HT;
         }
+    }
+
+    /**
+     * @return the selected
+     */
+    public Boolean getSelected() {
+        return selected;
+    }
+
+    /**
+     * @param selected the selected to set
+     */
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
     }
 
   

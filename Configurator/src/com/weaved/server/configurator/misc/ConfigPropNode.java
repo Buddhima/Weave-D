@@ -60,6 +60,11 @@ public class ConfigPropNode extends AbstractNode {
         HTProp.setShortDescription("Hit Threshold value of nodes");
         set.put(HTProp);
         
+        Property SelectedProp = new PropertySupport.Reflection<Boolean>(node, Boolean.class, "selected");
+        SelectedProp.setName("Selected"); 
+        SelectedProp.setShortDescription("Set True to bring feature to higher level, else set False");
+        set.put(SelectedProp);
+        
         
 
        }catch(NoSuchMethodException e)

@@ -6,6 +6,7 @@ package com.weaved.server.configurator;
 
 import com.weaved.server.configurator.misc.ConfigNode;
 import com.weaved.server.configurator.misc.ConfigPropNode;
+import com.weaved.server.configurator.misc.NodeLinks;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
@@ -74,7 +75,7 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
     private int featureCount = 0;
     private int perceptionCount = 0;
     public static HashMap<String, ConfigNode> nodeMap = new HashMap<String, ConfigNode>();
-    public static ArrayList<ConnectionWidget> edgeMap = new ArrayList<ConnectionWidget>();
+    public static ArrayList<NodeLinks> edgeMap = new ArrayList<NodeLinks>();
 //    public static CollisionsCollector widgetCollector = new WidgetsCollisionCollector(connectionLayer);
 
     public GraphSceneImpl() {
@@ -301,14 +302,14 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
                             if (conn.getSourceAnchor().getRelatedWidget().equals(widget)) {
 
                                 connectionLayer.removeChild(conn);
-                                edgeMap.remove(conn);
+//                                edgeMap.remove(conn);
 
                             }
 
                             if (conn.getTargetAnchor().getRelatedWidget().equals(widget)) {
 
                                 connectionLayer.removeChild(conn);
-                                edgeMap.remove(conn);
+//                                edgeMap.remove(conn);
                             }
 
 
@@ -391,6 +392,8 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
             String cnSourceIdType = cnSource.getId().substring(0, 2);
             String cnTargetIdType = cnTarget.getId().substring(0, 2);
             
+            String type = "TEMPORAL";
+            
 
             // filter relavent links only
             if ((cnSourceIdType.equals("L2") && cnTargetIdType.equals("L1"))
@@ -403,13 +406,14 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
                 // Double arrow head for cross features
                 if(cnSourceIdType.equals(cnTargetIdType)){
                     conn.setSourceAnchorShape(AnchorShape.TRIANGLE_FILLED);
+                    type = "CROSS";
                 }
                 
 //                conn.setRouter(RouterFactory.createOrthogonalSearchRouter(GraphSceneImpl.widgetCollector));
                 conn.setTargetAnchor(AnchorFactory.createRectangularAnchor(target));
                 conn.setSourceAnchor(AnchorFactory.createRectangularAnchor(source));
                 connectionLayer.addChild(conn);
-                edgeMap.add(conn);
+                edgeMap.add(new NodeLinks(type, cnSource.getId(), cnTarget.getId()));
             }
         }
     }

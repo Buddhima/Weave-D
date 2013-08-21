@@ -4,6 +4,8 @@
  */
 package com.weaved.server.configurator.misc;
 
+import com.sun.corba.se.impl.orbutil.graph.GraphImpl;
+import com.weaved.server.configurator.GraphSceneImpl;
 import javax.swing.JOptionPane;
 
 /**
