@@ -95,7 +95,7 @@ public final class configuratorTopComponent extends TopComponent {
         jScrollPane2 = new javax.swing.JScrollPane();
         HelpPane = new javax.swing.JEditorPane();
 
-        jPanel1.setBackground(new java.awt.Color(45, 173, 220));
+        jPanel1.setBackground(new java.awt.Color(5, 71, 97));
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(configuratorTopComponent.class, "configuratorTopComponent.jButton2.text")); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -224,6 +224,13 @@ public final class configuratorTopComponent extends TopComponent {
         help = "<html>"
                 + "<h1>Help Guide for Weave-D  </h1>"
                 + "<p> Through interface you can add components <br>and connect them as you wish </p>"
+                +"<p><ol>"
+                + "<li> Go to <b>Windows -> Palette</b> </li>"
+                + "<li> Drag & Drop relavent components<br> in to screen </li>"
+                + "<li> Move components by dragging </li>"
+                + "<li> Connect components by drawing <br>lines between components while <br>pressing <b>Ctrl</b> key </li>"
+                + "<li> Double click on any component <br>to change properties </li>"
+                + "</ol></p>"
                 + "</html>";
         
         return help;

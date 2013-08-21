@@ -4,6 +4,8 @@
  */
 package com.weaved.server.configurator.misc;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author BUDDHIMA
@@ -11,5 +13,13 @@ package com.weaved.server.configurator.misc;
 public class Runner {
     
     
-    public void run(){}
+    public void run(){
+    
+        System.out.println("Saving Configurations ...");
+        
+        
+        // Message for success
+        JOptionPane.showMessageDialog(null, "Configurations Saved");
+        
+    }
 }

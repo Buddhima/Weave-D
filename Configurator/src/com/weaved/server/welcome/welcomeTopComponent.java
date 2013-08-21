@@ -48,6 +48,7 @@ public final class welcomeTopComponent extends TopComponent {
         add(controlPanel, BorderLayout.SOUTH);
 //        add(IntroPane,BorderLayout.EAST);
         add(fiststepLabel,BorderLayout.EAST);
+        add(topPanel,BorderLayout.NORTH);
 
     }
 
@@ -68,6 +69,7 @@ public final class welcomeTopComponent extends TopComponent {
         jScrollPane1 = new javax.swing.JScrollPane();
         IntroPane = new javax.swing.JEditorPane();
         fiststepLabel = new javax.swing.JLabel();
+        topPanel = new javax.swing.JPanel();
 
         logoPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -107,7 +109,7 @@ public final class welcomeTopComponent extends TopComponent {
                 .addContainerGap(64, Short.MAX_VALUE))
         );
 
-        controlPanel.setBackground(new java.awt.Color(45, 173, 220));
+        controlPanel.setBackground(new java.awt.Color(5, 71, 97));
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton3, org.openide.util.NbBundle.getMessage(welcomeTopComponent.class, "welcomeTopComponent.jButton3.text")); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +123,7 @@ public final class welcomeTopComponent extends TopComponent {
         controlPanelLayout.setHorizontalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addContainerGap(3048, Short.MAX_VALUE)
+                .addContainerGap(3068, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(29, 29, 29))
         );
@@ -145,17 +147,33 @@ public final class welcomeTopComponent extends TopComponent {
         fiststepLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/weaved/server/welcome/firstscreen.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(fiststepLabel, org.openide.util.NbBundle.getMessage(welcomeTopComponent.class, "welcomeTopComponent.fiststepLabel.text")); // NOI18N
 
+        topPanel.setBackground(new java.awt.Color(5, 71, 97));
+        topPanel.setPreferredSize(new java.awt.Dimension(3152, 30));
+
+        javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
+        topPanel.setLayout(topPanelLayout);
+        topPanelLayout.setHorizontalGroup(
+            topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 3152, Short.MAX_VALUE)
+        );
+        topPanelLayout.setVerticalGroup(
+            topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(154, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2580, 2580, 2580))))
             .addGroup(layout.createSequentialGroup()
@@ -166,7 +184,7 @@ public final class welcomeTopComponent extends TopComponent {
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(2198, Short.MAX_VALUE)))
+                    .addContainerGap(4856, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,8 +192,13 @@ public final class welcomeTopComponent extends TopComponent {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(fiststepLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,6 +229,7 @@ public final class welcomeTopComponent extends TopComponent {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel logoPanel;
+    private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {

@@ -6,7 +6,6 @@ package com.weaved.server.configurator;
 
 import com.weaved.server.configurator.misc.ConfigNode;
 import com.weaved.server.configurator.misc.ConfigPropNode;
-import com.weaved.server.configurator.palette.Shape;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
@@ -19,9 +18,8 @@ import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -44,7 +42,6 @@ import org.netbeans.api.visual.model.ObjectSceneEventType;
 import org.netbeans.api.visual.model.ObjectSceneListener;
 import org.netbeans.api.visual.model.ObjectState;
 //import org.netbeans.api.visual.router.CollisionsCollector;
-import org.netbeans.api.visual.router.RouterFactory;
 import org.netbeans.api.visual.widget.ConnectionWidget;
 import org.netbeans.api.visual.widget.LayerWidget;
 import org.netbeans.api.visual.widget.Scene;
@@ -77,6 +74,7 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
     private int featureCount = 0;
     private int perceptionCount = 0;
     public static HashMap<String, ConfigNode> nodeMap = new HashMap<String, ConfigNode>();
+    public static ArrayList<ConnectionWidget> edgeMap = new ArrayList<ConnectionWidget>();
 //    public static CollisionsCollector widgetCollector = new WidgetsCollisionCollector(connectionLayer);
 
     public GraphSceneImpl() {
@@ -303,12 +301,14 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
                             if (conn.getSourceAnchor().getRelatedWidget().equals(widget)) {
 
                                 connectionLayer.removeChild(conn);
+                                edgeMap.remove(conn);
 
                             }
 
                             if (conn.getTargetAnchor().getRelatedWidget().equals(widget)) {
 
                                 connectionLayer.removeChild(conn);
+                                edgeMap.remove(conn);
                             }
 
 
@@ -409,6 +409,7 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
                 conn.setTargetAnchor(AnchorFactory.createRectangularAnchor(target));
                 conn.setSourceAnchor(AnchorFactory.createRectangularAnchor(source));
                 connectionLayer.addChild(conn);
+                edgeMap.add(conn);
             }
         }
     }

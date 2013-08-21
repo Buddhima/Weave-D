@@ -73,7 +73,7 @@ public final class summaryTopComponent extends TopComponent {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        controlPanel.setBackground(new java.awt.Color(45, 173, 220));
+        controlPanel.setBackground(new java.awt.Color(5, 71, 97));
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(summaryTopComponent.class, "summaryTopComponent.jButton2.text")); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
