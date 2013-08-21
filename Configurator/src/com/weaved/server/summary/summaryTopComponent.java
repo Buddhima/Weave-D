@@ -4,6 +4,7 @@
  */
 package com.weaved.server.summary;
 
+import com.weaved.server.configurator.misc.Runner;
 import java.awt.BorderLayout;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
@@ -146,6 +147,9 @@ public final class summaryTopComponent extends TopComponent {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         //         Final run part here
+        
+        new Runner().run();
+        
 
     }//GEN-LAST:event_jButton3ActionPerformed
 

@@ -46,7 +46,8 @@ public final class welcomeTopComponent extends TopComponent {
         
         add(logoPanel, BorderLayout.CENTER);
         add(controlPanel, BorderLayout.SOUTH);
-        add(IntroPane,BorderLayout.EAST);
+//        add(IntroPane,BorderLayout.EAST);
+        add(fiststepLabel,BorderLayout.EAST);
 
     }
 
@@ -66,6 +67,7 @@ public final class welcomeTopComponent extends TopComponent {
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         IntroPane = new javax.swing.JEditorPane();
+        fiststepLabel = new javax.swing.JLabel();
 
         logoPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -139,18 +141,27 @@ public final class welcomeTopComponent extends TopComponent {
         IntroPane.setRequestFocusEnabled(false);
         jScrollPane1.setViewportView(IntroPane);
 
+        fiststepLabel.setBackground(new java.awt.Color(255, 255, 255));
+        fiststepLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/weaved/server/welcome/firstscreen.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(fiststepLabel, org.openide.util.NbBundle.getMessage(welcomeTopComponent.class, "welcomeTopComponent.fiststepLabel.text")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(154, Short.MAX_VALUE)
-                .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2580, 2580, 2580))
+                .addContainerGap(154, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2580, 2580, 2580))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(621, 621, 621)
+                .addComponent(fiststepLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -160,7 +171,9 @@ public final class welcomeTopComponent extends TopComponent {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(213, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(fiststepLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62)
                 .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -169,7 +182,7 @@ public final class welcomeTopComponent extends TopComponent {
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(51, Short.MAX_VALUE)))
+                    .addContainerGap(415, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -186,6 +199,7 @@ public final class welcomeTopComponent extends TopComponent {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JEditorPane IntroPane;
     private javax.swing.JPanel controlPanel;
+    private javax.swing.JLabel fiststepLabel;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
