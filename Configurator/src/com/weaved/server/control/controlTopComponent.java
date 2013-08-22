@@ -10,13 +10,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import org.netbeans.api.progress.ProgressHandle;
+import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.util.Exceptions;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
+import org.openide.util.RequestProcessor;
 import org.openide.windows.WindowManager;
 
 /**
@@ -53,6 +58,9 @@ public final class controlTopComponent extends TopComponent {
         add(controlPanel, BorderLayout.SOUTH);
         add(buttonPanel, BorderLayout.CENTER);
 
+
+
+
     }
 
     /**
@@ -74,6 +82,10 @@ public final class controlTopComponent extends TopComponent {
         jScrollPane1 = new javax.swing.JScrollPane();
         descriptionTextPane = new javax.swing.JTextPane();
         jLabel1 = new javax.swing.JLabel();
+        progressLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(controlTopComponent.class, "controlTopComponent.jButton2.text")); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -107,11 +119,24 @@ public final class controlTopComponent extends TopComponent {
                 featureExtractorMouseEnter(evt);
             }
         });
+        featureExtractButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                featureExtractButtonActionPerformed(evt);
+            }
+        });
 
         org.openide.awt.Mnemonics.setLocalizedText(runIkaslButton, org.openide.util.NbBundle.getMessage(controlTopComponent.class, "controlTopComponent.runIkaslButton.text")); // NOI18N
         runIkaslButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                runIkaslButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 runIkaslMouseEnter(evt);
+            }
+        });
+        runIkaslButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                runIkaslButtonActionPerformed(evt);
             }
         });
 
@@ -119,6 +144,11 @@ public final class controlTopComponent extends TopComponent {
         generateLinkButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 generateLinksMouseEnter(evt);
+            }
+        });
+        generateLinkButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateLinkButtonActionPerformed(evt);
             }
         });
 
@@ -137,7 +167,7 @@ public final class controlTopComponent extends TopComponent {
         descriptionTextPane.setEditable(false);
         descriptionTextPane.setBackground(java.awt.SystemColor.control);
         descriptionTextPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        descriptionTextPane.setContentType("text/html "); // NOI18N
+        descriptionTextPane.setContentType("text/html"); // NOI18N
         descriptionTextPane.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         descriptionTextPane.setCaretColor(new java.awt.Color(102, 102, 255));
         descriptionTextPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -146,24 +176,47 @@ public final class controlTopComponent extends TopComponent {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/weaved/server/control/weave-D logo_small.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(controlTopComponent.class, "controlTopComponent.jLabel1.text")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(progressLabel, org.openide.util.NbBundle.getMessage(controlTopComponent.class, "controlTopComponent.progressLabel.text")); // NOI18N
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/weaved/server/control/down_arrow.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(controlTopComponent.class, "controlTopComponent.jLabel2.text")); // NOI18N
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/weaved/server/control/down_arrow.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(controlTopComponent.class, "controlTopComponent.jLabel3.text")); // NOI18N
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/weaved/server/control/down_arrow.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(controlTopComponent.class, "controlTopComponent.jLabel4.text")); // NOI18N
+
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
         buttonPanelLayout.setHorizontalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(featureExtractButton, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(runIkaslButton, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(generateLinkButton, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(visualizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(buttonPanelLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(featureExtractButton, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(runIkaslButton, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(generateLinkButton, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(visualizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(buttonPanelLayout.createSequentialGroup()
+                        .addGap(102, 102, 102)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(buttonPanelLayout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(buttonPanelLayout.createSequentialGroup()
+                        .addGap(101, 101, 101)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(45, 45, 45)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(buttonPanelLayout.createSequentialGroup()
+                        .addComponent(progressLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel1)))
                 .addContainerGap())
         );
@@ -172,11 +225,17 @@ public final class controlTopComponent extends TopComponent {
             .addGroup(buttonPanelLayout.createSequentialGroup()
                 .addGap(62, 62, 62)
                 .addComponent(featureExtractButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(runIkaslButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
                 .addComponent(generateLinkButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(visualizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(buttonPanelLayout.createSequentialGroup()
@@ -184,9 +243,15 @@ public final class controlTopComponent extends TopComponent {
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1)
                     .addGroup(buttonPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                        .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(buttonPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(buttonPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(progressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)))))
                 .addContainerGap())
         );
 
@@ -224,23 +289,23 @@ public final class controlTopComponent extends TopComponent {
 
     private void featureExtractorMouseEnter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_featureExtractorMouseEnter
         // TODO add your handling code here:
-        descriptionTextPane.setText("Extract Features \n\n"
-                + "By clicking extract features, you'll be presented with a screen which can extract features from raw data(i.e. Images, Text). For example, the tool can extract information about color existence, color proportion and color position for images.");
+        descriptionTextPane.setText("<html><div style=\"font-family:arial;font-size:14px;\"><b>Extract Features</b> <br/><br/>"
+                + "By clicking extract features, you'll be presented with a screen which can extract features from raw data(i.e. Images, Text). For example, the tool can extract information about color existence, color proportion and color position for images.</div></html>");
     }//GEN-LAST:event_featureExtractorMouseEnter
 
     private void runIkaslMouseEnter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_runIkaslMouseEnter
         // TODO add your handling code here:
-        descriptionTextPane.setText("Learn Incrementally \n\nBy clicking \"Learn Incrementally\", Weave-D will learn about the provided data, using the feature extractors created by clicking \"Extract Features\". Weave-D uses a state of the art neural network algorithm which is capable of incremental learning. Unlike the knowledge acquiring tools available in the market, Weave-D retains past knowledge and does not forget past information because of the new knowledge.");
+        descriptionTextPane.setText("<html><div style=\"font-family:arial;font-size:14px;\"><b>Learn Incrementally </b> <br/><br/>By clicking \"Learn Incrementally\", Weave-D will learn about the provided data, using the feature extractors created by clicking \"Extract Features\". Weave-D uses a state of the art neural network algorithm which is capable of incremental learning. Unlike the knowledge acquiring tools available in the market, Weave-D retains past knowledge and does not forget past information because of the new knowledge.</div></html>");
     }//GEN-LAST:event_runIkaslMouseEnter
 
     private void generateLinksMouseEnter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generateLinksMouseEnter
         // TODO add your handling code here:
-        descriptionTextPane.setText("Generate Links \n\nGenerate Links, generates relationships across various types of data (e.g. Images and Text) With the generated links user can see how data is related to each other. For example, horizontal links are capable of extracting how clusters of different features are inter-related. For example, by looking at the acquired knowledge, these links are capable of identifying images clustered together in both color existence and color proportion. Furthermore, vertical links are capable of extracting how patterns in data change over time. For example, by looking at the acquired knowledge, these links can say that a green-dominant cluster in images has later turned into a green-brown-dominant cluster.");
+        descriptionTextPane.setText("<html><div style=\"font-family:arial;font-size:14px;\"><b>Generate Links</b> <br/><br/>Generate Links, generates relationships across various types of data (e.g. Images and Text) With the generated links user can see how data is related to each other. For example, horizontal links are capable of extracting how clusters of different features are inter-related. For example, by looking at the acquired knowledge, these links are capable of identifying images clustered together in both color existence and color proportion. Furthermore, vertical links are capable of extracting how patterns in data change over time. For example, by looking at the acquired knowledge, these links can say that a green-dominant cluster in images has later turned into a green-brown-dominant cluster.</div></html>");
     }//GEN-LAST:event_generateLinksMouseEnter
 
     private void visualizeMouseEnter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_visualizeMouseEnter
         // TODO add your handling code here:
-        descriptionTextPane.setText("Visualize \n\n\"Visualize\" provides an intuitive visualization of the acquired knowledge. For example visualization experience provided by the tool comprise of a 3D easy-to-explore visualization. User can pan,zoom and rotate in order to easily analyze the data structure.");
+        descriptionTextPane.setText("<html><div style=\"font-family:arial;font-size:14px;\"><b>Visualize</b> <br/><br/>\"Visualize\" provides an intuitive visualization of the acquired knowledge. For example visualization experience provided by the tool comprise of a 3D easy-to-explore visualization. User can pan,zoom and rotate in order to easily analyze the data structure.</div></html>");
     }//GEN-LAST:event_visualizeMouseEnter
 
     private void visualizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizeButtonActionPerformed
@@ -251,6 +316,120 @@ public final class controlTopComponent extends TopComponent {
             Exceptions.printStackTrace(ex);
         }
     }//GEN-LAST:event_visualizeButtonActionPerformed
+
+    private void runIkaslButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runIkaslButtonActionPerformed
+
+        // TODO add your handling code here:
+           /* final Runnable run1 = new Runnable() {
+         @Override
+         public void run() {
+         ProgressHandle p = ProgressHandleFactory.createHandle("My Task");
+
+         p.start(100);
+
+         p.progress("Step 1", 10);
+         p.progress("Step 1", 10);
+         p.progress("Step 1", 10);
+         // do next work
+
+
+         p.progress("Step 1", 10);
+         p.progress("Step 1", 10);
+         p.progress("Step 1", 10);
+         p.progress(100);
+         p.finish();
+         }
+         };
+
+         Thread t = new Thread(run1);
+         t.start(); // start the task and progress visualisation
+         //        RequestProcessor.getDefault().post(run);
+         System.out.println("Clicked");*/
+
+
+
+
+
+//        configProgressBar.setVisible(true);
+
+//        configProgressBar.setValue(20);
+        progressLabel.setText("Start Learning ....");
+
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        progressLabel.setText("Processing ....");
+//        configProgressBar.setValue(60);
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        progressLabel.setText("Building Heirarchy ....");
+//        configProgressBar.setValue(100);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        progressLabel.setText("Learning Finished ....");
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        progressLabel.setText("");
+//        configProgressBar.setVisible(false);
+        JOptionPane.showMessageDialog(null, "Learning Completed");
+    }//GEN-LAST:event_runIkaslButtonActionPerformed
+
+    private void featureExtractButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_featureExtractButtonActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Runtime.getRuntime().exec("java -jar C:\\Users\\BUDDHIMA\\Desktop\\FeatureExtractors\\FeatureExtractor.jar");
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    }//GEN-LAST:event_featureExtractButtonActionPerformed
+
+    private void generateLinkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateLinkButtonActionPerformed
+        // TODO add your handling code here:
+        progressLabel.setText("Reading Hiararchy ....");
+
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+
+        progressLabel.setText("Generating Links ....");
+//        configProgressBar.setValue(100);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        progressLabel.setText("Link Generation done ....");
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        progressLabel.setText("");
+        JOptionPane.showMessageDialog(null, "Links Generated!");
+//        configProgressBar.setVisible(false);
+    }//GEN-LAST:event_generateLinkButtonActionPerformed
+
+    private void runIkaslButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_runIkaslButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_runIkaslButtonMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JPanel controlPanel;
@@ -259,8 +438,12 @@ public final class controlTopComponent extends TopComponent {
     private javax.swing.JButton generateLinkButton;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel progressLabel;
     private javax.swing.JButton runIkaslButton;
     private javax.swing.JButton visualizeButton;
     // End of variables declaration//GEN-END:variables
