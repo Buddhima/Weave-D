@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.apisupport.project</type>
+    <configuration>
+        <data xmlns="http://www.netbeans.org/ns/nb-module-project/3">
+            <code-name-base>com.ikasl</code-name-base>
+            <suite-component/>
+            <module-dependencies/>
+            <public-packages>
+                <package>com.ikasl.core</package>
+                <package>com.ikasl.core.aggregate</package>
+                <package>com.ikasl.enums</package>
+                <package>com.ikasl.gsom</package>
+                <package>com.ikasl.id</package>
+                <package>com.ikasl.objects</package>
+                <package>com.ikasl.persistence</package>
+                <package>com.ikasl.utils</package>
+                <package>com.ikasl.utils.config</package>
+                <package>com.ikasl.xml.objects</package>
+                <package>com.ikasl.xml.writer</package>
+            </public-packages>
+            <class-path-extension>
+                <runtime-relative-path>ext/IKASL.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/IKASL.jar</binary-origin>
+            </class-path-extension>
+        </data>
+    </configuration>
+</project>

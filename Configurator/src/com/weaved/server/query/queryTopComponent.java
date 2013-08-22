@@ -4,6 +4,9 @@
  */
 package com.weaved.server.query;
 
+import com.weaved.main.WeavedMain;
+import java.util.ArrayList;
+import javax.swing.JPanel;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -18,7 +21,7 @@ import org.openide.util.NbBundle.Messages;
 autostore = false)
 @TopComponent.Description(
     preferredID = "queryTopComponent",
-    iconBase = "com/weaved/server/runtimeConfig/icon_16.png",
+iconBase = "com/weaved/server/runtimeConfig/icon_16.png",
 //iconBase="SET/PATH/TO/ICON/HERE", 
 persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "editor", openAtStartup = true)
@@ -33,12 +36,34 @@ preferredID = "queryTopComponent")
     "HINT_queryTopComponent=This is a query window"
 })
 public final class queryTopComponent extends TopComponent {
-
+    
+    public static ArrayList<String> list = new ArrayList<String>();
+    
     public queryTopComponent() {
         initComponents();
+        jpanelImageGrid = new JPanel();
         setName(Bundle.CTL_queryTopComponent());
         setToolTipText(Bundle.HINT_queryTopComponent());
-
+        jTextButton1.setOpaque(false);
+        jTextButton1.setContentAreaFilled(false);
+        jTextButton1.setBorderPainted(false);
+        jTextButton1.setVisible(false);
+        
+        jTextButton2.setOpaque(false);
+        jTextButton2.setContentAreaFilled(false);
+        jTextButton2.setBorderPainted(false);
+        jTextButton2.setVisible(false);
+        
+        jTextButton3.setOpaque(false);
+        jTextButton3.setContentAreaFilled(false);
+        jTextButton3.setBorderPainted(false);
+        jTextButton3.setVisible(false);
+        
+        jTextButton4.setOpaque(false);
+        jTextButton4.setContentAreaFilled(false);
+        jTextButton4.setBorderPainted(false);
+        jTextButton4.setVisible(false);
+        
     }
 
     /**
@@ -58,8 +83,14 @@ public final class queryTopComponent extends TopComponent {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanelTextGrid = new javax.swing.JPanel();
+        jTextButton1 = new javax.swing.JButton();
+        jTextButton2 = new javax.swing.JButton();
+        jTextButton3 = new javax.swing.JButton();
+        jTextButton4 = new javax.swing.JButton();
+        jImageScrollPane = new javax.swing.JScrollPane();
+        jpanelImageGrid = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
 
         setMaximumSize(null);
@@ -92,7 +123,7 @@ public final class queryTopComponent extends TopComponent {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(queryImageLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                .addComponent(queryImageLocation)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(browseBtn)
                 .addContainerGap())
@@ -113,8 +144,18 @@ public final class queryTopComponent extends TopComponent {
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jButton2.text")); // NOI18N
         jButton2.setToolTipText(org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jButton2.toolTipText")); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton3, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jButton3.text")); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -148,27 +189,79 @@ public final class queryTopComponent extends TopComponent {
 
         jPanel3.setBackground(new java.awt.Color(204, 255, 204));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jPanelTextGrid.setBackground(new java.awt.Color(204, 204, 255));
+
+        org.openide.awt.Mnemonics.setLocalizedText(jTextButton1, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jTextButton1.text")); // NOI18N
+        jTextButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextButton1ActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(jTextButton2, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jTextButton2.text")); // NOI18N
+        jTextButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextButton2ActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(jTextButton3, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jTextButton3.text")); // NOI18N
+        jTextButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextButton3ActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(jTextButton4, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jTextButton4.text")); // NOI18N
+        jTextButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextButton4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelTextGridLayout = new javax.swing.GroupLayout(jPanelTextGrid);
+        jPanelTextGrid.setLayout(jPanelTextGridLayout);
+        jPanelTextGridLayout.setHorizontalGroup(
+            jPanelTextGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTextGridLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(jPanelTextGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextButton4)
+                    .addComponent(jTextButton3)
+                    .addComponent(jTextButton2)
+                    .addComponent(jTextButton1))
+                .addContainerGap(225, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 372, Short.MAX_VALUE)
+        jPanelTextGridLayout.setVerticalGroup(
+            jPanelTextGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTextGridLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jTextButton1)
+                .addGap(27, 27, 27)
+                .addComponent(jTextButton2)
+                .addGap(32, 32, 32)
+                .addComponent(jTextButton3)
+                .addGap(28, 28, 28)
+                .addComponent(jTextButton4)
+                .addContainerGap(161, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 333, Short.MAX_VALUE)
+        jScrollPane1.setViewportView(jPanelTextGrid);
+
+        jpanelImageGrid.setBackground(new java.awt.Color(204, 204, 255));
+
+        javax.swing.GroupLayout jpanelImageGridLayout = new javax.swing.GroupLayout(jpanelImageGrid);
+        jpanelImageGrid.setLayout(jpanelImageGridLayout);
+        jpanelImageGridLayout.setHorizontalGroup(
+            jpanelImageGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 743, Short.MAX_VALUE)
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jpanelImageGridLayout.setVerticalGroup(
+            jpanelImageGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 361, Short.MAX_VALUE)
         );
+
+        jImageScrollPane.setViewportView(jpanelImageGrid);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -176,19 +269,18 @@ public final class queryTopComponent extends TopComponent {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jImageScrollPane)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jImageScrollPane)
+                    .addComponent(jScrollPane1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 204, 255));
@@ -226,50 +318,137 @@ public final class queryTopComponent extends TopComponent {
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void queryImageLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queryImageLocationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_queryImageLocationActionPerformed
-
+    
     private void browseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseBtnActionPerformed
-      
     }//GEN-LAST:event_browseBtnActionPerformed
+    
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        WeavedMain weavedMain = new WeavedMain();
+        list = weavedMain.runCore(new double[]{1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
+        jpanelImageGrid.removeAll();
+        //System.out.println(">> " + UIValues.getINPUT_FILE_LOCATION());
 
+        //map = model.getHitAndImageMap();
+        if (list.size() > 0) {
+            jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, list, 8, "Images");
+            // Set the scrollpane viewport
+            jImageScrollPane.setViewportView(jpanelImageGrid);
+        }
+        
+        if (list.size() >= 4) {
+            jTextButton1.setText(list.get(0) + ".txt");
+            jTextButton2.setText(list.get(1) + ".txt");
+            jTextButton3.setText(list.get(2) + ".txt");
+            jTextButton4.setText(list.get(3) + ".txt");
+            jTextButton1.setVisible(true);
+            jTextButton2.setVisible(true);
+            jTextButton3.setVisible(true);
+            jTextButton4.setVisible(true);
+        } else if (list.size() == 3) {
+            jTextButton1.setText(list.get(0) + ".txt");
+            jTextButton2.setText(list.get(1) + ".txt");
+            jTextButton3.setText(list.get(2) + ".txt");
+            jTextButton1.setVisible(true);
+            jTextButton2.setVisible(true);
+            jTextButton3.setVisible(true);
+            
+        } else if (list.size() == 2) {
+            jTextButton1.setText(list.get(0) + ".txt");
+            jTextButton2.setText(list.get(1) + ".txt");
+            jTextButton1.setVisible(true);
+            jTextButton2.setVisible(true);
+            
+        } else {
+            jTextButton1.setText(list.get(0) + ".txt");
+            jTextButton1.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private void jTextButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton1ActionPerformed
+        try {
+            ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(0) + ".txt");
+            proc.start();
+        } catch (Exception hj) {
+            System.out.println("Error not der" + hj);
+        }
+    }//GEN-LAST:event_jTextButton1ActionPerformed
+    
+    private void jTextButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton2ActionPerformed
+        try {
+            ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(1) + ".txt");
+            proc.start();
+        } catch (Exception hj) {
+            System.out.println("Error not der" + hj);
+        }
+    }//GEN-LAST:event_jTextButton2ActionPerformed
+    
+    private void jTextButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton3ActionPerformed
+        try {
+            ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(2) + ".txt");
+            proc.start();
+        } catch (Exception hj) {
+            System.out.println("Error not der" + hj);
+        }
+    }//GEN-LAST:event_jTextButton3ActionPerformed
+    
+    private void jTextButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton4ActionPerformed
+        try {
+            ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(3) + ".txt");
+            proc.start();
+        } catch (Exception hj) {
+            System.out.println("Error not der" + hj);
+        }
+    }//GEN-LAST:event_jTextButton4ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseBtn;
     private javax.swing.JLabel browsedImageLbl;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JScrollPane jImageScrollPane;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanelTextGrid;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jTextButton1;
+    private javax.swing.JButton jTextButton2;
+    private javax.swing.JButton jTextButton3;
+    private javax.swing.JButton jTextButton4;
+    private javax.swing.JPanel jpanelImageGrid;
     private javax.swing.JTextField queryImageLocation;
     // End of variables declaration//GEN-END:variables
+
     @Override
     public void componentOpened() {
         // TODO add custom code on component opening
     }
-
+    
     @Override
     public void componentClosed() {
         // TODO add custom code on component closing
     }
-
+    
     void writeProperties(java.util.Properties p) {
         // better to version settings since initial version as advocated at
         // http://wiki.apidesign.org/wiki/PropertyFiles
         p.setProperty("version", "1.0");
         // TODO store your settings
     }
-
+    
     void readProperties(java.util.Properties p) {
         String version = p.getProperty("version");
         // TODO read your settings according to their version

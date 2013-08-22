@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<perception_config_model>
+    <perception id="L0F0" name="image">
+        <feature id="L1F0" name="color">
+            <dimension id="L2F0" name="existence">
+            </dimension>
+            <dimension id="L2F1" name="proportion">
+            </dimension>
+            <dimension id="L2F2" name="position">
+            </dimension>
+        </feature>
+        <feature id="L1F1" name="shape">
+			<dimension id="L2F3" name="existence">
+            </dimension>
+            <dimension id="L2F4" name="proportion">
+            </dimension>
+            <dimension id="L2F5" name="position">
+            </dimension>
+        </feature>
+        <feature id="L1F2" name="texture">
+			<dimension id="L2F6" name="existence">
+            </dimension>
+            <dimension id="L2F7" name="proportion">
+            </dimension>
+            <dimension id="L2F8" name="position">
+            </dimension>
+        </feature>
+    </perception>
+    <perception id="L0F1" name="text">
+        <feature id="L1F3" name="">
+            <dimension id="L2F9" name="wordnet">
+            </dimension>
+        </feature>
+        <feature id="L1F4" name="">
+			<dimension id="L2F10" name="uClassify">
+            </dimension>
+        </feature>
+    </perception>
+</perception_config_model>

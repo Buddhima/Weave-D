@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.apisupport.project</type>
+    <configuration>
+        <data xmlns="http://www.netbeans.org/ns/nb-module-project/3">
+            <code-name-base>com.vhlinker</code-name-base>
+            <suite-component/>
+            <module-dependencies/>
+            <public-packages>
+                <package>com.ikasl.objects</package>
+                <package>com.ikasl.objects.cross</package>
+                <package>com.ikasl.objects.temporal</package>
+                <package>com.vhlinker.commands</package>
+                <package>com.vhlinker.config</package>
+                <package>com.vhlinker.core</package>
+                <package>com.vhlinker.dataaccess</package>
+                <package>com.vhlinker.dataaccess.xml.parsers</package>
+                <package>com.vhlinker.dataaccess.xml.writers</package>
+                <package>com.vhlinker.enums</package>
+                <package>com.vhlinker.listener</package>
+                <package>com.vhlinker.main</package>
+                <package>com.vhlinker.util</package>
+            </public-packages>
+            <class-path-extension>
+                <runtime-relative-path>ext/VHLinkGenerator.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/VHLinkGenerator.jar</binary-origin>
+            </class-path-extension>
+        </data>
+    </configuration>
+</project>
