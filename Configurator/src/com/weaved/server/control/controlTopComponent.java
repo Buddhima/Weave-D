@@ -5,9 +5,16 @@
 package com.weaved.server.control;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.util.Exceptions;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.WindowManager;
@@ -20,7 +27,7 @@ import org.openide.windows.WindowManager;
 autostore = false)
 @TopComponent.Description(
     preferredID = "controlTopComponent",
-    iconBase = "com/weaved/server/summary/icon_16.png",
+iconBase = "com/weaved/server/summary/icon_16.png",
 //iconBase="SET/PATH/TO/ICON/HERE", 
 persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "editor", openAtStartup = true)
@@ -40,11 +47,11 @@ public final class controlTopComponent extends TopComponent {
         initComponents();
         setName(Bundle.CTL_controlTopComponent());
         setToolTipText(Bundle.HINT_controlTopComponent());
-        
+
         setLayout(new BorderLayout());
-        
+
         add(controlPanel, BorderLayout.SOUTH);
-        add(buttonPanel,BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.CENTER);
 
     }
 
@@ -66,8 +73,7 @@ public final class controlTopComponent extends TopComponent {
         visualizeButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         descriptionTextPane = new javax.swing.JTextPane();
-
-        controlPanel.setBackground(new java.awt.Color(5, 71, 97));
+        jLabel1 = new javax.swing.JLabel();
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(controlTopComponent.class, "controlTopComponent.jButton2.text")); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -92,8 +98,6 @@ public final class controlTopComponent extends TopComponent {
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        buttonPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -124,12 +128,23 @@ public final class controlTopComponent extends TopComponent {
                 visualizeMouseEnter(evt);
             }
         });
+        visualizeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                visualizeButtonActionPerformed(evt);
+            }
+        });
 
         descriptionTextPane.setEditable(false);
+        descriptionTextPane.setBackground(java.awt.SystemColor.control);
         descriptionTextPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        descriptionTextPane.setContentType("text/html "); // NOI18N
+        descriptionTextPane.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         descriptionTextPane.setCaretColor(new java.awt.Color(102, 102, 255));
         descriptionTextPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(descriptionTextPane);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/weaved/server/control/weave-D logo_small.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(controlTopComponent.class, "controlTopComponent.jLabel1.text")); // NOI18N
 
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
@@ -145,7 +160,11 @@ public final class controlTopComponent extends TopComponent {
                 .addGap(45, 45, 45)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)))
                 .addContainerGap())
         );
         buttonPanelLayout.setVerticalGroup(
@@ -159,12 +178,15 @@ public final class controlTopComponent extends TopComponent {
                 .addComponent(generateLinkButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
                 .addComponent(visualizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(buttonPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1)
-                    .addComponent(jScrollPane1))
+                    .addGroup(buttonPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -202,24 +224,33 @@ public final class controlTopComponent extends TopComponent {
 
     private void featureExtractorMouseEnter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_featureExtractorMouseEnter
         // TODO add your handling code here:
-        descriptionTextPane.setText("Feature Extractor");
+        descriptionTextPane.setText("Extract Features \n\n"
+                + "By clicking extract features, you'll be presented with a screen which can extract features from raw data(i.e. Images, Text). For example, the tool can extract information about color existence, color proportion and color position for images.");
     }//GEN-LAST:event_featureExtractorMouseEnter
 
     private void runIkaslMouseEnter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_runIkaslMouseEnter
         // TODO add your handling code here:
-        descriptionTextPane.setText("Run IKASL");
+        descriptionTextPane.setText("Learn Incrementally \n\nBy clicking \"Learn Incrementally\", Weave-D will learn about the provided data, using the feature extractors created by clicking \"Extract Features\". Weave-D uses a state of the art neural network algorithm which is capable of incremental learning. Unlike the knowledge acquiring tools available in the market, Weave-D retains past knowledge and does not forget past information because of the new knowledge.");
     }//GEN-LAST:event_runIkaslMouseEnter
 
     private void generateLinksMouseEnter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generateLinksMouseEnter
         // TODO add your handling code here:
-        descriptionTextPane.setText("Generate Links");
+        descriptionTextPane.setText("Generate Links \n\nGenerate Links, generates relationships across various types of data (e.g. Images and Text) With the generated links user can see how data is related to each other. For example, horizontal links are capable of extracting how clusters of different features are inter-related. For example, by looking at the acquired knowledge, these links are capable of identifying images clustered together in both color existence and color proportion. Furthermore, vertical links are capable of extracting how patterns in data change over time. For example, by looking at the acquired knowledge, these links can say that a green-dominant cluster in images has later turned into a green-brown-dominant cluster.");
     }//GEN-LAST:event_generateLinksMouseEnter
 
     private void visualizeMouseEnter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_visualizeMouseEnter
         // TODO add your handling code here:
-        descriptionTextPane.setText("Visualize");
+        descriptionTextPane.setText("Visualize \n\n\"Visualize\" provides an intuitive visualization of the acquired knowledge. For example visualization experience provided by the tool comprise of a 3D easy-to-explore visualization. User can pan,zoom and rotate in order to easily analyze the data structure.");
     }//GEN-LAST:event_visualizeMouseEnter
 
+    private void visualizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizeButtonActionPerformed
+        try {
+            // TODO add your handling code here:
+            Runtime.getRuntime().exec("java -jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\dist\\Arena.jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\nbqsa.txt");
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    }//GEN-LAST:event_visualizeButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JPanel controlPanel;
@@ -227,11 +258,13 @@ public final class controlTopComponent extends TopComponent {
     private javax.swing.JButton featureExtractButton;
     private javax.swing.JButton generateLinkButton;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton runIkaslButton;
     private javax.swing.JButton visualizeButton;
     // End of variables declaration//GEN-END:variables
+
     @Override
     public void componentOpened() {
         // TODO add custom code on component opening

@@ -48,7 +48,7 @@ public final class welcomeTopComponent extends TopComponent {
         add(controlPanel, BorderLayout.SOUTH);
 //        add(IntroPane,BorderLayout.EAST);
         add(fiststepLabel,BorderLayout.EAST);
-        add(topPanel,BorderLayout.NORTH);
+//        add(topPanel,BorderLayout.NORTH);
 
     }
 
@@ -109,8 +109,6 @@ public final class welcomeTopComponent extends TopComponent {
                 .addContainerGap(64, Short.MAX_VALUE))
         );
 
-        controlPanel.setBackground(new java.awt.Color(5, 71, 97));
-
         org.openide.awt.Mnemonics.setLocalizedText(jButton3, org.openide.util.NbBundle.getMessage(welcomeTopComponent.class, "welcomeTopComponent.jButton3.text")); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,7 +145,6 @@ public final class welcomeTopComponent extends TopComponent {
         fiststepLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/weaved/server/welcome/firstscreen.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(fiststepLabel, org.openide.util.NbBundle.getMessage(welcomeTopComponent.class, "welcomeTopComponent.fiststepLabel.text")); // NOI18N
 
-        topPanel.setBackground(new java.awt.Color(5, 71, 97));
         topPanel.setPreferredSize(new java.awt.Dimension(3152, 30));
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
