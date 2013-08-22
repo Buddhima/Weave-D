@@ -44,11 +44,13 @@ public final class welcomeTopComponent extends TopComponent {
         
         setLayout(new BorderLayout());
         
-        add(logoPanel, BorderLayout.CENTER);
+        //add(logoPanel, BorderLayout.WEST);
         add(controlPanel, BorderLayout.SOUTH);
 //        add(IntroPane,BorderLayout.EAST);
-        add(fiststepLabel,BorderLayout.EAST);
+//        add(fiststepLabel,BorderLayout.EAST);
+        //add(firstStepPanel,BorderLayout.EAST);
 //        add(topPanel,BorderLayout.NORTH);
+        add(allPanel,BorderLayout.CENTER);
 
     }
 
@@ -66,12 +68,14 @@ public final class welcomeTopComponent extends TopComponent {
         jLabel3 = new javax.swing.JLabel();
         controlPanel = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        IntroPane = new javax.swing.JEditorPane();
-        fiststepLabel = new javax.swing.JLabel();
         topPanel = new javax.swing.JPanel();
+        firstStepPanel = new javax.swing.JPanel();
+        fiststepLabel = new javax.swing.JLabel();
+        allPanel = new javax.swing.JPanel();
+        totalImageLabel = new javax.swing.JLabel();
 
         logoPanel.setBackground(new java.awt.Color(255, 255, 255));
+        logoPanel.setMaximumSize(null);
 
         jLabel1.setFont(new java.awt.Font("Cambria", 0, 36)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(welcomeTopComponent.class, "welcomeTopComponent.jLabel1.text")); // NOI18N
@@ -88,25 +92,29 @@ public final class welcomeTopComponent extends TopComponent {
             .addGroup(logoPanelLayout.createSequentialGroup()
                 .addGroup(logoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(logoPanelLayout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(jLabel1))
-                    .addGroup(logoPanelLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
                         .addGroup(logoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))))
-                .addContainerGap(613, Short.MAX_VALUE))
+                            .addGroup(logoPanelLayout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addComponent(jLabel1))
+                            .addGroup(logoPanelLayout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel2)))
+                        .addGap(0, 86, Short.MAX_VALUE))
+                    .addGroup(logoPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         logoPanelLayout.setVerticalGroup(
             logoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(logoPanelLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton3, org.openide.util.NbBundle.getMessage(welcomeTopComponent.class, "welcomeTopComponent.jButton3.text")); // NOI18N
@@ -121,7 +129,7 @@ public final class welcomeTopComponent extends TopComponent {
         controlPanelLayout.setHorizontalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addContainerGap(3068, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(29, 29, 29))
         );
@@ -133,76 +141,105 @@ public final class welcomeTopComponent extends TopComponent {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        IntroPane.setEditable(false);
-        IntroPane.setContentType("text/html"); // NOI18N
-        IntroPane.setText(org.openide.util.NbBundle.getMessage(welcomeTopComponent.class, "welcomeTopComponent.IntroPane.text")); // NOI18N
-        IntroPane.setMaximumSize(new java.awt.Dimension(200, 2147483647));
-        IntroPane.setPreferredSize(new java.awt.Dimension(600, 903));
-        IntroPane.setRequestFocusEnabled(false);
-        jScrollPane1.setViewportView(IntroPane);
-
-        fiststepLabel.setBackground(new java.awt.Color(255, 255, 255));
-        fiststepLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/weaved/server/welcome/firstscreen.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(fiststepLabel, org.openide.util.NbBundle.getMessage(welcomeTopComponent.class, "welcomeTopComponent.fiststepLabel.text")); // NOI18N
-
         topPanel.setPreferredSize(new java.awt.Dimension(3152, 30));
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 3152, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        firstStepPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        fiststepLabel.setBackground(new java.awt.Color(255, 255, 0));
+        fiststepLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/weaved/server/welcome/firstscreen.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(fiststepLabel, org.openide.util.NbBundle.getMessage(welcomeTopComponent.class, "welcomeTopComponent.fiststepLabel.text")); // NOI18N
+
+        javax.swing.GroupLayout firstStepPanelLayout = new javax.swing.GroupLayout(firstStepPanel);
+        firstStepPanel.setLayout(firstStepPanelLayout);
+        firstStepPanelLayout.setHorizontalGroup(
+            firstStepPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(firstStepPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(fiststepLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        firstStepPanelLayout.setVerticalGroup(
+            firstStepPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(firstStepPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(fiststepLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        totalImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/weaved/server/welcome/one_firstscreen.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(totalImageLabel, org.openide.util.NbBundle.getMessage(welcomeTopComponent.class, "welcomeTopComponent.totalImageLabel.text")); // NOI18N
+
+        javax.swing.GroupLayout allPanelLayout = new javax.swing.GroupLayout(allPanel);
+        allPanel.setLayout(allPanelLayout);
+        allPanelLayout.setHorizontalGroup(
+            allPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, allPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(totalImageLabel)
+                .addGap(30, 30, 30))
+        );
+        allPanelLayout.setVerticalGroup(
+            allPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, allPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(totalImageLabel)
+                .addGap(36, 36, 36))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2580, 2580, 2580))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(621, 621, 621)
-                .addComponent(fiststepLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap())
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(2812, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(firstStepPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(542, 542, 542)
+                .addComponent(allPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 5447, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(4856, Short.MAX_VALUE)))
+                    .addContainerGap(6537, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(fiststepLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(firstStepPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(allPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 854, Short.MAX_VALUE)
+                .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(415, Short.MAX_VALUE)))
+                    .addContainerGap(916, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -217,16 +254,17 @@ public final class welcomeTopComponent extends TopComponent {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JEditorPane IntroPane;
+    private javax.swing.JPanel allPanel;
     private javax.swing.JPanel controlPanel;
+    private javax.swing.JPanel firstStepPanel;
     private javax.swing.JLabel fiststepLabel;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel logoPanel;
     private javax.swing.JPanel topPanel;
+    private javax.swing.JLabel totalImageLabel;
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {
