@@ -39,7 +39,7 @@ public class ImageGridCreator {
             file = new File(imageLocation + "\\" + fNames.get(i) + ".jpg");
             //System.out.println("File: "+file);
             try {
-                image = ImageIO.read(file).getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH);
+                image = ImageIO.read(file).getScaledInstance(150, 150, BufferedImage.SCALE_SMOOTH);
                 cells[i] = getThubnailImage(image);
                 image.flush();
             } catch (IOException ex) {

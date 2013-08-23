@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Data learn_cycle_id="0">
   <element x="0" y="0">
+    <NodeID>LC0,GC0,GN3</NodeID>
+    <ParentID/>
+    <value>Easy_Mid_RockClimbing_154,Easy_Mid_RockClimbing_176,Easy_Mid_RockClimbing_193,Easy_Mid_RockClimbing_464,Easy_Mid_RockClimbing_51,Easy_Mid_RockClimbing_554,Easy_Mid_RockClimbing_555,Easy_Mid_RockClimbing_589,Easy_Mid_RockClimbing_596,Easy_Mid_RockClimbing_87</value>
+  </element>
+  <element x="0" y="0">
     <NodeID>LC0,GC0,GN0</NodeID>
     <ParentID/>
     <value/>
@@ -8,21 +13,11 @@
   <element x="0" y="0">
     <NodeID>LC0,GC0,GN1</NodeID>
     <ParentID/>
-    <value/>
-  </element>
-  <element x="0" y="0">
-    <NodeID>LC0,GC0,GN3</NodeID>
-    <ParentID/>
-    <value>Easy_Close_badminton_83</value>
-  </element>
-  <element x="0" y="0">
-    <NodeID>LC0,GC0,GN4</NodeID>
-    <ParentID/>
-    <value>Easy_Mid_RockClimbing_154,Easy_Mid_RockClimbing_176,Easy_Mid_RockClimbing_193,Easy_Mid_RockClimbing_464,Easy_Mid_RockClimbing_51,Easy_Mid_RockClimbing_554,Easy_Mid_RockClimbing_555,Easy_Mid_RockClimbing_589,Easy_Mid_RockClimbing_596,Easy_Mid_RockClimbing_87</value>
+    <value>Easy_Close_badminton_83,Easy_Close_croquet_204,Easy_Close_croquet_205,Easy_Mid_badminton_124,Easy_Mid_badminton_163,Easy_Mid_badminton_165,Easy_Mid_badminton_166,Easy_Mid_badminton_254,Easy_Mid_badminton_81,Easy_Mid_croquet_109,Easy_Mid_croquet_152,Easy_Mid_croquet_161,Easy_Mid_croquet_164,Easy_Mid_croquet_18,Easy_Mid_croquet_87,Easy_Mid_croquet_92,Easy_Mid_croquet_95,Medium_Mid_badminton_178</value>
   </element>
   <element x="0" y="0">
     <NodeID>LC0,GC0,GN2</NodeID>
     <ParentID/>
-    <value>Easy_Close_croquet_204,Easy_Close_croquet_205,Easy_Mid_badminton_124,Easy_Mid_badminton_163,Easy_Mid_badminton_165,Easy_Mid_badminton_166,Easy_Mid_badminton_254,Easy_Mid_badminton_81,Easy_Mid_croquet_109,Easy_Mid_croquet_152,Easy_Mid_croquet_161,Easy_Mid_croquet_164,Easy_Mid_croquet_18,Easy_Mid_croquet_87,Easy_Mid_croquet_92,Easy_Mid_croquet_95,Medium_Mid_badminton_178</value>
+    <value/>
   </element>
 </Data>

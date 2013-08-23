@@ -9,13 +9,17 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
@@ -57,6 +61,7 @@ public final class queryTopComponent extends TopComponent {
         setName(Bundle.CTL_queryTopComponent());
         setToolTipText(Bundle.HINT_queryTopComponent());
         weavedMain = new WeavedMain();
+        jLabelNoImages.setVisible(false);
         jTextButton1.setOpaque(false);
         jTextButton1.setContentAreaFilled(false);
         jTextButton1.setBorderPainted(false);
@@ -104,11 +109,11 @@ public final class queryTopComponent extends TopComponent {
         jTextButton4 = new javax.swing.JButton();
         jImageScrollPane = new javax.swing.JScrollPane();
         jpanelImageGrid = new javax.swing.JPanel();
+        jLabelNoImages = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setMaximumSize(null);
-
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jPanel2.border.title"))); // NOI18N
 
@@ -136,7 +141,7 @@ public final class queryTopComponent extends TopComponent {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(queryImageLocation)
+                .addComponent(queryImageLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(browseBtn)
                 .addContainerGap())
@@ -200,10 +205,9 @@ public final class queryTopComponent extends TopComponent {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(204, 255, 204));
+        jPanelTextGrid.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jPanelTextGrid.border.title"))); // NOI18N
 
-        jPanelTextGrid.setBackground(new java.awt.Color(204, 204, 255));
-
+        jTextButton1.setForeground(new java.awt.Color(0, 51, 255));
         org.openide.awt.Mnemonics.setLocalizedText(jTextButton1, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jTextButton1.text")); // NOI18N
         jTextButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -211,6 +215,7 @@ public final class queryTopComponent extends TopComponent {
             }
         });
 
+        jTextButton2.setForeground(new java.awt.Color(0, 51, 255));
         org.openide.awt.Mnemonics.setLocalizedText(jTextButton2, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jTextButton2.text")); // NOI18N
         jTextButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,6 +223,7 @@ public final class queryTopComponent extends TopComponent {
             }
         });
 
+        jTextButton3.setForeground(new java.awt.Color(0, 51, 255));
         org.openide.awt.Mnemonics.setLocalizedText(jTextButton3, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jTextButton3.text")); // NOI18N
         jTextButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,6 +231,7 @@ public final class queryTopComponent extends TopComponent {
             }
         });
 
+        jTextButton4.setForeground(new java.awt.Color(0, 51, 255));
         org.openide.awt.Mnemonics.setLocalizedText(jTextButton4, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jTextButton4.text")); // NOI18N
         jTextButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,7 +250,7 @@ public final class queryTopComponent extends TopComponent {
                     .addComponent(jTextButton3)
                     .addComponent(jTextButton2)
                     .addComponent(jTextButton1))
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
         jPanelTextGridLayout.setVerticalGroup(
             jPanelTextGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,22 +263,31 @@ public final class queryTopComponent extends TopComponent {
                 .addComponent(jTextButton3)
                 .addGap(28, 28, 28)
                 .addComponent(jTextButton4)
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanelTextGrid);
 
-        jpanelImageGrid.setBackground(new java.awt.Color(204, 204, 255));
+        jpanelImageGrid.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jpanelImageGrid.border.title"))); // NOI18N
+
+        jLabelNoImages.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabelNoImages, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jLabelNoImages.text")); // NOI18N
 
         javax.swing.GroupLayout jpanelImageGridLayout = new javax.swing.GroupLayout(jpanelImageGrid);
         jpanelImageGrid.setLayout(jpanelImageGridLayout);
         jpanelImageGridLayout.setHorizontalGroup(
             jpanelImageGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 743, Short.MAX_VALUE)
+            .addGroup(jpanelImageGridLayout.createSequentialGroup()
+                .addGap(208, 208, 208)
+                .addComponent(jLabelNoImages, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(232, Short.MAX_VALUE))
         );
         jpanelImageGridLayout.setVerticalGroup(
             jpanelImageGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 361, Short.MAX_VALUE)
+            .addGroup(jpanelImageGridLayout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addComponent(jLabelNoImages, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(237, Short.MAX_VALUE))
         );
 
         jImageScrollPane.setViewportView(jpanelImageGrid);
@@ -282,31 +298,36 @@ public final class queryTopComponent extends TopComponent {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jImageScrollPane)
+                .addComponent(jImageScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(16, 16, 16)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jImageScrollPane)
                     .addComponent(jScrollPane1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel5.setBackground(new java.awt.Color(255, 204, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jLabel2.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 344, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -362,50 +383,66 @@ public final class queryTopComponent extends TopComponent {
     }//GEN-LAST:event_browseBtnActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-        list = weavedMain.runCore(getInputFeatureVector("Vector/queryvector.txt"));
         jpanelImageGrid.removeAll();
+        jLabelNoImages.setVisible(false);
+        jTextButton1.setVisible(false);
+        jTextButton2.setVisible(false);
+        jTextButton3.setVisible(false);
+        jTextButton4.setVisible(false);
+        cleanDirectories();
+
+        list = weavedMain.runCore(getInputFeatureVector("Vector" + File.separator + "queryvector.txt"));
+
         //System.out.println(">> " + UIValues.getINPUT_FILE_LOCATION());
 
         //map = model.getHitAndImageMap();
         if (list.size() > 0) {
-            jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, list, 8, "Images");
+            jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, list, 5, "Images");
             // Set the scrollpane viewport
             jImageScrollPane.setViewportView(jpanelImageGrid);
+        } else {
+            jLabelNoImages.setVisible(true);
         }
 
         if (list.size() >= 4) {
-            jTextButton1.setText(list.get(0) + ".txt");
-            jTextButton2.setText(list.get(1) + ".txt");
-            jTextButton3.setText(list.get(2) + ".txt");
-            jTextButton4.setText(list.get(3) + ".txt");
+            jTextButton1.setText("<html><u>" + list.get(0) + ".txt" + "</u></html>");
+            jTextButton2.setText("<html><u>" + list.get(1) + ".txt" + "</u></html>");
+            jTextButton3.setText("<html><u>" + list.get(2) + ".txt" + "</u></html>");
+            jTextButton4.setText("<html><u>" + list.get(3) + ".txt" + "</u></html>");
             jTextButton1.setVisible(true);
             jTextButton2.setVisible(true);
             jTextButton3.setVisible(true);
             jTextButton4.setVisible(true);
         } else if (list.size() == 3) {
-            jTextButton1.setText(list.get(0) + ".txt");
-            jTextButton2.setText(list.get(1) + ".txt");
-            jTextButton3.setText(list.get(2) + ".txt");
+            jTextButton1.setText("<html><u>" + list.get(0) + ".txt" + "</u></html>");
+            jTextButton2.setText("<html><u>" + list.get(1) + ".txt" + "</u></html>");
+            jTextButton3.setText("<html><u>" + list.get(2) + ".txt" + "</u></html>");
             jTextButton1.setVisible(true);
             jTextButton2.setVisible(true);
             jTextButton3.setVisible(true);
 
         } else if (list.size() == 2) {
-            jTextButton1.setText(list.get(0) + ".txt");
-            jTextButton2.setText(list.get(1) + ".txt");
+            jTextButton1.setText("<html><u>" + list.get(0) + ".txt" + "</u></html>");
+            jTextButton2.setText("<html><u>" + list.get(1) + ".txt" + "</u></html>");
             jTextButton1.setVisible(true);
             jTextButton2.setVisible(true);
 
         } else if (list.size() == 1) {
-            jTextButton1.setText(list.get(0) + ".txt");
+            jTextButton1.setText("<html><u>" + list.get(0) + ".txt" + "</u></html>");
             jTextButton1.setVisible(true);
         }
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        copyImage(queryImageLocation.getText());
+        try {
+            ProcessBuilder proc = new ProcessBuilder("feature" + File.separator + "extraction" + File.separator + "MPEG7_DCD.exe", "Vector", "Vector", "hsl_27", "t");
+            proc.start();
+        } catch (Exception hj) {
+            System.out.println("Error not der" + hj);
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton1ActionPerformed
@@ -450,6 +487,8 @@ public final class queryTopComponent extends TopComponent {
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jImageScrollPane;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelNoImages;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -517,5 +556,71 @@ public final class queryTopComponent extends TopComponent {
             featureVector[i - 1] = Double.parseDouble(inputString[i]);
         }
         return featureVector;
+    }
+
+    private void cleanDirectories() {
+
+        File file1 = new File("L0F1");
+        String[] myFiles1;
+        if (file1.isDirectory()) {
+            myFiles1 = file1.list();
+            for (int i = 0; i < myFiles1.length; i++) {
+                File myFile = new File(file1, myFiles1[i]);
+                myFile.delete();
+            }
+        }
+
+        File file2 = new File("L0F2");
+        String[] myFiles2;
+        if (file2.isDirectory()) {
+            myFiles2 = file2.list();
+            for (int i = 0; i < myFiles2.length; i++) {
+                File myFile = new File(file2, myFiles2[i]);
+                myFile.delete();
+            }
+        }
+
+        File file3 = new File("Stacks" + File.separator + "L0F1" + File.separator + "lastGLayer.ser");
+        File file4 = new File("Stacks" + File.separator + "L0F2" + File.separator + "lastGLayer.ser");
+        file3.delete();
+        file4.delete();
+    }
+
+    private void copyImage(String fileLocation) {
+        String newFileLocation = null;
+        InputStream inStream = null;
+        OutputStream outStream = null;
+
+        try {
+
+            File afile = new File(fileLocation);
+            newFileLocation = afile.getName();
+            File bfile = new File("Vector" + File.separator + newFileLocation);
+
+            inStream = new FileInputStream(afile);
+            outStream = new FileOutputStream(bfile);
+
+            byte[] buffer = new byte[1024];
+
+            int length;
+            //copy the file content in bytes 
+            while ((length = inStream.read(buffer)) > 0) {
+
+                outStream.write(buffer, 0, length);
+
+            }
+
+            inStream.close();
+            outStream.close();
+
+            System.out.println("File is copied successful!");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void deleteImage() {
     }
 }
