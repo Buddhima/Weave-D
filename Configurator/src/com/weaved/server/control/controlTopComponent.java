@@ -6,10 +6,15 @@ package com.weaved.server.control;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -47,6 +52,8 @@ preferredID = "controlTopComponent")
     "HINT_controlTopComponent=This is a control window"
 })
 public final class controlTopComponent extends TopComponent {
+    
+    public static int countRound=0;
 
     public controlTopComponent() {
         initComponents();
@@ -311,7 +318,9 @@ public final class controlTopComponent extends TopComponent {
     private void visualizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizeButtonActionPerformed
         try {
             // TODO add your handling code here:
-            Runtime.getRuntime().exec("java -jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\dist\\Arena.jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\nbqsa.txt");
+//            Runtime.getRuntime().exec("java -jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\dist\\Arena.jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\nbqsa.txt");
+            if(countRound>4)countRound=4;// correct mistakenly clicks
+            Runtime.getRuntime().exec("java -jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\dist\\Arena.jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\nbqsa"+countRound+".txt");
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
@@ -353,38 +362,23 @@ public final class controlTopComponent extends TopComponent {
 //        configProgressBar.setVisible(true);
 
 //        configProgressBar.setValue(20);
-        progressLabel.setText("Start Learning ....");
+//        progressLabel.setText("Start Learning ....");
+
+        JFrame processingFrame = new ProcessingForm();
+       
+
+        processingFrame.setVisible(true);
 
         try {
-            Thread.sleep(1500);
+            Thread.sleep(3500);
         } catch (InterruptedException ex) {
             Exceptions.printStackTrace(ex);
         }
-        progressLabel.setText("Processing ....");
-//        configProgressBar.setValue(60);
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException ex) {
-            Exceptions.printStackTrace(ex);
-        }
-        progressLabel.setText("Building Heirarchy ....");
-//        configProgressBar.setValue(100);
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException ex) {
-            Exceptions.printStackTrace(ex);
-        }
-        progressLabel.setText("Learning Finished ....");
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Exceptions.printStackTrace(ex);
-        }
-        progressLabel.setText("");
-//        configProgressBar.setVisible(false);
-        JOptionPane.showMessageDialog(null, "Learning Completed");
+//
+        processingFrame.setVisible(false);
+        
+        // increase count
+        countRound++;
     }//GEN-LAST:event_runIkaslButtonActionPerformed
 
     private void featureExtractButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_featureExtractButtonActionPerformed
@@ -399,32 +393,46 @@ public final class controlTopComponent extends TopComponent {
 
     private void generateLinkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateLinkButtonActionPerformed
         // TODO add your handling code here:
-        progressLabel.setText("Reading Hiararchy ....");
+//        progressLabel.setText("Reading Hiararchy ....");
+//
+//        try {
+//            Thread.sleep(1500);
+//        } catch (InterruptedException ex) {
+//            Exceptions.printStackTrace(ex);
+//        }
+//
+//        progressLabel.setText("Generating Links ....");
+////        configProgressBar.setValue(100);
+//
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException ex) {
+//            Exceptions.printStackTrace(ex);
+//        }
+//        progressLabel.setText("Link Generation done ....");
+//
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException ex) {
+//            Exceptions.printStackTrace(ex);
+//        }
+//        progressLabel.setText("");
+//        JOptionPane.showMessageDialog(null, "Links Generated!");
+////        configProgressBar.setVisible(false);
+        
+        
+        JFrame processingFrame = new ProcessingForm();
+       
+
+        processingFrame.setVisible(true);
 
         try {
-            Thread.sleep(1500);
+            Thread.sleep(3500);
         } catch (InterruptedException ex) {
             Exceptions.printStackTrace(ex);
         }
-
-        progressLabel.setText("Generating Links ....");
-//        configProgressBar.setValue(100);
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException ex) {
-            Exceptions.printStackTrace(ex);
-        }
-        progressLabel.setText("Link Generation done ....");
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Exceptions.printStackTrace(ex);
-        }
-        progressLabel.setText("");
-        JOptionPane.showMessageDialog(null, "Links Generated!");
-//        configProgressBar.setVisible(false);
+//
+        processingFrame.setVisible(false);
     }//GEN-LAST:event_generateLinkButtonActionPerformed
 
     private void runIkaslButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_runIkaslButtonMouseClicked
