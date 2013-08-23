@@ -4,6 +4,9 @@
  */
 package com.weaved.server.control;
 
+import com.weaved.main.WeavedMain;
+import com.weaved.perception.model.main.PercpModelFacade;
+import com.weaved.server.xml.elements.PerceptionHierarchyNode;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -52,8 +55,10 @@ preferredID = "controlTopComponent")
     "HINT_controlTopComponent=This is a control window"
 })
 public final class controlTopComponent extends TopComponent {
-    
-    public static int countRound=0;
+
+    public static int countRound = 0;
+    public WeavedMain weavedMain;
+    public static PercpModelFacade PERCEP_MODEL_FACADE;
 
     public controlTopComponent() {
         initComponents();
@@ -319,8 +324,10 @@ public final class controlTopComponent extends TopComponent {
         try {
             // TODO add your handling code here:
 //            Runtime.getRuntime().exec("java -jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\dist\\Arena.jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\nbqsa.txt");
-            if(countRound>4)countRound=4;// correct mistakenly clicks
-            Runtime.getRuntime().exec("java -jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\dist\\Arena.jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\nbqsa"+countRound+".txt");
+            if (countRound > 4) {
+                countRound = 4;// correct mistakenly clicks
+            }
+            Runtime.getRuntime().exec("java -jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\dist\\Arena.jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\nbqsa" + countRound + ".txt");
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
@@ -328,6 +335,9 @@ public final class controlTopComponent extends TopComponent {
 
     private void runIkaslButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runIkaslButtonActionPerformed
 
+        weavedMain = new WeavedMain();
+        weavedMain.runIKASL();
+        JOptionPane.showMessageDialog(this, "IKASL Run Successfully");
         // TODO add your handling code here:
            /* final Runnable run1 = new Runnable() {
          @Override
@@ -364,20 +374,20 @@ public final class controlTopComponent extends TopComponent {
 //        configProgressBar.setValue(20);
 //        progressLabel.setText("Start Learning ....");
 
-        JFrame processingFrame = new ProcessingForm();
-       
-
-        processingFrame.setVisible(true);
-
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException ex) {
-            Exceptions.printStackTrace(ex);
-        }
+//        JFrame processingFrame = new ProcessingForm();
 //
-        processingFrame.setVisible(false);
-        
-        // increase count
+//
+//        processingFrame.setVisible(true);
+//
+//        try {
+//            Thread.sleep(1500);
+//        } catch (InterruptedException ex) {
+//            Exceptions.printStackTrace(ex);
+//        }
+////
+//        processingFrame.setVisible(false);
+//
+//        // increase count
         countRound++;
     }//GEN-LAST:event_runIkaslButtonActionPerformed
 
@@ -392,6 +402,9 @@ public final class controlTopComponent extends TopComponent {
     }//GEN-LAST:event_featureExtractButtonActionPerformed
 
     private void generateLinkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateLinkButtonActionPerformed
+        weavedMain.runLinkGenerator();
+        PERCEP_MODEL_FACADE= weavedMain.getPercpModelFacade();
+        JOptionPane.showMessageDialog(this, "Link Generation Successfull");
         // TODO add your handling code here:
 //        progressLabel.setText("Reading Hiararchy ....");
 //
@@ -419,20 +432,20 @@ public final class controlTopComponent extends TopComponent {
 //        progressLabel.setText("");
 //        JOptionPane.showMessageDialog(null, "Links Generated!");
 ////        configProgressBar.setVisible(false);
-        
-        
-        JFrame processingFrame = new ProcessingForm();
-       
 
-        processingFrame.setVisible(true);
 
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException ex) {
-            Exceptions.printStackTrace(ex);
-        }
+//        JFrame processingFrame = new ProcessingForm();
 //
-        processingFrame.setVisible(false);
+//
+//        processingFrame.setVisible(true);
+//
+//        try {
+//            Thread.sleep(1500);
+//        } catch (InterruptedException ex) {
+//            Exceptions.printStackTrace(ex);
+//        }
+////
+//        processingFrame.setVisible(false);
     }//GEN-LAST:event_generateLinkButtonActionPerformed
 
     private void runIkaslButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_runIkaslButtonMouseClicked

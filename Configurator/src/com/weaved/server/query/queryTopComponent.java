@@ -5,6 +5,9 @@
 package com.weaved.server.query;
 
 import com.weaved.main.WeavedMain;
+import com.weaved.perception.model.main.PercpModelFacade;
+import com.weaved.query.enums.QueryObjectType;
+import com.weaved.server.control.controlTopComponent;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -53,7 +56,8 @@ preferredID = "queryTopComponent")
 public final class queryTopComponent extends TopComponent {
 
     public static ArrayList<String> list = new ArrayList<String>();
-    WeavedMain weavedMain;
+    public WeavedMain weavedMain;
+    public PercpModelFacade percpModelFacade;
 
     public queryTopComponent() {
         initComponents();
@@ -365,7 +369,7 @@ public final class queryTopComponent extends TopComponent {
     }//GEN-LAST:event_queryImageLocationActionPerformed
 
     private void browseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseBtnActionPerformed
-        cleanDirectories();
+        cleanPreviousImages();
         JFileChooser chooser = new JFileChooser(".");
         int choice = chooser.showOpenDialog(null);
         if (choice != JFileChooser.APPROVE_OPTION) {
@@ -394,7 +398,8 @@ public final class queryTopComponent extends TopComponent {
         jTextButton4.setVisible(false);
         //cleanDirectories();
 
-        list = weavedMain.runCore(getInputFeatureVector("Vector" + File.separator + "existenceResult.txt"));
+        list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(QueryObjectType.IMAGE, getInputFeatureVector("Vector" + File.separator + "existenceResult.txt"));
+        //list = weavedMain.runIKASL(getInputFeatureVector("Vector" + File.separator + "existenceResult.txt"));
 
         //System.out.println(">> " + UIValues.getINPUT_FILE_LOCATION());
 
@@ -534,7 +539,7 @@ public final class queryTopComponent extends TopComponent {
     }
 
     private double[] getInputFeatureVector(String featureVectorFile) {
-        double[] featureVector = new double[27];
+        double[] featureVector = new double[15];
         String input = null;
         BufferedReader br = null;
 
@@ -599,6 +604,19 @@ public final class queryTopComponent extends TopComponent {
 
     }
 
+    private void cleanPreviousImages() {
+
+        File files = new File("Vector");
+        String[] myFiles2;
+        if (files.isDirectory()) {
+            myFiles2 = files.list();
+            for (int i = 0; i < myFiles2.length; i++) {
+                File myFile = new File(files, myFiles2[i]);
+                myFile.delete();
+            }
+        }
+    }
+
     private void copyImage(String fileLocation) {
         String newFileLocation = null;
         InputStream inStream = null;
@@ -632,8 +650,5 @@ public final class queryTopComponent extends TopComponent {
             e.printStackTrace();
         }
 
-    }
-
-    private void deleteImage() {
     }
 }

@@ -42,20 +42,20 @@ public class PercpModelFacade {
     private ArrayList<String> cfLinks;
     private ArrayList<IKASLMain> ikaslMainList;
     private ArrayList<VHLinkerFacade> vhLinkerList = new ArrayList<VHLinkerFacade>();
-    
+
     public PercpModelFacade() {
         ikaslMainList = new ArrayList<IKASLMain>();
     }
 
     //===== This Method is to create IKASL params without going through
     //XML files. Will probably be deleted later
-    public void createIKASLComponents(int count,ArrayList<IKASLParams> params, ArrayList<String> ids){
-        for(int i=0;i<count;i++){
+    public void createIKASLComponents(int count, ArrayList<IKASLParams> params, ArrayList<String> ids) {
+        for (int i = 0; i < count; i++) {
             IKASLMain ikasl = new IKASLMain(params.get(i), ids.get(i));
             ikaslMainList.add(ikasl);
         }
     }
-            
+
     private IKASLParams getIKASLParamsFromModelElement(IKASLConfigModelElement element) {
         IKASLParams params = new IKASLParams();
         params.setSpreadFactor(element.getSpreadFactor());
@@ -162,26 +162,26 @@ public class PercpModelFacade {
     }
 
     public void runIKASLTest(String id, IKASLParams params, ArrayList<double[]> iWeights, ArrayList<String> iNames,
-            int min, int max, int dims){
-        
+            int min, int max, int dims) {
+
         IKASLConstants.MIN_BOUND = min;
         IKASLConstants.MAX_BOUND = max;
         IKASLConstants.DIMENSIONS = dims;
-        
+
         IKASLMain currIKASL = null;
-        for(IKASLMain ikasl : ikaslMainList){
-            if(ikasl.getMyID().equalsIgnoreCase(id)){
+        for (IKASLMain ikasl : ikaslMainList) {
+            if (ikasl.getMyID().equalsIgnoreCase(id)) {
                 currIKASL = ikasl;
-                currIKASL.runIKASLForCycle(currIKASL.retrieveLastLayer(), iWeights, iNames);        
+                currIKASL.runIKASLForCycle(currIKASL.retrieveLastLayer(), iWeights, iNames);
                 currIKASL.writeLearnCycleXML(id);
-                System.out.println("----------------------- IKASL test results:"+currIKASL.getTesterTestResults().size()+" -------------------------------");
+                System.out.println("----------------------- IKASL test results:" + currIKASL.getTesterTestResults().size() + " -------------------------------");
                 break;
             }
         }
-        
-        
+
+
     }
-    
+
     public void fusePerceptions() {
     }
 
@@ -207,55 +207,66 @@ public class PercpModelFacade {
         vHLinkerFacade.runLinkersWithCommand(vHLinkerCommand);
         vhLinkerList.add(vHLinkerFacade);
     }
-    
-    
+
     //Assumption: We consider ikaslMainList[0] runs for Image color existence
     //ikaslMainList[1] runs for Text 
-    private String findGNodeFromIKASLForQuery(QueryObjectType type,double[] query){
-        
+    private String findGNodeFromIKASLForQuery(QueryObjectType type, double[] query) {
+
         IKASLMain ikaslMain;
-        if(type == QueryObjectType.IMAGE){
+        if (type == QueryObjectType.IMAGE) {
             ikaslMain = ikaslMainList.get(0); //color existence
-        }else{
+        } else {
             ikaslMain = ikaslMainList.get(1); //text
         }
         return ikaslMain.getLastLayersWinnerNodeForQuery(query);
     }
-    
-    public ArrayList<String> getHorizontalLinksForQuery(QueryObjectType type, double[] query){
+
+    public ArrayList<String> getHorizontalLinksForQuery(QueryObjectType type, double[] query) {
         String winnerID = this.findGNodeFromIKASLForQuery(type, query);
-        System.out.println("--------------- Winner ID : "+winnerID+" -----------------------");
-        
+        System.out.println("--------------- Winner ID : " + winnerID + " -----------------------");
+
         VHLinkerFacade vhLinkerFacade = vhLinkerList.get(0);
-        
+
         CrossFeatureData crossFeatureData = vhLinkerFacade.getCrossLinkObject();
         TemporalLinkData temporalLinkData = vhLinkerFacade.getTemporalLinkObject();
-        
+
         ArrayList<GNodeHitValueObjectList> gnHVList = crossFeatureData.getgNodeHitValueObjectList();
         ArrayList<ArrayList<String>> dataVals = new ArrayList<ArrayList<String>>();
-        
-        for(GNodeHitValueObject obj : gnHVList.get(gnHVList.size()-1).getgNodeHitValueObjects()){
-            if(EntityIDGenerator.generateEntityIDString(obj.getRow()).equalsIgnoreCase(winnerID)){
+
+        for (GNodeHitValueObject obj : gnHVList.get(gnHVList.size() - 1).getgNodeHitValueObjects()) {
+            if (EntityIDGenerator.generateEntityIDString(obj.getRow()).equalsIgnoreCase(winnerID)) {
                 dataVals.add(obj.getDataValues());
             }
         }
-        
-        System.out.println("Number of lists of string lists belonging to winner: "+dataVals.size());
-        
+
+        System.out.println("Number of lists of string lists belonging to winner: " + dataVals.size());
+
         ArrayList<String> maxLengthStr = dataVals.get(0);
         ArrayList<String> prevStr = dataVals.get(0);
-        for(ArrayList<String> str : dataVals){
-            if(str.size()>=prevStr.size()){
+        for (ArrayList<String> str : dataVals) {
+            if (str.size() >= prevStr.size()) {
                 maxLengthStr = str;
             }
             prevStr = str;
         }
-        
+
         return maxLengthStr;
     }
-    
+
     /* Not needed yet
-    public ArrayList<ArrayList<String>> getVerticalLinksForQuery(QueryObjectType type, double[] query){
+     public ArrayList<ArrayList<String>> getVerticalLinksForQuery(QueryObjectType type, double[] query){
         
-    }*/
+     }*/
+    public ArrayList<String> getImageSetForQuery(QueryObjectType type, double[] query) {
+        String winnerID = this.findGNodeFromIKASLForQuery(type, query);
+        IKASLMain ikaslMain;
+        if (type == QueryObjectType.IMAGE) {
+            ikaslMain = ikaslMainList.get(0); //color existence
+        } else {
+            ikaslMain = ikaslMainList.get(1); //text
+        }
+
+        ArrayList<String> imgList = ikaslMain.getImageListForGNode(winnerID);
+        return imgList;
+    }
 }
