@@ -47,7 +47,7 @@ public class WeavedMain {
         //IKASL Parameters for color existence
         IKASLParams imgParams = new IKASLParams();
         imgParams.setDimensions(27);
-        imgParams.setSpreadFactor(0.45);
+        imgParams.setSpreadFactor(0.2);
         imgParams.setMaxIterations(200);
         imgParams.setMaxNeighborhoodRadius(2);
         imgParams.setStartLearningRate(0.45);

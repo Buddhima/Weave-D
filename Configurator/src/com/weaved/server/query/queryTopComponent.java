@@ -5,11 +5,22 @@
 package com.weaved.server.query;
 
 import com.weaved.main.WeavedMain;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.util.Exceptions;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 
@@ -36,9 +47,9 @@ preferredID = "queryTopComponent")
     "HINT_queryTopComponent=This is a query window"
 })
 public final class queryTopComponent extends TopComponent {
-    
+
     public static ArrayList<String> list = new ArrayList<String>();
-    
+
     public queryTopComponent() {
         initComponents();
         jpanelImageGrid = new JPanel();
@@ -48,22 +59,22 @@ public final class queryTopComponent extends TopComponent {
         jTextButton1.setContentAreaFilled(false);
         jTextButton1.setBorderPainted(false);
         jTextButton1.setVisible(false);
-        
+
         jTextButton2.setOpaque(false);
         jTextButton2.setContentAreaFilled(false);
         jTextButton2.setBorderPainted(false);
         jTextButton2.setVisible(false);
-        
+
         jTextButton3.setOpaque(false);
         jTextButton3.setContentAreaFilled(false);
         jTextButton3.setBorderPainted(false);
         jTextButton3.setVisible(false);
-        
+
         jTextButton4.setOpaque(false);
         jTextButton4.setContentAreaFilled(false);
         jTextButton4.setBorderPainted(false);
         jTextButton4.setVisible(false);
-        
+
     }
 
     /**
@@ -326,13 +337,31 @@ public final class queryTopComponent extends TopComponent {
     private void queryImageLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queryImageLocationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_queryImageLocationActionPerformed
-    
+
     private void browseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseBtnActionPerformed
+
+        JFileChooser chooser = new JFileChooser(".");
+        int choice = chooser.showOpenDialog(null);
+        if (choice != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+        File chosenFile = chooser.getSelectedFile();
+        //JOptionPane.showMessageDialog(null,chosenFile.getAbsolutePath());
+        queryImageLocation.setText(chosenFile.getAbsolutePath());
+        File file = new File(chosenFile.getAbsolutePath());
+        Image image = null;
+        try {
+            image = ImageIO.read(file).getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH);
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        ImageIcon imageIcon = new ImageIcon(image);
+        browsedImageLbl.setIcon(imageIcon);
     }//GEN-LAST:event_browseBtnActionPerformed
-    
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         WeavedMain weavedMain = new WeavedMain();
-        list = weavedMain.runCore(new double[]{1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
+        list = weavedMain.runCore(getInputFeatureVector("Vector/queryvector.txt"));
         jpanelImageGrid.removeAll();
         //System.out.println(">> " + UIValues.getINPUT_FILE_LOCATION());
 
@@ -342,7 +371,7 @@ public final class queryTopComponent extends TopComponent {
             // Set the scrollpane viewport
             jImageScrollPane.setViewportView(jpanelImageGrid);
         }
-        
+
         if (list.size() >= 4) {
             jTextButton1.setText(list.get(0) + ".txt");
             jTextButton2.setText(list.get(1) + ".txt");
@@ -359,23 +388,24 @@ public final class queryTopComponent extends TopComponent {
             jTextButton1.setVisible(true);
             jTextButton2.setVisible(true);
             jTextButton3.setVisible(true);
-            
+
         } else if (list.size() == 2) {
             jTextButton1.setText(list.get(0) + ".txt");
             jTextButton2.setText(list.get(1) + ".txt");
             jTextButton1.setVisible(true);
             jTextButton2.setVisible(true);
-            
-        } else {
+
+        } else if (list.size() == 1) {
             jTextButton1.setText(list.get(0) + ".txt");
             jTextButton1.setVisible(true);
         }
+
     }//GEN-LAST:event_jButton3ActionPerformed
-    
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     private void jTextButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton1ActionPerformed
         try {
             ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(0) + ".txt");
@@ -384,7 +414,7 @@ public final class queryTopComponent extends TopComponent {
             System.out.println("Error not der" + hj);
         }
     }//GEN-LAST:event_jTextButton1ActionPerformed
-    
+
     private void jTextButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton2ActionPerformed
         try {
             ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(1) + ".txt");
@@ -393,7 +423,7 @@ public final class queryTopComponent extends TopComponent {
             System.out.println("Error not der" + hj);
         }
     }//GEN-LAST:event_jTextButton2ActionPerformed
-    
+
     private void jTextButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton3ActionPerformed
         try {
             ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(2) + ".txt");
@@ -402,7 +432,7 @@ public final class queryTopComponent extends TopComponent {
             System.out.println("Error not der" + hj);
         }
     }//GEN-LAST:event_jTextButton3ActionPerformed
-    
+
     private void jTextButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton4ActionPerformed
         try {
             ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(3) + ".txt");
@@ -436,21 +466,54 @@ public final class queryTopComponent extends TopComponent {
     public void componentOpened() {
         // TODO add custom code on component opening
     }
-    
+
     @Override
     public void componentClosed() {
         // TODO add custom code on component closing
     }
-    
+
     void writeProperties(java.util.Properties p) {
         // better to version settings since initial version as advocated at
         // http://wiki.apidesign.org/wiki/PropertyFiles
         p.setProperty("version", "1.0");
         // TODO store your settings
     }
-    
+
     void readProperties(java.util.Properties p) {
         String version = p.getProperty("version");
         // TODO read your settings according to their version
+    }
+
+    private double[] getInputFeatureVector(String featureVectorFile) {
+        double[] featureVector = new double[27];
+        String input = null;
+        BufferedReader br = null;
+
+        try {
+            String sCurrentLine;
+            br = new BufferedReader(new FileReader(featureVectorFile));
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                input = sCurrentLine;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        String[] inputString = input.split(",");
+
+        for (int i = 1; i < inputString.length; i++) {
+            featureVector[i - 1] = Double.parseDouble(inputString[i]);
+        }
+        return featureVector;
     }
 }
