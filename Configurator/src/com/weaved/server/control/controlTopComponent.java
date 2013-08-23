@@ -370,7 +370,7 @@ public final class controlTopComponent extends TopComponent {
         processingFrame.setVisible(true);
 
         try {
-            Thread.sleep(3500);
+            Thread.sleep(1500);
         } catch (InterruptedException ex) {
             Exceptions.printStackTrace(ex);
         }
@@ -427,7 +427,7 @@ public final class controlTopComponent extends TopComponent {
         processingFrame.setVisible(true);
 
         try {
-            Thread.sleep(3500);
+            Thread.sleep(1500);
         } catch (InterruptedException ex) {
             Exceptions.printStackTrace(ex);
         }
