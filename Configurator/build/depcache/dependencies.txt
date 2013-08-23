@@ -531,6 +531,7 @@ java.lang.String
 java.lang.Exception
 com.weaved.main.WeavedMain
 org.openide.util.NbBundle
+java.awt.Image
 javax.swing.BorderFactory
 java.io.FileReader
 javax.swing.LayoutStyle
@@ -539,12 +540,14 @@ javax.swing.LayoutStyle$ComponentPlacement
 java.lang.StringBuilder
 java.lang.Double
 javax.swing.GroupLayout$SequentialGroup
+java.awt.image.BufferedImage
 java.lang.ProcessBuilder
 [D
 org.openide.awt.Mnemonics
 javax.swing.GroupLayout
 [Ljava.lang.String;
 javax.swing.GroupLayout$Alignment
+org.openide.util.Exceptions
 javax.swing.JTextField
 java.lang.Throwable
 com.weaved.server.query.queryTopComponent
@@ -554,9 +557,10 @@ com.weaved.server.query.queryTopComponent$7
 javax.swing.GroupLayout$ParallelGroup
 com.weaved.server.query.queryTopComponent$6
 com.weaved.server.query.queryTopComponent$5
-javax.swing.JButton
 com.weaved.server.query.queryTopComponent$4
+javax.swing.JButton
 com.weaved.server.query.queryTopComponent$3
+javax.imageio.ImageIO
 java.lang.System
 java.awt.Color
 com.weaved.server.query.queryTopComponent$2
@@ -565,10 +569,12 @@ com.weaved.server.query.ImageGridCreator
 java.io.PrintStream
 org.openide.windows.TopComponent
 javax.swing.JScrollPane
+java.awt.event.ActionEvent
 javax.swing.JLabel
 java.io.BufferedReader
 java.util.Properties
 javax.swing.JFileChooser
+javax.swing.ImageIcon
 ||:com.weaved.config.models.PercpModelConfigModel
 com.weaved.config.models.ConfigModel
 com.weaved.config.models.PercpModelConfigModel

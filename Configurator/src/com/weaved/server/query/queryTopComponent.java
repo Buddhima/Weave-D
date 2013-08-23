@@ -49,12 +49,14 @@ preferredID = "queryTopComponent")
 public final class queryTopComponent extends TopComponent {
 
     public static ArrayList<String> list = new ArrayList<String>();
+    WeavedMain weavedMain;
 
     public queryTopComponent() {
         initComponents();
         jpanelImageGrid = new JPanel();
         setName(Bundle.CTL_queryTopComponent());
         setToolTipText(Bundle.HINT_queryTopComponent());
+        weavedMain = new WeavedMain();
         jTextButton1.setOpaque(false);
         jTextButton1.setContentAreaFilled(false);
         jTextButton1.setBorderPainted(false);
@@ -360,7 +362,7 @@ public final class queryTopComponent extends TopComponent {
     }//GEN-LAST:event_browseBtnActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        WeavedMain weavedMain = new WeavedMain();
+        
         list = weavedMain.runCore(getInputFeatureVector("Vector/queryvector.txt"));
         jpanelImageGrid.removeAll();
         //System.out.println(">> " + UIValues.getINPUT_FILE_LOCATION());
