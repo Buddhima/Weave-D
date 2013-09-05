@@ -23,7 +23,7 @@ autostore = false)
     preferredID = "summaryTopComponent",
 iconBase = "com/weaved/server/summary/icon_16.png",
 persistenceType = TopComponent.PERSISTENCE_ALWAYS)
-@TopComponent.Registration(mode = "editor", openAtStartup = true)
+@TopComponent.Registration(mode = "editor", openAtStartup = false)
 @ActionID(category = "Window", id = "com.weaved.server.summary.summaryTopComponent")
 @ActionReference(path = "Menu/Window" /*, position = 333 */)
 @TopComponent.OpenActionRegistration(
