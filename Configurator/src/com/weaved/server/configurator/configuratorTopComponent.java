@@ -5,6 +5,15 @@
 package com.weaved.server.configurator;
 
 import com.weaved.server.configurator.palette.PaletteSupport;
+import com.weaved.server.xml.ConfigModelWriterFacade;
+import com.weaved.server.xml.adapters.IKASLConfigModelCreator;
+import com.weaved.server.xml.adapters.ImportantPercpConfigModelCreator;
+import com.weaved.server.xml.adapters.LinkConfigModelCreator;
+import com.weaved.server.xml.adapters.PerceptionHierarchyModelCreator;
+import com.weaved.server.xml.models.IKASLConfigModel;
+import com.weaved.server.xml.models.ImportantPercpConfigModel;
+import com.weaved.server.xml.models.LinkConfigModel;
+import com.weaved.server.xml.models.PerceptionHierarchyModel;
 import java.awt.BorderLayout;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
@@ -53,7 +62,7 @@ public final class configuratorTopComponent extends TopComponent {
         setLayout(new BorderLayout());
         GraphSceneImpl scene = new GraphSceneImpl();
         JScrollPane shapePane = new JScrollPane();
-        HelpPane=new JEditorPane("text/html", "");
+        HelpPane = new JEditorPane("text/html", "");
         HelpPane.setEditable(false);
 
 
@@ -66,8 +75,8 @@ public final class configuratorTopComponent extends TopComponent {
 
         shapePane.setViewportView(scene.createView());
 
-        
-        
+
+
         HelpPane.setSize(160, 100);
         HelpPane.setText(getHelpText());
 
@@ -184,6 +193,22 @@ public final class configuratorTopComponent extends TopComponent {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+
+        // Save drawn configuration
+        LinkConfigModelCreator linkConfigModelCreator = new LinkConfigModelCreator();
+        ImportantPercpConfigModelCreator importantPercpConfigModelCreator=new  ImportantPercpConfigModelCreator();
+        IKASLConfigModelCreator ikaslConfigModelCreator = new IKASLConfigModelCreator();
+//        PerceptionHierarchyModelCreator perceptionHierarchyModelCreator = new PerceptionHierarchyModelCreator();
+        
+        ConfigModelWriterFacade configModelWriterFacade = new ConfigModelWriterFacade();
+        
+        configModelWriterFacade.setLinkConfigModel((LinkConfigModel)linkConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
+        configModelWriterFacade.setImportantPercepConfigModel((ImportantPercpConfigModel)importantPercpConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
+        configModelWriterFacade.setiKASLConfigModel((IKASLConfigModel)ikaslConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
+//        configModelWriterFacade.setPerceptionHierarchy((PerceptionHierarchyModel)perceptionHierarchyModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
+
+        configModelWriterFacade.createConfigXMLs();
+
         TopComponent tc = WindowManager.getDefault().findTopComponent("runtimeTopComponent");
 
         if (tc != null) {
@@ -225,11 +250,11 @@ public final class configuratorTopComponent extends TopComponent {
 
     private String getHelpText() {
         String help;
-        
+
         help = "<html>"
                 + "<h1>Help Guide for Weave-D  </h1>"
                 + "<p> Through interface you can add components <br>and connect them as you wish </p>"
-                +"<p><ol>"
+                + "<p><ol>"
                 + "<li> Go to <b>Windows -> Palette</b> </li>"
                 + "<li> Drag & Drop relavent components<br> in to screen </li>"
                 + "<li> Move components by dragging </li>"
@@ -237,7 +262,7 @@ public final class configuratorTopComponent extends TopComponent {
                 + "<li> Double click on any component <br>to change properties </li>"
                 + "</ol></p>"
                 + "</html>";
-        
+
         return help;
     }
 }
