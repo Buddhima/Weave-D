@@ -85,7 +85,7 @@ public class PercpConfigModelWriter implements ConfigXMLWriter {
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("ikasl_params.xml"));
+            StreamResult result = new StreamResult(new File("Config" + File.separator + "ikasl_params.xml"));
             transformer.transform(source, result);
 
         } catch (TransformerException ex) {

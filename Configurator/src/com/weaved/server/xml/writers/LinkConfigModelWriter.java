@@ -69,7 +69,7 @@ public class LinkConfigModelWriter implements ConfigXMLWriter {
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("link_config_model.xml"));
+            StreamResult result = new StreamResult(new File("Config" + File.separator + "link_config_model.xml"));
             transformer.transform(source, result);
 
         } catch (TransformerException ex) {

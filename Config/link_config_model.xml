@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<link_config_model>
+    <crossLink>L1F0-L1F1</crossLink>
+    <temporalLink>L1F1</temporalLink>
+    <temporalLink>L1F0</temporalLink>
+    <temporalLink>L0F0</temporalLink>
+</link_config_model>
