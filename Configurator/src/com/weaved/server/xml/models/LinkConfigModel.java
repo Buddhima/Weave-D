@@ -35,6 +35,7 @@ public class LinkConfigModel extends ConfigModel {
      */
     public void setCrossLinks(ArrayList<String> crossLinks) {
         this.crossLinks = crossLinks;
+
     }
 
     /**
@@ -49,5 +50,6 @@ public class LinkConfigModel extends ConfigModel {
      */
     public void setTemporalLinks(ArrayList<String> temporalLinks) {
         this.temporalLinks = temporalLinks;
+
     }
 }

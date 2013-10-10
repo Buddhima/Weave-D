@@ -23,6 +23,9 @@ public class ImportantPercpConfigModelCreator extends ConfigModelCreator {
 
     @Override
     public ConfigModel getModel(HashMap<String, ConfigNode> nodeMap, ArrayList<NodeLinks> edgeMap) {
+        importantPercpConfigModel = new ImportantPercpConfigModel();
+        importantPercpConfigModelElements = new ArrayList<ImportantPercpConfigModelElement>();
+
         for (String key : nodeMap.keySet()) {
             ConfigNode configNode = nodeMap.get(key);
             ImportantPercpConfigModelElement importantPercpConfigModelElement = new ImportantPercpConfigModelElement(key, configNode.getSelected());

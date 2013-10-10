@@ -23,7 +23,9 @@ public class IKASLConfigModelCreator extends ConfigModelCreator {
 
     @Override
     public ConfigModel getModel(HashMap<String, ConfigNode> nodeMap, ArrayList<NodeLinks> edgeMap) {
-
+        iKASLConfigModel = new IKASLConfigModel();
+        iKASLConfigModelElements = new ArrayList<IKASLConfigModelElement>();
+        
         for (String key : nodeMap.keySet()) {
             ConfigNode configNode = nodeMap.get(key);
             IKASLConfigModelElement iKASLConfigModelElement = new IKASLConfigModelElement();

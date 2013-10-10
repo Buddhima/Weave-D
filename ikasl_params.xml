@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ikasl_params>
+    <ikasl_stack id="L1F1">
+        <SF>0.0</SF>
+        <ITR>0</ITR>
+        <NR>0.0</NR>
+        <LR>0.0</LR>
+        <HT>0</HT>
+    </ikasl_stack>
+    <ikasl_stack id="L1F0">
+        <SF>0.0</SF>
+        <ITR>0</ITR>
+        <NR>0.0</NR>
+        <LR>0.0</LR>
+        <HT>0</HT>
+    </ikasl_stack>
+    <ikasl_stack id="L0F0">
+        <SF>0.0</SF>
+        <ITR>0</ITR>
+        <NR>0.0</NR>
+        <LR>0.0</LR>
+        <HT>0</HT>
+    </ikasl_stack>
+</ikasl_params>
