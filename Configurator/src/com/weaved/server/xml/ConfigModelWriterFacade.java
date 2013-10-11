@@ -32,8 +32,7 @@ public class ConfigModelWriterFacade {
         iKASLConfigModelWriter = new IKASLConfigModelWriter(iKASLConfigModel);
         importantPercpConfigModelWriter = new ImportantPercpConfigModelWriter(importantPercepConfigModel);
         linkConfigModelWriter = new LinkConfigModelWriter(linkConfigModel);
-        // uncomment once completed
-        //percpConfigModelWriter = new PercpConfigModelWriter(getPerceptionHierarchy());
+        percpConfigModelWriter = new PercpConfigModelWriter(perceptionHierarchy);
     }
 
     public void createConfigXMLs() {
@@ -41,8 +40,7 @@ public class ConfigModelWriterFacade {
         iKASLConfigModelWriter.write();
         importantPercpConfigModelWriter.write();
         linkConfigModelWriter.write();
-        // uncomment once completed
-        //percpConfigModelWriter.write();
+        percpConfigModelWriter.write();
     }
 
     /**

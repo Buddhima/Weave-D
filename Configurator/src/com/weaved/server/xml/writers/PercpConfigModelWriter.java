@@ -53,7 +53,7 @@ public class PercpConfigModelWriter implements ConfigXMLWriter {
 
                 Element perceptionElement = doc.createElement("perception");
                 perceptionElement.setAttribute("id", perceptNode.getStackId());
-                perceptionElement.setAttribute("name", perceptNode.getStackId());
+                perceptionElement.setAttribute("name", perceptNode.getStackName());
                 perceptionConfigModelElement.appendChild(perceptionElement);
 
                 ArrayList<PerceptionHierarchyNode> featureLevelNodes = perceptNode.getChildNodes();
@@ -62,7 +62,7 @@ public class PercpConfigModelWriter implements ConfigXMLWriter {
 
                     Element featureElement = doc.createElement("feature");
                     featureElement.setAttribute("id", featureNode.getStackId());
-                    featureElement.setAttribute("name", featureNode.getStackId());
+                    featureElement.setAttribute("name", featureNode.getStackName());
                     perceptionElement.appendChild(featureElement);
 
                     ArrayList<PerceptionHierarchyNode> dimensionLevelNodes = featureNode.getChildNodes();
@@ -71,7 +71,7 @@ public class PercpConfigModelWriter implements ConfigXMLWriter {
 
                         Element dimensionElement = doc.createElement("dimension");
                         dimensionElement.setAttribute("id", dimensionNode.getStackId());
-                        dimensionElement.setAttribute("name", dimensionNode.getStackId());
+                        dimensionElement.setAttribute("name", dimensionNode.getStackName());
                         featureElement.appendChild(dimensionElement);
                     }
                 }
@@ -85,7 +85,7 @@ public class PercpConfigModelWriter implements ConfigXMLWriter {
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("Config" + File.separator + "ikasl_params.xml"));
+            StreamResult result = new StreamResult(new File("Config" + File.separator + "perception_config_model.xml"));
             transformer.transform(source, result);
 
         } catch (TransformerException ex) {

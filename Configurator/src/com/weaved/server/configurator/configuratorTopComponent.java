@@ -192,20 +192,19 @@ public final class configuratorTopComponent extends TopComponent {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
 
         // Save drawn configuration
         LinkConfigModelCreator linkConfigModelCreator = new LinkConfigModelCreator();
         ImportantPercpConfigModelCreator importantPercpConfigModelCreator=new  ImportantPercpConfigModelCreator();
         IKASLConfigModelCreator ikaslConfigModelCreator = new IKASLConfigModelCreator();
-//        PerceptionHierarchyModelCreator perceptionHierarchyModelCreator = new PerceptionHierarchyModelCreator();
+        PerceptionHierarchyModelCreator perceptionHierarchyModelCreator = new PerceptionHierarchyModelCreator();
         
         ConfigModelWriterFacade configModelWriterFacade = new ConfigModelWriterFacade();
         
         configModelWriterFacade.setLinkConfigModel((LinkConfigModel)linkConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
         configModelWriterFacade.setImportantPercepConfigModel((ImportantPercpConfigModel)importantPercpConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
         configModelWriterFacade.setiKASLConfigModel((IKASLConfigModel)ikaslConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
-//        configModelWriterFacade.setPerceptionHierarchy((PerceptionHierarchyModel)perceptionHierarchyModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
+        configModelWriterFacade.setPerceptionHierarchy((PerceptionHierarchyModel)perceptionHierarchyModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
 
         configModelWriterFacade.createConfigXMLs();
 
