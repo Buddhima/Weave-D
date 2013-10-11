@@ -31,8 +31,6 @@ public class PerceptionHierarchyModelCreator extends ConfigModelCreator {
         connectionsMap = edgeMap;
 
         ArrayList<String> perceptionNodes = getNodesStartingWith("L0");
-        ArrayList<String> featureNodes = getNodesStartingWith("L1");
-        ArrayList<String> dimensionNodes = getNodesStartingWith("L2");
 
         ArrayList<PerceptionHierarchyNode> percepHierarchyNodes = new ArrayList<PerceptionHierarchyNode>();
         PerceptionHierarchyNode root = new PerceptionHierarchyNode("L-1F-1");
@@ -71,17 +69,6 @@ public class PerceptionHierarchyModelCreator extends ConfigModelCreator {
         }
         root.setChildNodes(percepHierarchyNodes);
         perceptionHierarchyNodes.add(root);
-//        for (PerceptionHierarchyNode p1 : percepHierarchyNodes) {
-//            perceptionHierarchyNodes.add(p1);
-//        }
-//        
-//        for (PerceptionHierarchyNode p2 : featureHierarchyNodes) {
-//            perceptionHierarchyNodes.add(p2);
-//        }
-//        
-//        for (PerceptionHierarchyNode p3 : dimHierarchyNodes) {
-//            perceptionHierarchyNodes.add(p3);
-//        }
 
         perceptionHierarchyModel.setPerceptionHierarchyNodes(perceptionHierarchyNodes);
         return perceptionHierarchyModel;

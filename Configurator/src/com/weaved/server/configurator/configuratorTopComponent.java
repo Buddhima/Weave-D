@@ -205,7 +205,7 @@ public final class configuratorTopComponent extends TopComponent {
         configModelWriterFacade.setImportantPercepConfigModel((ImportantPercpConfigModel)importantPercpConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
         configModelWriterFacade.setiKASLConfigModel((IKASLConfigModel)ikaslConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
         configModelWriterFacade.setPerceptionHierarchy((PerceptionHierarchyModel)perceptionHierarchyModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
-
+        // write to xml files
         configModelWriterFacade.createConfigXMLs();
 
         TopComponent tc = WindowManager.getDefault().findTopComponent("runtimeTopComponent");
