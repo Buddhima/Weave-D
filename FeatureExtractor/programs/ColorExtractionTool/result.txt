@@ -1,0 +1,8 @@
+C:\Users\BUDDHIMA\Desktop\test\test2.jpg 0,8,0
+C:\Users\BUDDHIMA\Desktop\test\test2.jpg 80,152,96
+C:\Users\BUDDHIMA\Desktop\test\test2.jpg 184,120,120
+C:\Users\BUDDHIMA\Desktop\test\test2.jpg 192,208,216
+C:\Users\BUDDHIMA\Desktop\test\test2.jpg 184,48,48
+C:\Users\BUDDHIMA\Desktop\test\test2.jpg 232,24,32
+C:\Users\BUDDHIMA\Desktop\test\test2.jpg 32,176,72
+C:\Users\BUDDHIMA\Desktop\test\test2.jpg 112,144,184

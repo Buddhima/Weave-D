@@ -324,11 +324,15 @@ public final class controlTopComponent extends TopComponent {
     private void visualizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizeButtonActionPerformed
         try {
             // TODO add your handling code here:
-//            Runtime.getRuntime().exec("java -jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\dist\\Arena.jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\nbqsa.txt");
+
             if (countRound > 4) {
                 countRound = 4;// correct mistakenly clicks
             }
-            Runtime.getRuntime().exec("java -jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\dist\\Arena.jar C:\\Users\\BUDDHIMA\\Documents\\NetBeansProjects\\Arena\\nbqsa" + countRound + ".txt");
+
+            // Note: MUST run weave-D from Weave-D top-level project, relative source files reside inside /files folder
+            String arena3dPath = System.getProperty("user.dir") + "\\Arena3D";
+            Runtime.getRuntime().exec("java -jar " + arena3dPath + "\\Arena.jar" + " " + arena3dPath + "\\files\\nbqsa" + countRound + ".txt");
+
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
@@ -396,7 +400,7 @@ public final class controlTopComponent extends TopComponent {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            Runtime.getRuntime().exec("java -jar C:\\Users\\BUDDHIMA\\Desktop\\FeatureExtractors\\FeatureExtractor.jar");
+            Runtime.getRuntime().exec("java -jar "+System.getProperty("user.dir")+"\\FeatureExtractor\\FeatureExtractor.jar");
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
