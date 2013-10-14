@@ -453,7 +453,7 @@ public final class queryTopComponent extends TopComponent {
             ProcessBuilder proc = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Vector", "Vector", "hsl_15", "t");
             proc.start();
         } catch (Exception hj) {
-            System.out.println("Error not der" + hj);
+            System.out.println("Error: " + hj);
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -463,7 +463,7 @@ public final class queryTopComponent extends TopComponent {
             ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(0) + ".txt");
             proc.start();
         } catch (Exception hj) {
-            System.out.println("Error not der" + hj);
+            System.out.println("Error:" + hj);
         }
     }//GEN-LAST:event_jTextButton1ActionPerformed
 
@@ -472,7 +472,7 @@ public final class queryTopComponent extends TopComponent {
             ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(1) + ".txt");
             proc.start();
         } catch (Exception hj) {
-            System.out.println("Error not der" + hj);
+            System.out.println("Error:" + hj);
         }
     }//GEN-LAST:event_jTextButton2ActionPerformed
 
@@ -481,7 +481,7 @@ public final class queryTopComponent extends TopComponent {
             ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(2) + ".txt");
             proc.start();
         } catch (Exception hj) {
-            System.out.println("Error not der" + hj);
+            System.out.println("Error:" + hj);
         }
     }//GEN-LAST:event_jTextButton3ActionPerformed
 
@@ -490,7 +490,7 @@ public final class queryTopComponent extends TopComponent {
             ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(3) + ".txt");
             proc.start();
         } catch (Exception hj) {
-            System.out.println("Error not der" + hj);
+            System.out.println("Error:" + hj);
         }
     }//GEN-LAST:event_jTextButton4ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
