@@ -4,9 +4,9 @@
  */
 package com.weaved.xml.parsers;
 
-import com.weaved.config.models.ConfigModel;
-import com.weaved.config.models.IKASLConfigModel;
-import com.weaved.config.models.elememts.IKASLConfigModelElement;
+import com.weaved.server.xml.elements.IKASLConfigModelElement;
+import com.weaved.server.xml.models.ConfigModel;
+import com.weaved.server.xml.models.IKASLConfigModel;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

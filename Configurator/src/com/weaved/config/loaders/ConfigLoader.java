@@ -4,7 +4,8 @@
  */
 package com.weaved.config.loaders;
 
-import com.weaved.config.models.ConfigModel;
+import com.weaved.server.xml.models.ConfigModel;
+
 
 /**
  *

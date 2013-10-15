@@ -4,9 +4,9 @@
  */
 package com.weaved.xml.parsers;
 
-import com.weaved.server.xml.elements.ImportantPercpConfigModelElement;
+import com.weaved.server.xml.elements.FeatureVectorsConfigModelElement;
 import com.weaved.server.xml.models.ConfigModel;
-import com.weaved.server.xml.models.ImportantPercpConfigModel;
+import com.weaved.server.xml.models.FeatureVectorsConfigModel;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,18 +23,16 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author Thushan Ganegedara
+ * @author Lasindu
  */
-public class ImportantPercpConfigXMLParser extends XMLParser {
+public class FeatureVectorsConfigModelXMLParser extends XMLParser {
 
-    private ImportantPercpConfigModel imporatantPercpConfigModel;
+    private FeatureVectorsConfigModel featureVectorsConfigModel;
 
     @Override
     public void createConfig(String path) {
-        boolean selected = false;
-        imporatantPercpConfigModel = new ImportantPercpConfigModel();
-        ArrayList<ImportantPercpConfigModelElement> importantPercpConfigModelElements = new ArrayList<ImportantPercpConfigModelElement>();
-
+        featureVectorsConfigModel = new FeatureVectorsConfigModel();
+        ArrayList<FeatureVectorsConfigModelElement> featureVectorsConfigModelElements = new ArrayList<FeatureVectorsConfigModelElement>();
         File fXmlFile = new File(path);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;
@@ -58,24 +56,23 @@ public class ImportantPercpConfigXMLParser extends XMLParser {
 
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node nNode = nList.item(temp);
-
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element eElement = (Element) nNode;
-                int isSelected = Integer.parseInt(eElement.getFirstChild().getNodeValue());
-                if (isSelected == 1) {
-                    selected = true;
-                } else if (isSelected == 0) {
-                    selected = false;
-                }
-                ImportantPercpConfigModelElement importantPercpConfigModelElement = new ImportantPercpConfigModelElement(eElement.getAttribute("id"), selected);
-                importantPercpConfigModelElements.add(importantPercpConfigModelElement);
+                FeatureVectorsConfigModelElement featureVectorsConfigModelElement = new FeatureVectorsConfigModelElement();
+                // Create a PercpModelElement with IKASL Attributes
+                featureVectorsConfigModelElement.setStackId(eElement.getAttribute("id"));
+                featureVectorsConfigModelElement.setFeatureVectorLocation(eElement.getElementsByTagName("location").item(0).getTextContent());
+                featureVectorsConfigModelElement.setMinBound(Double.parseDouble(eElement.getElementsByTagName("min").item(0).getTextContent()));
+                featureVectorsConfigModelElement.setMaxBound(Double.parseDouble(eElement.getElementsByTagName("max").item(0).getTextContent()));
+                // Add Elements to ArrayList
+                featureVectorsConfigModelElements.add(featureVectorsConfigModelElement);
             }
         }
-        imporatantPercpConfigModel.setImportantPercpConfigModelElements(importantPercpConfigModelElements);
+        featureVectorsConfigModel.setFeatureVectorsConfigModelElements(featureVectorsConfigModelElements);
     }
 
     @Override
     public ConfigModel getConfig() {
-        return imporatantPercpConfigModel;
+        return featureVectorsConfigModel;
     }
 }

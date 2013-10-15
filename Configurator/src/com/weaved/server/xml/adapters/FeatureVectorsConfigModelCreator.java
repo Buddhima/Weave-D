@@ -4,13 +4,11 @@
  */
 package com.weaved.server.xml.adapters;
 
-import com.weaved.config.models.FeatureVectorsConfigModel;
-import com.weaved.config.models.elememts.FeatureVectorsConfigModelElement;
 import com.weaved.server.configurator.misc.ConfigNode;
 import com.weaved.server.configurator.misc.NodeLinks;
-import com.weaved.server.xml.elements.IKASLConfigModelElement;
+import com.weaved.server.xml.elements.FeatureVectorsConfigModelElement;
 import com.weaved.server.xml.models.ConfigModel;
-import com.weaved.server.xml.models.IKASLConfigModel;
+import com.weaved.server.xml.models.FeatureVectorsConfigModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,15 +31,15 @@ public class FeatureVectorsConfigModelCreator extends ConfigModelCreator {
             FeatureVectorsConfigModelElement featureVectorsConfigModelElement = new FeatureVectorsConfigModelElement();
             featureVectorsConfigModelElement.setStackId(configNode.getId());
             // Change these 3 params once UI changes are done
-            featureVectorsConfigModelElement.setFeatureVectorLocation("");
-            featureVectorsConfigModelElement.setMinBound(0.00);
-            featureVectorsConfigModelElement.setMaxBound(0.00);
+            featureVectorsConfigModelElement.setFeatureVectorLocation(configNode.getFVL());
+            featureVectorsConfigModelElement.setMinBound(configNode.getMinBound());
+            featureVectorsConfigModelElement.setMaxBound(configNode.getMaxBound());
 
             featureVectorsConfigModelElements.add(featureVectorsConfigModelElement);
         }
         featureVectorsConfigModel.setFeatureVectorsConfigModelElements(featureVectorsConfigModelElements);
         // need to change this
-        return null;
+        return featureVectorsConfigModel;
     }
 
    

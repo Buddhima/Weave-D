@@ -4,9 +4,8 @@
  */
 package com.weaved.server.xml.writers;
 
-import com.weaved.config.models.FeatureVectorsConfigModel;
-import com.weaved.config.models.elememts.FeatureVectorsConfigModelElement;
-import com.weaved.server.xml.elements.IKASLConfigModelElement;
+import com.weaved.server.xml.elements.FeatureVectorsConfigModelElement;
+import com.weaved.server.xml.models.FeatureVectorsConfigModel;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.logging.Level;

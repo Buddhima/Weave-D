@@ -6,10 +6,12 @@ package com.weaved.server.configurator;
 
 import com.weaved.server.configurator.palette.PaletteSupport;
 import com.weaved.server.xml.ConfigModelWriterFacade;
+import com.weaved.server.xml.adapters.FeatureVectorsConfigModelCreator;
 import com.weaved.server.xml.adapters.IKASLConfigModelCreator;
 import com.weaved.server.xml.adapters.ImportantPercpConfigModelCreator;
 import com.weaved.server.xml.adapters.LinkConfigModelCreator;
 import com.weaved.server.xml.adapters.PerceptionHierarchyModelCreator;
+import com.weaved.server.xml.models.FeatureVectorsConfigModel;
 import com.weaved.server.xml.models.IKASLConfigModel;
 import com.weaved.server.xml.models.ImportantPercpConfigModel;
 import com.weaved.server.xml.models.LinkConfigModel;
@@ -195,16 +197,20 @@ public final class configuratorTopComponent extends TopComponent {
 
         // Save drawn configuration
         LinkConfigModelCreator linkConfigModelCreator = new LinkConfigModelCreator();
-        ImportantPercpConfigModelCreator importantPercpConfigModelCreator=new  ImportantPercpConfigModelCreator();
+        ImportantPercpConfigModelCreator importantPercpConfigModelCreator = new ImportantPercpConfigModelCreator();
         IKASLConfigModelCreator ikaslConfigModelCreator = new IKASLConfigModelCreator();
+        FeatureVectorsConfigModelCreator featureVectorsConfigModelCreator = new FeatureVectorsConfigModelCreator();
         PerceptionHierarchyModelCreator perceptionHierarchyModelCreator = new PerceptionHierarchyModelCreator();
-        
+
+
         ConfigModelWriterFacade configModelWriterFacade = new ConfigModelWriterFacade();
-        
-        configModelWriterFacade.setLinkConfigModel((LinkConfigModel)linkConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
-        configModelWriterFacade.setImportantPercepConfigModel((ImportantPercpConfigModel)importantPercpConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
-        configModelWriterFacade.setiKASLConfigModel((IKASLConfigModel)ikaslConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
-        configModelWriterFacade.setPerceptionHierarchy((PerceptionHierarchyModel)perceptionHierarchyModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
+
+        configModelWriterFacade.setLinkConfigModel((LinkConfigModel) linkConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
+        configModelWriterFacade.setImportantPercepConfigModel((ImportantPercpConfigModel) importantPercpConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
+        configModelWriterFacade.setiKASLConfigModel((IKASLConfigModel) ikaslConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
+        configModelWriterFacade.setFeatureVectorsConfigModel((FeatureVectorsConfigModel) featureVectorsConfigModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
+        configModelWriterFacade.setPerceptionHierarchy((PerceptionHierarchyModel) perceptionHierarchyModelCreator.getModel(GraphSceneImpl.nodeMap, GraphSceneImpl.edgeMap));
+
         // write to xml files
         configModelWriterFacade.createConfigXMLs();
 

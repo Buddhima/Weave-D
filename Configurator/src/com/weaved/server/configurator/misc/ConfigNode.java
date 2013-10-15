@@ -4,7 +4,6 @@
  */
 package com.weaved.server.configurator.misc;
 
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.awt.Image;
 
 /**

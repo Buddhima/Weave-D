@@ -4,7 +4,7 @@
  */
 package com.weaved.xml.parsers;
 
-import com.weaved.config.models.ConfigModel;
+import com.weaved.server.xml.models.ConfigModel;
 
 /**
  *

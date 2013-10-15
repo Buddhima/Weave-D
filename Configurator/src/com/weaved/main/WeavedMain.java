@@ -5,12 +5,8 @@
 package com.weaved.main;
 
 import com.ikasl.objects.IKASLParams;
-import com.ikasl.utils.IKASLConstants;
-import com.weaved.config.models.LinkConfigModel;
 import com.weaved.input.NumericalDataParser;
 import com.weaved.perception.model.main.PercpModelFacade;
-import com.weaved.query.enums.QueryObjectType;
-import com.weaved.xml.parsers.XMLParser;
 import java.util.ArrayList;
 
 /**

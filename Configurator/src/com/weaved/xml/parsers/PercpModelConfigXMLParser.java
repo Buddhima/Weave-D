@@ -4,11 +4,10 @@
  */
 package com.weaved.xml.parsers;
 
-import com.weaved.config.models.ConfigModel;
 import com.weaved.config.models.PercpModelConfigModel;
 import com.weaved.config.models.elememts.PercpConfigModelElement;
+import com.weaved.server.xml.models.ConfigModel;
 import com.weaved.utils.Tree;
-import com.weaved.xml.parsers.XMLParser;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;

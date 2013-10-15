@@ -4,10 +4,12 @@
  */
 package com.weaved.server.xml;
 
+import com.weaved.server.xml.models.FeatureVectorsConfigModel;
 import com.weaved.server.xml.models.IKASLConfigModel;
 import com.weaved.server.xml.models.ImportantPercpConfigModel;
 import com.weaved.server.xml.models.LinkConfigModel;
 import com.weaved.server.xml.models.PerceptionHierarchyModel;
+import com.weaved.server.xml.writers.FeatureVectorsConfigModelWriter;
 import com.weaved.server.xml.writers.IKASLConfigModelWriter;
 import com.weaved.server.xml.writers.ImportantPercpConfigModelWriter;
 import com.weaved.server.xml.writers.LinkConfigModelWriter;
@@ -20,16 +22,19 @@ import com.weaved.server.xml.writers.PercpConfigModelWriter;
 public class ConfigModelWriterFacade {
 
     private IKASLConfigModel iKASLConfigModel;
+    private FeatureVectorsConfigModel featureVectorsConfigModel;
     private ImportantPercpConfigModel importantPercepConfigModel;
     private LinkConfigModel linkConfigModel;
     private PerceptionHierarchyModel perceptionHierarchy;
     private IKASLConfigModelWriter iKASLConfigModelWriter;
+    private FeatureVectorsConfigModelWriter featureVectorsConfigModelWriter;
     private ImportantPercpConfigModelWriter importantPercpConfigModelWriter;
     private LinkConfigModelWriter linkConfigModelWriter;
     private PercpConfigModelWriter percpConfigModelWriter;
 
     public void initWriters() {
         iKASLConfigModelWriter = new IKASLConfigModelWriter(iKASLConfigModel);
+        featureVectorsConfigModelWriter = new FeatureVectorsConfigModelWriter(getFeatureVectorsConfigModel());
         importantPercpConfigModelWriter = new ImportantPercpConfigModelWriter(importantPercepConfigModel);
         linkConfigModelWriter = new LinkConfigModelWriter(linkConfigModel);
         percpConfigModelWriter = new PercpConfigModelWriter(perceptionHierarchy);
@@ -38,6 +43,7 @@ public class ConfigModelWriterFacade {
     public void createConfigXMLs() {
         initWriters();
         iKASLConfigModelWriter.write();
+        featureVectorsConfigModelWriter.write();
         importantPercpConfigModelWriter.write();
         linkConfigModelWriter.write();
         percpConfigModelWriter.write();
@@ -97,6 +103,20 @@ public class ConfigModelWriterFacade {
      */
     public void setPerceptionHierarchy(PerceptionHierarchyModel perceptionHierarchy) {
         this.perceptionHierarchy = perceptionHierarchy;
+    }
+
+    /**
+     * @return the featureVectorsConfigModel
+     */
+    public FeatureVectorsConfigModel getFeatureVectorsConfigModel() {
+        return featureVectorsConfigModel;
+    }
+
+    /**
+     * @param featureVectorsConfigModel the featureVectorsConfigModel to set
+     */
+    public void setFeatureVectorsConfigModel(FeatureVectorsConfigModel featureVectorsConfigModel) {
+        this.featureVectorsConfigModel = featureVectorsConfigModel;
     }
 
    }
