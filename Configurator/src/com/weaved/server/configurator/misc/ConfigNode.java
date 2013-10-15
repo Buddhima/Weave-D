@@ -22,6 +22,9 @@ public class ConfigNode {
     private Double NR = new Double(0);// neighbourhod radious
     private Double LR = new Double(0);// learning rate
     private Integer HT = new Integer(0);// hit threshold
+    private String FVL = new String();// feature vector location
+    private Double MaxBound = new Double(0);//Max bound
+    private Double MinBound = new Double(0);//Min bound
     private Boolean selected = new Boolean(false);// selected
     
     
@@ -171,6 +174,48 @@ public class ConfigNode {
      */
     public void setSelected(Boolean selected) {
         this.selected = selected;
+    }
+
+    /**
+     * @return the FVL
+     */
+    public String getFVL() {
+        return FVL;
+    }
+
+    /**
+     * @param FVL the FVL to set
+     */
+    public void setFVL(String FVL) {
+        this.FVL = FVL;
+    }
+
+    /**
+     * @return the MaxBound
+     */
+    public Double getMaxBound() {
+        return MaxBound;
+    }
+
+    /**
+     * @param MaxBound the MaxBound to set
+     */
+    public void setMaxBound(Double MaxBound) {
+        this.MaxBound = MaxBound;
+    }
+
+    /**
+     * @return the MinBound
+     */
+    public Double getMinBound() {
+        return MinBound;
+    }
+
+    /**
+     * @param MinBound the MinBound to set
+     */
+    public void setMinBound(Double MinBound) {
+        this.MinBound = MinBound;
     }
 
   

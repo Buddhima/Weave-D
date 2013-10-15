@@ -60,6 +60,21 @@ public class ConfigPropNode extends AbstractNode {
         HTProp.setShortDescription("Hit Threshold value of nodes");
         set.put(HTProp);
         
+        Property FVLProp = new PropertySupport.Reflection<String>(node, String.class, "FVL");
+        FVLProp.setName("Feature Vector Location"); 
+        FVLProp.setShortDescription("Feature Vector Location file path");
+        set.put(FVLProp);
+        
+        Property MaxBoundProp = new PropertySupport.Reflection<Double>(node, Double.class, "MaxBound");
+        MaxBoundProp.setName("Max Bound");     
+        MaxBoundProp.setShortDescription("Maximum Bound of the component should be mentioned");
+        set.put(MaxBoundProp);
+        
+        Property MinBoundProp = new PropertySupport.Reflection<Double>(node, Double.class, "MinBound");
+        MinBoundProp.setName("Min Bound");     
+        MinBoundProp.setShortDescription("Minimum Bound of the component should be mentioned");
+        set.put(MinBoundProp);
+        
         Property SelectedProp = new PropertySupport.Reflection<Boolean>(node, Boolean.class, "selected");
         SelectedProp.setName("Selected"); 
         SelectedProp.setShortDescription("Set True to bring feature to higher level, else set False");
