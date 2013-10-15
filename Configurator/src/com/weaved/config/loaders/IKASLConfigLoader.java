@@ -15,9 +15,13 @@ public class IKASLConfigLoader extends ConfigLoader {
 
     private IKASLConfigModelXMLParser iKASLConfigModelXMLParser;
 
+    public IKASLConfigLoader() {
+        iKASLConfigModelXMLParser = new IKASLConfigModelXMLParser();
+    }
+
     @Override
     public void loadConfig(String path) {
-       iKASLConfigModelXMLParser.createConfig(path);
+        iKASLConfigModelXMLParser.createConfig(path);
     }
 
     @Override

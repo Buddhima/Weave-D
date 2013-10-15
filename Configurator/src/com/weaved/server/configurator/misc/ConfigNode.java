@@ -14,7 +14,6 @@ public class ConfigNode {
 
     private Image image;
     private String id;
-    
     private String name = new String();
     private Double SF = new Double(0);// spread factor
     private Integer ITR = new Integer(0); // iterations
@@ -22,11 +21,10 @@ public class ConfigNode {
     private Double LR = new Double(0);// learning rate
     private Integer HT = new Integer(0);// hit threshold
     private String FVL = new String();// feature vector location
-    private Double MaxBound = new Double(0);//Max bound
-    private Double MinBound = new Double(0);//Min bound
+    private Integer MaxBound = new Integer(0);//Max bound
+    private Integer MinBound = new Integer(0);//Min bound
+    private Integer DimSize = new Integer(0); // Dimension Size
     private Boolean selected = new Boolean(false);// selected
-    
-    
 
     /**
      *
@@ -92,7 +90,7 @@ public class ConfigNode {
      * @param SF the SF to set
      */
     public void setSF(Double SF) {
-        if(SF.doubleValue()>=0 && SF.doubleValue()<=1) {
+        if (SF.doubleValue() >= 0 && SF.doubleValue() <= 1) {
             this.SF = SF;
         }
     }
@@ -108,7 +106,7 @@ public class ConfigNode {
      * @param ITR the ITR to set
      */
     public void setITR(Integer ITR) {
-        if (ITR.intValue()>=0) {
+        if (ITR.intValue() >= 0) {
             this.ITR = ITR;
         }
     }
@@ -124,7 +122,7 @@ public class ConfigNode {
      * @param NR the NR to set
      */
     public void setNR(Double NR) {
-        if(NR.doubleValue()>=0) {
+        if (NR.doubleValue() >= 0) {
             this.NR = NR;
         }
     }
@@ -140,7 +138,7 @@ public class ConfigNode {
      * @param LR the LR to set
      */
     public void setLR(Double LR) {
-        if(LR.doubleValue()>=0 && LR.doubleValue()<=1) {
+        if (LR.doubleValue() >= 0 && LR.doubleValue() <= 1) {
             this.LR = LR;
         }
     }
@@ -156,7 +154,7 @@ public class ConfigNode {
      * @param HT the HT to set
      */
     public void setHT(Integer HT) {
-        if(HT.intValue()>=0) {
+        if (HT.intValue() >= 0) {
             this.HT = HT;
         }
     }
@@ -192,30 +190,42 @@ public class ConfigNode {
     /**
      * @return the MaxBound
      */
-    public Double getMaxBound() {
+    public Integer getMaxBound() {
         return MaxBound;
     }
 
     /**
      * @param MaxBound the MaxBound to set
      */
-    public void setMaxBound(Double MaxBound) {
+    public void setMaxBound(Integer MaxBound) {
         this.MaxBound = MaxBound;
     }
 
     /**
      * @return the MinBound
      */
-    public Double getMinBound() {
+    public Integer getMinBound() {
         return MinBound;
     }
 
     /**
      * @param MinBound the MinBound to set
      */
-    public void setMinBound(Double MinBound) {
+    public void setMinBound(Integer MinBound) {
         this.MinBound = MinBound;
     }
 
-  
+    /**
+     * @return the DimSize
+     */
+    public Integer getDimSize() {
+        return DimSize;
+    }
+
+    /**
+     * @param DimSize the DimSize to set
+     */
+    public void setDimSize(Integer DimSize) {
+        this.DimSize = DimSize;
+    }
 }

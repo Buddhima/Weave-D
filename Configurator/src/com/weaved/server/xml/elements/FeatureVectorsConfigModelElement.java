@@ -4,18 +4,17 @@
  */
 package com.weaved.server.xml.elements;
 
-import com.weaved.config.models.elememts.*;
-
 /**
  *
  * @author Lasindu
  */
 public class FeatureVectorsConfigModelElement {
-    
+
     private String stackId;
     private String featureVectorLocation;
-    private double minBound;
-    private double maxBound;
+    private int minBound;
+    private int maxBound;
+    private int dimSize;
 
     /**
      * @return the stackId
@@ -48,28 +47,42 @@ public class FeatureVectorsConfigModelElement {
     /**
      * @return the minBound
      */
-    public double getMinBound() {
+    public int getMinBound() {
         return minBound;
     }
 
     /**
      * @param minBound the minBound to set
      */
-    public void setMinBound(double minBound) {
+    public void setMinBound(int minBound) {
         this.minBound = minBound;
     }
 
     /**
      * @return the maxBound
      */
-    public double getMaxBound() {
+    public int getMaxBound() {
         return maxBound;
     }
 
     /**
      * @param maxBound the maxBound to set
      */
-    public void setMaxBound(double maxBound) {
+    public void setMaxBound(int maxBound) {
         this.maxBound = maxBound;
+    }
+
+    /**
+     * @return the dimSize
+     */
+    public int getDimSize() {
+        return dimSize;
+    }
+
+    /**
+     * @param dimSize the dimSize to set
+     */
+    public void setDimSize(int dimSize) {
+        this.dimSize = dimSize;
     }
 }

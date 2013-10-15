@@ -17,15 +17,15 @@ import java.util.HashMap;
  * @author Lasindu
  */
 public class FeatureVectorsConfigModelCreator extends ConfigModelCreator {
-
+    
     private FeatureVectorsConfigModel featureVectorsConfigModel;
     private ArrayList<FeatureVectorsConfigModelElement> featureVectorsConfigModelElements;
-
+    
     @Override
     public ConfigModel getModel(HashMap<String, ConfigNode> nodeMap, ArrayList<NodeLinks> edgeMap) {
         featureVectorsConfigModel = new FeatureVectorsConfigModel();
         featureVectorsConfigModelElements = new ArrayList<FeatureVectorsConfigModelElement>();
-
+        
         for (String key : nodeMap.keySet()) {
             ConfigNode configNode = nodeMap.get(key);
             FeatureVectorsConfigModelElement featureVectorsConfigModelElement = new FeatureVectorsConfigModelElement();
@@ -34,14 +34,12 @@ public class FeatureVectorsConfigModelCreator extends ConfigModelCreator {
             featureVectorsConfigModelElement.setFeatureVectorLocation(configNode.getFVL());
             featureVectorsConfigModelElement.setMinBound(configNode.getMinBound());
             featureVectorsConfigModelElement.setMaxBound(configNode.getMaxBound());
-
+            featureVectorsConfigModelElement.setDimSize(configNode.getDimSize());
+            
             featureVectorsConfigModelElements.add(featureVectorsConfigModelElement);
         }
         featureVectorsConfigModel.setFeatureVectorsConfigModelElements(featureVectorsConfigModelElements);
         // need to change this
         return featureVectorsConfigModel;
     }
-
-   
 }
-

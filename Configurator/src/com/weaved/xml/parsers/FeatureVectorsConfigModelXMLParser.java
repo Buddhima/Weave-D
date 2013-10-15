@@ -62,8 +62,9 @@ public class FeatureVectorsConfigModelXMLParser extends XMLParser {
                 // Create a PercpModelElement with IKASL Attributes
                 featureVectorsConfigModelElement.setStackId(eElement.getAttribute("id"));
                 featureVectorsConfigModelElement.setFeatureVectorLocation(eElement.getElementsByTagName("location").item(0).getTextContent());
-                featureVectorsConfigModelElement.setMinBound(Double.parseDouble(eElement.getElementsByTagName("min").item(0).getTextContent()));
-                featureVectorsConfigModelElement.setMaxBound(Double.parseDouble(eElement.getElementsByTagName("max").item(0).getTextContent()));
+                featureVectorsConfigModelElement.setMinBound(Integer.parseInt(eElement.getElementsByTagName("min").item(0).getTextContent()));
+                featureVectorsConfigModelElement.setMaxBound(Integer.parseInt(eElement.getElementsByTagName("max").item(0).getTextContent()));
+                featureVectorsConfigModelElement.setDimSize(Integer.parseInt(eElement.getElementsByTagName("dimension").item(0).getTextContent()));
                 // Add Elements to ArrayList
                 featureVectorsConfigModelElements.add(featureVectorsConfigModelElement);
             }

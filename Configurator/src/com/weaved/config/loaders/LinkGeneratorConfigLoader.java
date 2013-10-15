@@ -15,10 +15,14 @@ public class LinkGeneratorConfigLoader extends ConfigLoader {
 
     private LinkGeneratorConfigXMLParser linkGeneratorConfigXMLParser;
 
+    public LinkGeneratorConfigLoader() {
+        linkGeneratorConfigXMLParser = new LinkGeneratorConfigXMLParser();
+    }
+
     @Override
     public void loadConfig(String path) {
         linkGeneratorConfigXMLParser.createConfig(path);
-       
+
     }
 
     @Override

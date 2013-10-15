@@ -15,6 +15,10 @@ public class ImportantPercpConfigLoader extends ConfigLoader {
 
     private ImportantPercpConfigXMLParser importantPercpConfigLoaderXMLParser;
 
+    public ImportantPercpConfigLoader() {
+        importantPercpConfigLoaderXMLParser = new ImportantPercpConfigXMLParser();
+    }
+
     @Override
     public void loadConfig(String path) {
         importantPercpConfigLoaderXMLParser.createConfig(path);

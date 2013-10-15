@@ -15,6 +15,10 @@ public class PercpModelConfigLoader extends ConfigLoader {
 
     private PercpModelConfigXMLParser percpModelConfigXMLParser;
 
+    public PercpModelConfigLoader() {
+        percpModelConfigXMLParser = new PercpModelConfigXMLParser();
+    }
+
     @Override
     public void loadConfig(String path) {
         percpModelConfigXMLParser.createConfig(path);
