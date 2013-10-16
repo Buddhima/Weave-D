@@ -46,7 +46,7 @@ public class WeavedMain {
         // Loading Configurations
         LoadConfigurations();
         ArrayList<IKASLConfigModelElement> iKASLConfigModelElements = getNodesStartingWith("L2", iKASLConfigModel.getiKASLConfigModelElements());
-        ArrayList<IKASLRuntimeHelper> iKASLRuntimeHelpers = new ArrayList<IKASLRuntimeHelper>();
+        ArrayList<IKASLCompAllInputs> iKASLRuntimeHelpers = new ArrayList<IKASLCompAllInputs>();
         ArrayList<IKASLParams> paramList = new ArrayList<IKASLParams>();
         ArrayList<String> idList = new ArrayList<String>();
 
@@ -55,7 +55,7 @@ public class WeavedMain {
             NumericalDataParser parser = new NumericalDataParser();
             FeatureVectorsConfigModelElement featureVectorsConfigModelElement = getCorrespondingFeatureVectoreElement(iKASLConfigModelElement, featureVectorsConfigModel.getFeatureVectorsConfigModelElements());
             parser.parseInput(featureVectorsConfigModelElement.getFeatureVectorLocation());
-            IKASLRuntimeHelper iKASLRuntimeHelper = new IKASLRuntimeHelper();
+            IKASLCompAllInputs iKASLRuntimeHelper = new IKASLCompAllInputs();
             iKASLRuntimeHelper.setiWeights(parser.getiWeights());
             iKASLRuntimeHelper.setiNames(parser.getiNames());
 //            ArrayList<double[]> iWeights = parser.getiWeights();
@@ -84,60 +84,19 @@ public class WeavedMain {
 
         getPercpModelFacade().createIKASLComponents(paramList.size(), paramList, idList);
 
-        for (IKASLRuntimeHelper helper : iKASLRuntimeHelpers) {
+        for (IKASLCompAllInputs helper : iKASLRuntimeHelpers) {
             getPercpModelFacade().runIKASLTest(helper.getStackId(), helper.getiKASLParams(),
                     helper.getiWeights(), helper.getiNames(), helper.getMin(), helper.getMax(), helper.getDimension());
         }
-//        //Parsing inputs for color existence
-//        NumericalDataParser parser = new NumericalDataParser();
-//        parser.parseInput("input1_img.txt");
-//        ArrayList<double[]> imgIWeights = parser.getiWeights();
-//        ArrayList<String> imgINames = parser.getiNames();
-//
-//        //Parsing inputs for color proportion
-//        NumericalDataParser parser2 = new NumericalDataParser();
-//        parser2.parseInput("input1_txt.txt");
-//        ArrayList<double[]> txtIWeights = parser2.getiWeights();
-//        ArrayList<String> txtINames = parser2.getiNames();
-//
-//        //IKASL Parameters for color existence
-//        IKASLParams imgParams = new IKASLParams();
-//        imgParams.setDimensions(15);
-//        imgParams.setSpreadFactor(0.35);
-//        imgParams.setMaxIterations(200);
-//        imgParams.setMaxNeighborhoodRadius(2);
-//        imgParams.setStartLearningRate(0.45);
-//        imgParams.setFD(0.2);
-//        imgParams.setAggregationType(0);
-//        imgParams.setHitThreshold(0);
-//        imgParams.setLearningCycleCount(1);
-//
-//        //IKASL Parameters for color proportion
-//        IKASLParams txtParams = new IKASLParams();
-//        txtParams.setDimensions(7);
-//        txtParams.setSpreadFactor(0.45);
-//        txtParams.setMaxIterations(200);
-//        txtParams.setMaxNeighborhoodRadius(2);
-//        txtParams.setStartLearningRate(0.45);
-//        txtParams.setFD(0.2);
-//        txtParams.setLearningCycleCount(1);
-//        txtParams.setAggregationType(0);
-//        txtParams.setHitThreshold(0);
-//        
-//        ArrayList<IKASLParams> paramList = new ArrayList<IKASLParams>();
-//        paramList.add(imgParams);
-//        paramList.add(txtParams);
-//        
-//        ArrayList<String> idList = new ArrayList<String>();
-//        idList.add("L0F1");
-//        idList.add("L0F2");
-
-//        getPercpModelFacade().createIKASLComponents(2, paramList, idList);
-//        getPercpModelFacade().runIKASLTest("L0F1", imgParams, imgIWeights, imgINames, 0, 1, 15);
-//        getPercpModelFacade().runIKASLTest("L0F2", txtParams, txtIWeights, txtINames, 0, 1, 7);
 
     }
 
+    /**
+     * Run the link generation for required IKASL components
+     * TODO: It's not just LOF1 and L0F2, therefore we've to find between which 
+     * IKASL components to generate these links (by reading necessary xml files)
+     * and generate links dynamically
+     */
     public void runLinkGenerator() {
         //create only cross feature links, no temporal links
         getPercpModelFacade().runLinkGeneration("L0F1", "L0F2", false, true);
@@ -162,6 +121,12 @@ public class WeavedMain {
 
     }
 
+    /**
+     * TODO: Write What does this method do?
+     * @param prefix
+     * @param iKASLConfigModelElements
+     * @return 
+     */
     private ArrayList<IKASLConfigModelElement> getNodesStartingWith(String prefix, ArrayList<IKASLConfigModelElement> iKASLConfigModelElements) {
 
         ArrayList<IKASLConfigModelElement> nodes = new ArrayList<IKASLConfigModelElement>();
@@ -174,6 +139,12 @@ public class WeavedMain {
 
     }
 
+    /**
+     * TODO: Write a more intuitive method name. This name doesn't explain "correspond to what?"
+     * @param iKASLConfigModelElement
+     * @param featureVectorsConfigModelElements
+     * @return 
+     */
     private FeatureVectorsConfigModelElement getCorrespondingFeatureVectoreElement(IKASLConfigModelElement iKASLConfigModelElement, ArrayList<FeatureVectorsConfigModelElement> featureVectorsConfigModelElements) {
 
         FeatureVectorsConfigModelElement featureVectorsConfigModelElement = null;

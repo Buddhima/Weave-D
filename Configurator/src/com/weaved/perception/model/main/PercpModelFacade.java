@@ -46,9 +46,16 @@ public class PercpModelFacade {
     public PercpModelFacade() {
         ikaslMainList = new ArrayList<IKASLMain>();
     }
-
-    //===== This Method is to create IKASL params without going through
-    //XML files. Will probably be deleted later
+    
+    /**
+     * This method should be called before calling runIKASL or runIKASLTest
+     * This method creates IKASLMain components. 
+     * IKASLMain components run IKASL algorithm with given parameters
+     * 
+     * @param count The number of IKASLMain components to be created
+     * @param params An arraylist of IKASLParam objects which contains IKASL parameters for each IKASLMain component
+     * @param ids  An arraylist of Strings which has the ID of each IKASLMain component created 
+     */
     public void createIKASLComponents(int count, ArrayList<IKASLParams> params, ArrayList<String> ids) {
         for (int i = 0; i < count; i++) {
             IKASLMain ikasl = new IKASLMain(params.get(i), ids.get(i));
@@ -56,6 +63,12 @@ public class PercpModelFacade {
         }
     }
 
+    /**
+     * This method takes an IKASLConfigModelElement object (This object is created by reading
+     * required xml file) And return an IKASLParam object with the properties found in IKASLConfigModelElement
+     * @param element The ModelElement created by reading the <ikasl_params>.xml file
+     * @return IKASLParam object
+     */
     private IKASLParams getIKASLParamsFromModelElement(IKASLConfigModelElement element) {
         IKASLParams params = new IKASLParams();
         params.setSpreadFactor(element.getSpreadFactor());
@@ -127,7 +140,10 @@ public class PercpModelFacade {
     LinkConfigModel linkConfModel;
     ImportantPercpConfigModel ipConfModel;
 
-    //ArrayList<String>
+    /**
+     * This method is used to load all the configuration files required to
+     * run WeaveD
+     */
     public void loadAllConfig() {
         PercpModelConfigLoader pmConfLoader = new PercpModelConfigLoader();
         IKASLConfigLoader ikaslLoader = new IKASLConfigLoader();
@@ -149,6 +165,11 @@ public class PercpModelFacade {
 
     }
 
+    /*
+     * This is the original method that should be used to run IKASL algorithm. But
+     * since we're not currently interested in the perception heirarchy we will be using
+     * runIKASLTest method.
+     */
     //don't wait till calling this method to create IKASLMains
     //better to create at the setup as doing with creatIKASLComponetns Method
     public void runIKASL(Tree<String> percpTree, ArrayList<IKASLConfigModelElement> ikaslParamList) {
@@ -161,6 +182,19 @@ public class PercpModelFacade {
         }
     }
 
+    /**
+     * This method run IKASL algorithm for a given set of inputs. First it find the correct
+     * IKASLMain component with specified ID. Then it run algorithm for given inputs
+     * by giving the parameters specified by input. 
+     * 
+     * @param id - ID of the IKASLMain comp
+     * @param params - Algorithmic parameters for the IKASL algorithm
+     * @param iWeights - input Feature vector set (ex. Image-color vectors)
+     * @param iNames - input name list (ex. Image names, Text file names)
+     * @param min - Minimum bound for the inputs 
+     * @param max - Maximum bound for the inputs
+     * @param dims - Number of dimensions
+     */
     public void runIKASLTest(String id, IKASLParams params, ArrayList<double[]> iWeights, ArrayList<String> iNames,
             int min, int max, int dims) {
 
@@ -182,9 +216,27 @@ public class PercpModelFacade {
 
     }
 
+    /**
+     * This method will be used to create the high-level perception using information
+     * available at the dimension level. Currently we're not interested in using
+     * perception model
+     */
     public void fusePerceptions() {
     }
 
+    /**
+     * Run the link generation task for two IKASL outputs. This method creates 
+     * Cross-feature linkes - between ikasl1 and ikasl2
+     * Temporal links for ikasl 1
+     * 
+     * @param ikaslStack1Location Folder where IKASL xml outputs are located. 
+     * By default for storing IKASL outputs we're using a folder structure like below,
+     * <project_path>\Stacks\<ikasl_ID> 
+     * @param ikaslStack2Location Folder where the other IKASL to generate cross-feature links
+     * with is located
+     * @param temporalLinksIsSet Do you want temporal links to be generated?
+     * @param crossFLinksIsSet Do you want cross feature links to be generated
+     */
     public void runLinkGeneration(String ikaslStack1Location, String ikaslStack2Location, boolean temporalLinksIsSet, boolean crossFLinksIsSet) {
 
         Properties prop = new Properties();
@@ -208,8 +260,15 @@ public class PercpModelFacade {
         vhLinkerList.add(vHLinkerFacade);
     }
 
-    //Assumption: We consider ikaslMainList[0] runs for Image color existence
-    //ikaslMainList[1] runs for Text 
+    /**
+     * Assumption: We consider ikaslMainList[0] runs for Image color existence
+     * Assumption: ikaslMainList[1] runs for Text 
+     * TODO: We've to change this method to incorporate the correct IKASLMain component
+     * Without above ASSUMPTIONS! 0 & 1 are hard-coded here. Need to remove them.
+     * @param type The input type (e.g. Images/Text)
+     * @param query feature vector of the input
+     * @return Winner node for the input which is in the Last IKASL layer 
+     */
     private String findGNodeFromIKASLForQuery(QueryObjectType type, double[] query) {
 
         IKASLMain ikaslMain;
@@ -221,6 +280,20 @@ public class PercpModelFacade {
         return ikaslMain.getLastLayersWinnerNodeForQuery(query);
     }
 
+    /**
+     * Assumption: We consider ikaslMainList[0] runs for Image color existence
+     * Assumption: ikaslMainList[1] runs for Text 
+     * NEED TO GET RID OF THESE ASSUMPTIONS
+     * 
+     * This returns the horizontal links of the winner node of the given input query.
+     * Therefore, if we provide an image as a query,
+     * First, we can get winner node from the Image IKASL stack for the given input
+     * Then, we can find the related nodes in the Text IKASL stack through these links
+     * 
+     * @param type Type of the input (e.g. Image/Text)
+     * @param query feature vector of the input
+     * @return Returns a String with all the related nodes from other IKASL stack
+     */
     public ArrayList<String> getHorizontalLinksForQuery(QueryObjectType type, double[] query) {
         String winnerID = this.findGNodeFromIKASLForQuery(type, query);
         System.out.println("--------------- Winner ID : " + winnerID + " -----------------------");
@@ -257,6 +330,13 @@ public class PercpModelFacade {
      public ArrayList<ArrayList<String>> getVerticalLinksForQuery(QueryObjectType type, double[] query){
         
      }*/
+    
+    /**
+     * Returns the related images for the given input query
+     * @param type Type of the input (e.g. Image/Text)
+     * @param query feature vector of the input
+     * @return ArrayList of String of image names
+     */
     public ArrayList<String> getImageSetForQuery(QueryObjectType type, double[] query) {
         String winnerID = this.findGNodeFromIKASLForQuery(type, query);
         IKASLMain ikaslMain;

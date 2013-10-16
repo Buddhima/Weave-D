@@ -8,17 +8,18 @@ import com.ikasl.objects.IKASLParams;
 import java.util.ArrayList;
 
 /**
- *
+ * This class contains all the parameters and other inputs required by the IKASL
+ * algorithm to run without errors
  * @author Lasindu
  */
-public class IKASLRuntimeHelper {
+public class IKASLCompAllInputs {
 
     private String stackId;
-    private ArrayList<double[]> iWeights;
-    private ArrayList<String> iNames;
+    private ArrayList<double[]> iWeights;   //input feature vectos
+    private ArrayList<String> iNames;   //input names
     private IKASLParams iKASLParams;
-    private int min;
-    private int max;
+    private int min;    //min bound
+    private int max;    //max bound
     private int dimension;
 
     /**
