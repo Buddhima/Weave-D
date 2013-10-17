@@ -420,14 +420,19 @@ public final class controlTopComponent extends TopComponent {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void visualizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizeButtonActionPerformed
-        try {
+ // Note: MUST run weave-D from Weave-D top-level project, relative source files reside inside /files folder
+        VisualizeSelectionForm visualizeSelectionForm=new VisualizeSelectionForm();
+        visualizeSelectionForm.setRoundCount(countRound);
+        visualizeSelectionForm.setVisible(true);
+        consoleTxtArea.append("Visualization component is up and running...\n");
+    /*          try {
             // TODO add your handling code here:
 
             if (countRound > 4) {
                 countRound = 4;// correct mistakenly clicks
             }
 
-            // Note: MUST run weave-D from Weave-D top-level project, relative source files reside inside /files folder
+            
             String arena3dPath = System.getProperty("user.dir") + "\\Arena3D";
             Runtime.getRuntime().exec("java -jar " + arena3dPath + "\\Arena.jar" + " " + arena3dPath + "\\files\\nbqsa" + countRound + ".txt");
             consoleTxtArea.append("Visualization component is up and running...\n");
@@ -435,6 +440,7 @@ public final class controlTopComponent extends TopComponent {
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
+       */ 
     }//GEN-LAST:event_visualizeButtonActionPerformed
 
     private void visualizeMouseEnter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_visualizeMouseEnter
