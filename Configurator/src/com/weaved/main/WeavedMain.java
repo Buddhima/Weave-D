@@ -50,7 +50,7 @@ public class WeavedMain {
     public void runIKASL() {
         // Loading Configurations
         LoadConfigurations();
-        ArrayList<IKASLConfigModelElement> iKASLConfigModelElements = getNodesStartingWith("L2", iKASLConfigModel.getiKASLConfigModelElements());
+        ArrayList<IKASLConfigModelElement> iKASLConfigModelElements = getIKASLModelElementWithPrefix("L2", iKASLConfigModel.getiKASLConfigModelElements());
         ArrayList<IKASLCompAllInputs> iKASLRuntimeHelpers = new ArrayList<IKASLCompAllInputs>();
         ArrayList<IKASLParams> paramList = new ArrayList<IKASLParams>();
         ArrayList<String> idList = new ArrayList<String>();
