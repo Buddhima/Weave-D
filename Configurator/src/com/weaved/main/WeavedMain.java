@@ -137,9 +137,9 @@ public class WeavedMain {
 
         //TODO: Need to write code for loading the link configuration xml
         //TODO: Need to check whether link config model/link config loader classes are working properly
-        linkConfigLoader = new LinkGeneratorConfigLoader();
-        linkConfigLoader.loadConfig(configFolder + File.separator + FileAndFolderNameList.linkConfigFile);
-        linkConfigModel = (LinkConfigModel) linkConfigLoader.getPopulatedConfigModel();
+//        linkConfigLoader = new LinkGeneratorConfigLoader();
+//        linkConfigLoader.loadConfig(configFolder + File.separator + FileAndFolderNameList.linkConfigFile);
+//        linkConfigModel = (LinkConfigModel) linkConfigLoader.getPopulatedConfigModel();
         
     }
 

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Data learn_cycle_id="6">
+  <element x="0" y="0">
+    <NodeID>LC6,GC0,GN4</NodeID>
+    <ParentID>LC5,GC0,GN0</ParentID>
+    <value>Easy_Mid_badminton_124,Easy_Mid_badminton_81</value>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC3,GC0,GN4</NodeID>
+    <ParentID>LC2,GC0,GN9</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC3,GC0,GN0</NodeID>
+    <ParentID>LC2,GC0,GN6</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC6,GC0,GN2</NodeID>
+    <ParentID>LC5,GC0,GN3</ParentID>
+    <value>Easy_Mid_RockClimbing_154,Easy_Mid_RockClimbing_176,Easy_Mid_RockClimbing_193,Easy_Mid_RockClimbing_464,Easy_Mid_RockClimbing_51,Easy_Mid_RockClimbing_554,Easy_Mid_RockClimbing_555,Easy_Mid_RockClimbing_589,Easy_Mid_RockClimbing_596,Easy_Mid_RockClimbing_87</value>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC3,GC0,GN7</NodeID>
+    <ParentID>LC2,GC0,GN4</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC3,GC0,GN10</NodeID>
+    <ParentID>LC2,GC0,GN5</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC3,GC0,GN5</NodeID>
+    <ParentID>LC2,GC0,GN7</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC3,GC0,GN1</NodeID>
+    <ParentID>LC2,GC0,GN11</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC0,GC0,GN4</NodeID>
+    <ParentID/>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC4,GC0,GN4</NodeID>
+    <ParentID>LC3,GC0,GN9</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC3,GC0,GN8</NodeID>
+    <ParentID>LC2,GC0,GN1</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC5,GC0,GN5</NodeID>
+    <ParentID>LC4,GC0,GN1</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC4,GC0,GN0</NodeID>
+    <ParentID>LC3,GC0,GN11</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC6,GC0,GN0</NodeID>
+    <ParentID>LC5,GC0,GN4</ParentID>
+    <value>Easy_Close_croquet_204,Easy_Close_croquet_205,Easy_Mid_croquet_109,Easy_Mid_croquet_152,Easy_Mid_croquet_161,Easy_Mid_croquet_164,Easy_Mid_croquet_18,Easy_Mid_croquet_87,Easy_Mid_croquet_92,Easy_Mid_croquet_95</value>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC5,GC0,GN6</NodeID>
+    <ParentID>LC4,GC0,GN1</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC6,GC0,GN1</NodeID>
+    <ParentID>LC5,GC0,GN4</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC6,GC0,GN5</NodeID>
+    <ParentID>LC5,GC0,GN0</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC3,GC0,GN6</NodeID>
+    <ParentID>LC2,GC0,GN3</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC4,GC0,GN2</NodeID>
+    <ParentID>LC3,GC0,GN11</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC5,GC0,GN2</NodeID>
+    <ParentID>LC4,GC0,GN5</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC3,GC0,GN2</NodeID>
+    <ParentID>LC2,GC0,GN10</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC5,GC0,GN1</NodeID>
+    <ParentID>LC4,GC0,GN3</ParentID>
+    <value>Easy_Close_badminton_83,Easy_Mid_badminton_163,Easy_Mid_badminton_165,Easy_Mid_badminton_166,Easy_Mid_badminton_254,Medium_Mid_badminton_178</value>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC6,GC0,GN3</NodeID>
+    <ParentID>LC5,GC0,GN3</ParentID>
+    <value/>
+  </element>
+  <element x="0" y="0">
+    <NodeID>LC3,GC0,GN3</NodeID>
+    <ParentID>LC2,GC0,GN8</ParentID>
+    <value/>
+  </element>
+</Data>
