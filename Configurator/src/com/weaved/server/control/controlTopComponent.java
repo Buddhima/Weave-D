@@ -66,7 +66,7 @@ public final class controlTopComponent extends TopComponent {
         setName(Bundle.CTL_controlTopComponent());
         setToolTipText(Bundle.HINT_controlTopComponent());
 
-       // setLayout(new BorderLayout());
+        // setLayout(new BorderLayout());
 
 //        add(controlPanel, BorderLayout.SOUTH);
 //        add(buttonPanel, BorderLayout.CENTER);
@@ -420,27 +420,27 @@ public final class controlTopComponent extends TopComponent {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void visualizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizeButtonActionPerformed
- // Note: MUST run weave-D from Weave-D top-level project, relative source files reside inside /files folder
-        VisualizeSelectionForm visualizeSelectionForm=new VisualizeSelectionForm();
+        // Note: MUST run weave-D from Weave-D top-level project, relative source files reside inside /files folder
+        VisualizeSelectionForm visualizeSelectionForm = new VisualizeSelectionForm();
         visualizeSelectionForm.setRoundCount(countRound);
         visualizeSelectionForm.setVisible(true);
         consoleTxtArea.append("Visualization component is up and running...\n");
-    /*          try {
-            // TODO add your handling code here:
+        /*          try {
+         // TODO add your handling code here:
 
-            if (countRound > 4) {
-                countRound = 4;// correct mistakenly clicks
-            }
+         if (countRound > 4) {
+         countRound = 4;// correct mistakenly clicks
+         }
 
             
-            String arena3dPath = System.getProperty("user.dir") + "\\Arena3D";
-            Runtime.getRuntime().exec("java -jar " + arena3dPath + "\\Arena.jar" + " " + arena3dPath + "\\files\\nbqsa" + countRound + ".txt");
-            consoleTxtArea.append("Visualization component is up and running...\n");
+         String arena3dPath = System.getProperty("user.dir") + "\\Arena3D";
+         Runtime.getRuntime().exec("java -jar " + arena3dPath + "\\Arena.jar" + " " + arena3dPath + "\\files\\nbqsa" + countRound + ".txt");
+         consoleTxtArea.append("Visualization component is up and running...\n");
 
-        } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
-        }
-       */ 
+         } catch (IOException ex) {
+         Exceptions.printStackTrace(ex);
+         }
+         */
     }//GEN-LAST:event_visualizeButtonActionPerformed
 
     private void visualizeMouseEnter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_visualizeMouseEnter
@@ -508,23 +508,24 @@ public final class controlTopComponent extends TopComponent {
     private void runIkaslButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runIkaslButtonActionPerformed
 
         weavedMain = new WeavedMain();
-        
+
         // get Starting time
         long startTime = System.currentTimeMillis();
         consoleTxtArea.append("IKASL Algorithm is running...\n");
+        weavedMain.LoadConfigurations();
         weavedMain.runIKASL();
         consoleTxtArea.append("Incrementally learning has been done successfully!\n");
         // get end time (execution time of learning algorithm)
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
-        
+
         // display in the control window
-        executionDurationLbl.setText(totalTime+" (ms)");
-        
+        executionDurationLbl.setText(totalTime + " (ms)");
+
         JOptionPane.showMessageDialog(this, "IKASL Run Successfully");
         // TODO add your handling code here:
-        
-        
+
+
         /* final Runnable run1 = new Runnable() {
          @Override
          public void run() {
@@ -589,7 +590,7 @@ public final class controlTopComponent extends TopComponent {
             // TODO add your handling code here:
             Runtime.getRuntime().exec("java -jar " + System.getProperty("user.dir") + "\\FeatureExtractor\\FeatureExtractor.jar");
             consoleTxtArea.append("Feature Extraction tool is loading...\n");
-            currentLearningPeriodLbl.setText(""+(Integer.parseInt(currentLearningPeriodLbl.getText())+1));
+            currentLearningPeriodLbl.setText("" + (Integer.parseInt(currentLearningPeriodLbl.getText()) + 1));
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }

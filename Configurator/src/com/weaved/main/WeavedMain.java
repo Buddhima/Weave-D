@@ -48,9 +48,8 @@ public class WeavedMain {
      * @param args the command line arguments
      */
     public void runIKASL() {
-        // Loading Configurations
-        LoadConfigurations();
-        ArrayList<IKASLConfigModelElement> iKASLConfigModelElements = getIKASLModelElementWithPrefix("L2", iKASLConfigModel.getiKASLConfigModelElements());
+
+        ArrayList<IKASLConfigModelElement> iKASLConfigModelElements = getIKASLModelElementWithPrefix("L2", getiKASLConfigModel().getiKASLConfigModelElements());
         ArrayList<IKASLCompAllInputs> iKASLRuntimeHelpers = new ArrayList<IKASLCompAllInputs>();
         ArrayList<IKASLParams> paramList = new ArrayList<IKASLParams>();
         ArrayList<String> idList = new ArrayList<String>();
@@ -58,7 +57,7 @@ public class WeavedMain {
         for (IKASLConfigModelElement iKASLConfigModelElement : iKASLConfigModelElements) {
 
             NumericalDataParser parser = new NumericalDataParser();
-            FeatureVectorsConfigModelElement featureVectorsConfigModelElement = getCorrespondingFeatureVectoreElement(iKASLConfigModelElement, featureVectorsConfigModel.getFeatureVectorsConfigModelElements());
+            FeatureVectorsConfigModelElement featureVectorsConfigModelElement = getCorrespondingFeatureVectoreElement(iKASLConfigModelElement, getFeatureVectorsConfigModel().getFeatureVectorsConfigModelElements());
             parser.parseInput(featureVectorsConfigModelElement.getFeatureVectorLocation());
             IKASLCompAllInputs iKASLRuntimeHelper = new IKASLCompAllInputs();
             iKASLRuntimeHelper.setiWeights(parser.getiWeights());
@@ -81,10 +80,10 @@ public class WeavedMain {
             iKASLRuntimeHelper.setDimension(featureVectorsConfigModelElement.getDimSize());
             iKASLRuntimeHelper.setMin(featureVectorsConfigModelElement.getMinBound());
             iKASLRuntimeHelper.setMax(featureVectorsConfigModelElement.getMaxBound());
-
+            iKASLRuntimeHelpers.add(iKASLRuntimeHelper);
             paramList.add(iKASLParams);
             idList.add(iKASLConfigModelElement.getStackId());
-
+                
         }
 
         getPercpModelFacade().createIKASLComponents(paramList.size(), paramList, idList);
@@ -130,11 +129,11 @@ public class WeavedMain {
         String configFolder = FileAndFolderNameList.rootConfigFolder;
         featureVectorsConfigLoader = new FeatureVectorsConfigLoader();
         featureVectorsConfigLoader.loadConfig(configFolder + File.separator + FileAndFolderNameList.featureVecConfigFile);
-        featureVectorsConfigModel = (FeatureVectorsConfigModel) featureVectorsConfigLoader.getPopulatedConfigModel();
+        setFeatureVectorsConfigModel((FeatureVectorsConfigModel) featureVectorsConfigLoader.getPopulatedConfigModel());
 
         iKASLConfigLoader = new IKASLConfigLoader();
         iKASLConfigLoader.loadConfig(configFolder + File.separator + FileAndFolderNameList.ikaslParamFile);
-        iKASLConfigModel = (IKASLConfigModel) iKASLConfigLoader.getPopulatedConfigModel();
+        setiKASLConfigModel((IKASLConfigModel) iKASLConfigLoader.getPopulatedConfigModel());
 
         //TODO: Need to write code for loading the link configuration xml
         //TODO: Need to check whether link config model/link config loader classes are working properly
@@ -187,5 +186,33 @@ public class WeavedMain {
         }
 
         return featureVectorsConfigModelElement;
+    }
+
+    /**
+     * @return the featureVectorsConfigModel
+     */
+    public FeatureVectorsConfigModel getFeatureVectorsConfigModel() {
+        return featureVectorsConfigModel;
+    }
+
+    /**
+     * @param featureVectorsConfigModel the featureVectorsConfigModel to set
+     */
+    public void setFeatureVectorsConfigModel(FeatureVectorsConfigModel featureVectorsConfigModel) {
+        this.featureVectorsConfigModel = featureVectorsConfigModel;
+    }
+
+    /**
+     * @return the iKASLConfigModel
+     */
+    public IKASLConfigModel getiKASLConfigModel() {
+        return iKASLConfigModel;
+    }
+
+    /**
+     * @param iKASLConfigModel the iKASLConfigModel to set
+     */
+    public void setiKASLConfigModel(IKASLConfigModel iKASLConfigModel) {
+        this.iKASLConfigModel = iKASLConfigModel;
     }
 }

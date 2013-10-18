@@ -59,7 +59,7 @@ public class PercpModelFacade {
     public void createIKASLComponents(int count, ArrayList<IKASLParams> params, ArrayList<String> ids) {
         for (int i = 0; i < count; i++) {
             IKASLMain ikasl = new IKASLMain(params.get(i), ids.get(i));
-            ikaslMainList.add(ikasl);
+            getIkaslMainList().add(ikasl);
         }
     }
 
@@ -203,7 +203,7 @@ public class PercpModelFacade {
         IKASLConstants.DIMENSIONS = dims;
 
         IKASLMain currIKASL = null;
-        for (IKASLMain ikasl : ikaslMainList) {
+        for (IKASLMain ikasl : getIkaslMainList()) {
             if (ikasl.getMyID().equalsIgnoreCase(id)) {
                 currIKASL = ikasl;
                 currIKASL.runIKASLForCycle(currIKASL.retrieveLastLayer(), iWeights, iNames);
@@ -273,9 +273,9 @@ public class PercpModelFacade {
 
         IKASLMain ikaslMain;
         if (type == QueryObjectType.IMAGE) {
-            ikaslMain = ikaslMainList.get(0); //color existence
+            ikaslMain = getIkaslMainList().get(0); //color existence
         } else {
-            ikaslMain = ikaslMainList.get(1); //text
+            ikaslMain = getIkaslMainList().get(1); //text
         }
         return ikaslMain.getLastLayersWinnerNodeForQuery(query);
     }
@@ -341,12 +341,19 @@ public class PercpModelFacade {
         String winnerID = this.findGNodeFromIKASLForQuery(type, query);
         IKASLMain ikaslMain;
         if (type == QueryObjectType.IMAGE) {
-            ikaslMain = ikaslMainList.get(0); //color existence
+            ikaslMain = getIkaslMainList().get(0); //color existence
         } else {
-            ikaslMain = ikaslMainList.get(1); //text
+            ikaslMain = getIkaslMainList().get(1); //text
         }
 
         ArrayList<String> imgList = ikaslMain.getImageListForGNode(winnerID);
         return imgList;
+    }
+
+    /**
+     * @return the ikaslMainList
+     */
+    public ArrayList<IKASLMain> getIkaslMainList() {
+        return ikaslMainList;
     }
 }

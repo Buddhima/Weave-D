@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: junit
+OpenIDE-Module-Localizing-Bundle: junit/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+

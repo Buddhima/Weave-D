@@ -61,7 +61,7 @@ public class FeatureVectorsConfigModelWriter implements ConfigXMLWriter {
                 location.appendChild(doc.createTextNode(String.valueOf(featureVectorsConfigModelElement.getFeatureVectorLocation())));
                 min.appendChild(doc.createTextNode(String.valueOf(featureVectorsConfigModelElement.getMinBound())));
                 max.appendChild(doc.createTextNode(String.valueOf(featureVectorsConfigModelElement.getMaxBound())));
-                dim.appendChild(doc.createTextNode(String.valueOf(featureVectorsConfigModelElement.getMaxBound())));
+                dim.appendChild(doc.createTextNode(String.valueOf(featureVectorsConfigModelElement.getDimSize())));
 
                 ikaslStack.appendChild(location);
                 ikaslStack.appendChild(min);
