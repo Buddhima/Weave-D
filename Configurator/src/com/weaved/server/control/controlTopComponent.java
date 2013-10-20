@@ -586,14 +586,21 @@ public final class controlTopComponent extends TopComponent {
 
     private void featureExtractButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_featureExtractButtonActionPerformed
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            Runtime.getRuntime().exec("java -jar " + System.getProperty("user.dir") + "\\FeatureExtractor\\FeatureExtractor.jar");
-            consoleTxtArea.append("Feature Extraction tool is loading...\n");
-            currentLearningPeriodLbl.setText("" + (Integer.parseInt(currentLearningPeriodLbl.getText()) + 1));
-        } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
-        }
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    // TODO add your handling code here:
+                    Runtime.getRuntime().exec("java -jar " + System.getProperty("user.dir") + "\\FeatureExtractor\\FeatureExtractor.jar");
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+                consoleTxtArea.append("Feature Extraction tool is loading...\n");
+                currentLearningPeriodLbl.setText("" + (Integer.parseInt(currentLearningPeriodLbl.getText()) + 1));
+            }
+        };
+        thread.start();
     }//GEN-LAST:event_featureExtractButtonActionPerformed
 
     private void featureExtractorMouseEnter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_featureExtractorMouseEnter
