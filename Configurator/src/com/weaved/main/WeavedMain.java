@@ -17,7 +17,10 @@ import com.weaved.server.xml.models.IKASLConfigModel;
 import com.weaved.server.xml.models.LinkConfigModel;
 import com.weaved.utils.FileAndFolderNameList;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.Collections;
+import sun.org.mozilla.javascript.internal.regexp.SubString;
 
 /**
  *
@@ -32,6 +35,8 @@ public class WeavedMain {
     private LinkGeneratorConfigLoader linkConfigLoader;
     private IKASLConfigModel iKASLConfigModel;
     private LinkConfigModel linkConfigModel;
+    
+    int counter;
     /*--------------------------------------------------------
      * Things to beware of
      * 1. Make sure you delete the lastGLayer.ser before runing IKASL from the scratch. 
@@ -42,6 +47,10 @@ public class WeavedMain {
     public WeavedMain() {
 
         percpModelFacade = new PercpModelFacade();
+        // This counter is used to keep track of which input file we're currently reading
+        //e.g. if counter == 1, we're reading input1.txt
+        // if counter ==2, we're reading input2.txt        
+        counter = 1;
     }
 
     /**
@@ -49,11 +58,10 @@ public class WeavedMain {
      */
     public void runIKASL() {
 
-        // This counter is used to keep track of which input file we're currently reading
-        //e.g. if counter == 1, we're reading input1.txt
-        // if counter ==2, we're reading input2.txt
-        int counter = 1;
+        
+        
         String currFileName = "input"+counter+".txt";
+        Boolean counterLessOrEqualThanFile = true;
         
         ArrayList<IKASLConfigModelElement> iKASLConfigModelElements = getIKASLModelElementWithPrefix("L2", getiKASLConfigModel().getiKASLConfigModelElements());
         ArrayList<IKASLCompAllInputs> iKASLRuntimeHelpers = new ArrayList<IKASLCompAllInputs>();
@@ -64,45 +72,69 @@ public class WeavedMain {
 
             NumericalDataParser parser = new NumericalDataParser();
             FeatureVectorsConfigModelElement featureVectorsConfigModelElement = getCorrespondingFeatureVectoreElement(iKASLConfigModelElement, getFeatureVectorsConfigModel().getFeatureVectorsConfigModelElements());
+        
+            File dir = new File(featureVectorsConfigModelElement.getFeatureVectorLocation());
+            File[] files = dir.listFiles(new FilenameFilter() { 
+    	         public boolean accept(File dir, String filename)
+    	              { return filename.endsWith(".txt"); }     
+            });
+            ArrayList<Integer> inputFileNumbers = new ArrayList<Integer>();
+            for(File f : files){
+                String fName = f.getName();
+                if(fName.startsWith("input")){
+                    int idx = fName.indexOf(".");
+                    fName = fName.substring(5,idx);
+                    inputFileNumbers.add(Integer.parseInt(fName));
+                }
+            }
             
-            //parse the file with the correct input file
-            parser.parseInput(featureVectorsConfigModelElement.getFeatureVectorLocation()+ File.separator + currFileName);
+            int maxFNumber = Collections.max(inputFileNumbers);
+            if(counter>maxFNumber){
+                counterLessOrEqualThanFile=false;
+            }
             
-            IKASLCompAllInputs iKASLRuntimeHelper = new IKASLCompAllInputs();
-            iKASLRuntimeHelper.setiWeights(parser.getiWeights());
-            iKASLRuntimeHelper.setiNames(parser.getiNames());
+            if(counterLessOrEqualThanFile){
+                //parse the file with the correct input file
+                parser.parseInput(featureVectorsConfigModelElement.getFeatureVectorLocation()+ File.separator + currFileName);
+            
+                IKASLCompAllInputs iKASLRuntimeHelper = new IKASLCompAllInputs();
+                iKASLRuntimeHelper.setiWeights(parser.getiWeights());
+                iKASLRuntimeHelper.setiNames(parser.getiNames());
 
-            IKASLParams iKASLParams = new IKASLParams();
-            iKASLParams.setDimensions(featureVectorsConfigModelElement.getDimSize());
-            iKASLParams.setSpreadFactor(iKASLConfigModelElement.getSpreadFactor());
-            iKASLParams.setMaxIterations(iKASLConfigModelElement.getMaxIterations());
-            iKASLParams.setMaxNeighborhoodRadius(iKASLConfigModelElement.getMaxNeighborhoodRadius());
-            iKASLParams.setStartLearningRate(iKASLConfigModelElement.getStartLearningRate());
-            iKASLParams.setFD(0.2);
-            iKASLParams.setAggregationType(0);
-            iKASLParams.setHitThreshold(iKASLConfigModelElement.getHitThreshold());
-            iKASLParams.setLearningCycleCount(1);
-            iKASLRuntimeHelper.setiKASLParams(iKASLParams);
-            iKASLRuntimeHelper.setStackId(iKASLConfigModelElement.getStackId());
-            iKASLRuntimeHelper.setDimension(featureVectorsConfigModelElement.getDimSize());
-            iKASLRuntimeHelper.setMin(featureVectorsConfigModelElement.getMinBound());
-            iKASLRuntimeHelper.setMax(featureVectorsConfigModelElement.getMaxBound());
-            iKASLRuntimeHelpers.add(iKASLRuntimeHelper);
-            paramList.add(iKASLParams);
-            idList.add(iKASLConfigModelElement.getStackId());
-                
+                IKASLParams iKASLParams = new IKASLParams();
+                iKASLParams.setDimensions(featureVectorsConfigModelElement.getDimSize());
+                iKASLParams.setSpreadFactor(iKASLConfigModelElement.getSpreadFactor());
+                iKASLParams.setMaxIterations(iKASLConfigModelElement.getMaxIterations());
+                iKASLParams.setMaxNeighborhoodRadius(iKASLConfigModelElement.getMaxNeighborhoodRadius());
+                iKASLParams.setStartLearningRate(iKASLConfigModelElement.getStartLearningRate());
+                iKASLParams.setFD(0.2);
+                iKASLParams.setAggregationType(0);
+                iKASLParams.setHitThreshold(iKASLConfigModelElement.getHitThreshold());
+                iKASLParams.setLearningCycleCount(1);
+                iKASLRuntimeHelper.setiKASLParams(iKASLParams);
+                iKASLRuntimeHelper.setStackId(iKASLConfigModelElement.getStackId());
+                iKASLRuntimeHelper.setDimension(featureVectorsConfigModelElement.getDimSize());
+                iKASLRuntimeHelper.setMin(featureVectorsConfigModelElement.getMinBound());
+                iKASLRuntimeHelper.setMax(featureVectorsConfigModelElement.getMaxBound());
+                iKASLRuntimeHelpers.add(iKASLRuntimeHelper);
+                paramList.add(iKASLParams);
+                idList.add(iKASLConfigModelElement.getStackId());
+            }
         }
 
-        getPercpModelFacade().createIKASLComponents(paramList.size(), paramList, idList);
+        if(counter == 1){
+            getPercpModelFacade().createIKASLComponents(paramList.size(), paramList, idList);
+        }
 
-        for (IKASLCompAllInputs helper : iKASLRuntimeHelpers) {
-            getPercpModelFacade().runIKASLTest(helper.getStackId(), helper.getiKASLParams(),
+        if(counterLessOrEqualThanFile){
+            for (IKASLCompAllInputs helper : iKASLRuntimeHelpers) {
+                getPercpModelFacade().runIKASLTest(helper.getStackId(), helper.getiKASLParams(),
                     helper.getiWeights(), helper.getiNames(), helper.getMin(), helper.getMax(), helper.getDimension());
+            }
+            //increment the counter so the program will read the next input file, when we click
+            //'learn incrementally' button next.
+            counter++;
         }
-
-        //increment the counter so the program will read the next input file, when we click
-        //'learn incrementally' button next.
-        counter++;
     }
 
     /**
