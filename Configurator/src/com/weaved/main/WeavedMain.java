@@ -49,6 +49,12 @@ public class WeavedMain {
      */
     public void runIKASL() {
 
+        // This counter is used to keep track of which input file we're currently reading
+        //e.g. if counter == 1, we're reading input1.txt
+        // if counter ==2, we're reading input2.txt
+        int counter = 1;
+        String currFileName = "input"+counter+".txt";
+        
         ArrayList<IKASLConfigModelElement> iKASLConfigModelElements = getIKASLModelElementWithPrefix("L2", getiKASLConfigModel().getiKASLConfigModelElements());
         ArrayList<IKASLCompAllInputs> iKASLRuntimeHelpers = new ArrayList<IKASLCompAllInputs>();
         ArrayList<IKASLParams> paramList = new ArrayList<IKASLParams>();
@@ -58,12 +64,13 @@ public class WeavedMain {
 
             NumericalDataParser parser = new NumericalDataParser();
             FeatureVectorsConfigModelElement featureVectorsConfigModelElement = getCorrespondingFeatureVectoreElement(iKASLConfigModelElement, getFeatureVectorsConfigModel().getFeatureVectorsConfigModelElements());
-            parser.parseInput(featureVectorsConfigModelElement.getFeatureVectorLocation());
+            
+            //parse the file with the correct input file
+            parser.parseInput(featureVectorsConfigModelElement.getFeatureVectorLocation()+ File.separator + currFileName);
+            
             IKASLCompAllInputs iKASLRuntimeHelper = new IKASLCompAllInputs();
             iKASLRuntimeHelper.setiWeights(parser.getiWeights());
             iKASLRuntimeHelper.setiNames(parser.getiNames());
-//            ArrayList<double[]> iWeights = parser.getiWeights();
-//            ArrayList<String> iNames = parser.getiNames();
 
             IKASLParams iKASLParams = new IKASLParams();
             iKASLParams.setDimensions(featureVectorsConfigModelElement.getDimSize());
@@ -93,6 +100,9 @@ public class WeavedMain {
                     helper.getiWeights(), helper.getiNames(), helper.getMin(), helper.getMax(), helper.getDimension());
         }
 
+        //increment the counter so the program will read the next input file, when we click
+        //'learn incrementally' button next.
+        counter++;
     }
 
     /**
