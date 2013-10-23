@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Collections;
-import sun.org.mozilla.javascript.internal.regexp.SubString;
 
 /**
  *
