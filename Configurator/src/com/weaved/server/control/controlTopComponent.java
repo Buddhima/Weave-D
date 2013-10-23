@@ -502,16 +502,53 @@ public final class controlTopComponent extends TopComponent {
         infoImage.setIcon(imgThisImg);
     }//GEN-LAST:event_generateLinksMouseEnter
 
+    boolean ikaslIsDone;
+    Object lock;
     private void runIkaslButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runIkaslButtonActionPerformed
 
+        ikaslIsDone = false;
+        lock = new Object();
         
-
+        Thread t = new Thread(new Runnable() {
+             public void run(){
+                jProgressBar1.setValue(20);
+             
+                synchronized(lock){
+                while(!ikaslIsDone){
+                    try {
+                         lock.wait(3000);
+                     } catch (InterruptedException ex) {
+                         Exceptions.printStackTrace(ex);
+                     }
+                }
+                }
+             
+                jProgressBar1.setValue(100);
+             
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+             
+                jProgressBar1.setValue(0);
+             }
+             
+         });
+         t.start(); 
+         
+        
         // get Starting time
         long startTime = System.currentTimeMillis();
-        consoleTxtArea.append("IKASL Algorithm is running...\n");
+        consoleTxtArea.append("IKASL Algorithm is being executed...\n");
         weavedMain.LoadConfigurations();
         weavedMain.runIKASL();
-        consoleTxtArea.append("Incrementally learning has been done successfully!\n");
+        
+        synchronized(lock){
+            ikaslIsDone = true;
+            lock.notifyAll();
+        }
+        consoleTxtArea.append("IKASL Algorithm execution has finished\n");
         // get end time (execution time of learning algorithm)
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
@@ -519,54 +556,10 @@ public final class controlTopComponent extends TopComponent {
         // display in the control window
         executionDurationLbl.setText(totalTime + " (ms)");
 
-        JOptionPane.showMessageDialog(this, "IKASL Run Successfully");
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Learning complete");
 
+         System.out.println("Clicked");
 
-        /* final Runnable run1 = new Runnable() {
-         @Override
-         public void run() {
-         ProgressHandle p = ProgressHandleFactory.createHandle("My Task");
-
-         p.start(100);
-
-         p.progress("Step 1", 10);
-         p.progress("Step 1", 10);
-         p.progress("Step 1", 10);
-         // do next work
-
-         p.progress("Step 1", 10);
-         p.progress("Step 1", 10);
-         p.progress("Step 1", 10);
-         p.progress(100);
-         p.finish();
-         }
-         };
-
-         Thread t = new Thread(run1);
-         t.start(); // start the task and progress visualisation
-         //        RequestProcessor.getDefault().post(run);
-         System.out.println("Clicked");*/
-
-        //        configProgressBar.setVisible(true);
-
-        //        configProgressBar.setValue(20);
-        //        progressLabel.setText("Start Learning ....");
-
-        //        JFrame processingFrame = new ProcessingForm();
-        //
-        //
-        //        processingFrame.setVisible(true);
-        //
-        //        try {
-        //            Thread.sleep(1500);
-        //        } catch (InterruptedException ex) {
-        //            Exceptions.printStackTrace(ex);
-        //        }
-        ////
-        //        processingFrame.setVisible(false);
-        //
-        //        // increase count
         countRound++;
     }//GEN-LAST:event_runIkaslButtonActionPerformed
 
