@@ -5,8 +5,6 @@
 /IKASL/build/
 /VHLinkGenerator/build/
 /IKASL/nbproject/private
-/Images/
-/Text/
 /Vector/
 /Configurator/build/
 /VHLinkGenerator/build/
@@ -15,3 +13,8 @@
 /FeatureExtractor/build/
 /junit/nbproject/private/
 /junit/build/
+/Config/feature_vectors_config.xml
+/Config/ikasl_params.xml
+/Config/important_percep_config.xml
+/Config/link_config_model.xml
+/Config/perception_config_model.xml
