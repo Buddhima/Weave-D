@@ -16,4 +16,6 @@ public class FileAndFolderNameList {
     public static String linkConfigFile = "link_config_model.xml";
     public static String importantPercepConfigFile = "important_percep_config.xml";
     public static String perceptionConfigFile = "perception_config_model.xml";
+    
+    public static String ikaslOutputFolder = "Output";
 }

@@ -25,7 +25,9 @@ import com.weaved.server.xml.elements.ImportantPercpConfigModelElement;
 import com.weaved.server.xml.models.IKASLConfigModel;
 import com.weaved.server.xml.models.ImportantPercpConfigModel;
 import com.weaved.server.xml.models.LinkConfigModel;
+import com.weaved.utils.FileAndFolderNameList;
 import com.weaved.utils.Tree;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -207,7 +209,7 @@ public class PercpModelFacade {
             if (ikasl.getMyID().equalsIgnoreCase(id)) {
                 currIKASL = ikasl;
                 currIKASL.runIKASLForCycle(currIKASL.retrieveLastLayer(), iWeights, iNames);
-                currIKASL.writeLearnCycleXML(id);
+                currIKASL.writeLearnCycleXML(FileAndFolderNameList.ikaslOutputFolder+File.separator+id);
                 System.out.println("----------------------- IKASL test results:" + currIKASL.getTesterTestResults().size() + " -------------------------------");
                 break;
             }
