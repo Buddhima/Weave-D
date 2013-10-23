@@ -71,7 +71,10 @@ public class WeavedMain {
 
             NumericalDataParser parser = new NumericalDataParser();
             FeatureVectorsConfigModelElement featureVectorsConfigModelElement = getCorrespondingFeatureVectoreElement(iKASLConfigModelElement, getFeatureVectorsConfigModel().getFeatureVectorsConfigModelElements());
-        
+
+            //This section is to find the text files with "input" as prefix
+            //and also find the highest number (i.e input1, input2,...)
+            //in the given folder
             File dir = new File(featureVectorsConfigModelElement.getFeatureVectorLocation());
             File[] files = dir.listFiles(new FilenameFilter() { 
     	         public boolean accept(File dir, String filename)
@@ -88,6 +91,8 @@ public class WeavedMain {
             }
             
             int maxFNumber = Collections.max(inputFileNumbers);
+            //check whether counter of the learnt input files is less or equal
+            //than the actual files in the folder
             if(counter>maxFNumber){
                 counterLessOrEqualThanFile=false;
             }

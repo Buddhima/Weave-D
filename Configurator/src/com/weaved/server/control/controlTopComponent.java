@@ -66,11 +66,8 @@ public final class controlTopComponent extends TopComponent {
         setName(Bundle.CTL_controlTopComponent());
         setToolTipText(Bundle.HINT_controlTopComponent());
 
-        // setLayout(new BorderLayout());
+        weavedMain = new WeavedMain();
 
-//        add(controlPanel, BorderLayout.SOUTH);
-//        add(buttonPanel, BorderLayout.CENTER);
-//        add(infoImage, BorderLayout.EAST);
         add(controlPanel);
         add(buttonPanel);
         add(infoImage);
@@ -507,7 +504,7 @@ public final class controlTopComponent extends TopComponent {
 
     private void runIkaslButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runIkaslButtonActionPerformed
 
-        weavedMain = new WeavedMain();
+        
 
         // get Starting time
         long startTime = System.currentTimeMillis();
