@@ -445,7 +445,7 @@ public final class queryTopComponent extends TopComponent {
 
         //map = model.getHitAndImageMap();
         if (list.size() > 0) {
-            jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, list, 5, "Images");
+            jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, list, 5, "Input\\Files\\Images");
             // Set the scrollpane viewport
             jImageScrollPane.setViewportView(jpanelImageGrid);
             jpanelImageGrid.setVisible(true);
@@ -500,7 +500,7 @@ public final class queryTopComponent extends TopComponent {
 
     private void jTextButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton1ActionPerformed
         try {
-            ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(0) + ".txt");
+            ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Input\\Files\\Text\\" + list.get(0) + ".txt");
             proc.start();
         } catch (Exception hj) {
             System.out.println("Error:" + hj);
@@ -509,7 +509,7 @@ public final class queryTopComponent extends TopComponent {
 
     private void jTextButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton2ActionPerformed
         try {
-            ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(1) + ".txt");
+            ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Input\\Files\\Text\\" + list.get(1) + ".txt");
             proc.start();
         } catch (Exception hj) {
             System.out.println("Error:" + hj);
@@ -518,7 +518,7 @@ public final class queryTopComponent extends TopComponent {
 
     private void jTextButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton3ActionPerformed
         try {
-            ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(2) + ".txt");
+            ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Input\\Files\\Text\\" + list.get(2) + ".txt");
             proc.start();
         } catch (Exception hj) {
             System.out.println("Error:" + hj);
@@ -527,7 +527,7 @@ public final class queryTopComponent extends TopComponent {
 
     private void jTextButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton4ActionPerformed
         try {
-            ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Text/" + list.get(3) + ".txt");
+            ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Input\\Files\\Text\\" + list.get(3) + ".txt");
             proc.start();
         } catch (Exception hj) {
             System.out.println("Error:" + hj);
