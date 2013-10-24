@@ -102,8 +102,8 @@ public final class queryTopComponent extends TopComponent {
         queryImageLocation = new javax.swing.JTextField();
         browseBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        image_type = new javax.swing.JRadioButton();
+        text_type = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         browsedImageLbl = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -142,12 +142,12 @@ public final class queryTopComponent extends TopComponent {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jLabel1.text")); // NOI18N
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(jRadioButton1, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jRadioButton1.text")); // NOI18N
+        buttonGroup1.add(image_type);
+        image_type.setSelected(true);
+        org.openide.awt.Mnemonics.setLocalizedText(image_type, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.image_type.text")); // NOI18N
 
-        buttonGroup1.add(jRadioButton2);
-        org.openide.awt.Mnemonics.setLocalizedText(jRadioButton2, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jRadioButton2.text")); // NOI18N
+        buttonGroup1.add(text_type);
+        org.openide.awt.Mnemonics.setLocalizedText(text_type, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.text_type.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jLabel3.text")); // NOI18N
 
@@ -167,9 +167,9 @@ public final class queryTopComponent extends TopComponent {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(browseBtn))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
+                        .addComponent(image_type)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton2)
+                        .addComponent(text_type)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -178,8 +178,8 @@ public final class queryTopComponent extends TopComponent {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
+                    .addComponent(image_type)
+                    .addComponent(text_type)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -490,7 +490,7 @@ public final class queryTopComponent extends TopComponent {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         copyImage(queryImageLocation.getText());
         try {
-            ProcessBuilder proc = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Vector", "Vector", "hsl_15", "t");
+            ProcessBuilder proc = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query", "hsl_15", "t");
             proc.start();
         } catch (Exception hj) {
             System.out.println("Error: " + hj);
@@ -537,6 +537,7 @@ public final class queryTopComponent extends TopComponent {
     private javax.swing.JButton browseBtn;
     private javax.swing.JLabel browsedImageLbl;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JRadioButton image_type;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jImageScrollPane;
@@ -550,8 +551,6 @@ public final class queryTopComponent extends TopComponent {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelTextGrid;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jTextButton1;
     private javax.swing.JButton jTextButton2;
@@ -559,6 +558,7 @@ public final class queryTopComponent extends TopComponent {
     private javax.swing.JButton jTextButton4;
     private javax.swing.JPanel jpanelImageGrid;
     private javax.swing.JTextField queryImageLocation;
+    private javax.swing.JRadioButton text_type;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -640,7 +640,7 @@ public final class queryTopComponent extends TopComponent {
 
         File file3 = new File("Stacks" + File.separator + "L0F1" + File.separator + "lastGLayer.ser");
         File file4 = new File("Stacks" + File.separator + "L0F2" + File.separator + "lastGLayer.ser");
-        File file5 = new File("Vector");
+        File file5 = new File("Query");
         file3.delete();
         file4.delete();
         for (File f : file5.listFiles()) {
@@ -651,7 +651,7 @@ public final class queryTopComponent extends TopComponent {
 
     private void cleanPreviousImages() {
 
-        File files = new File("Vector");
+        File files = new File("Query");
         String[] myFiles2;
         if (files.isDirectory()) {
             myFiles2 = files.list();
@@ -671,7 +671,7 @@ public final class queryTopComponent extends TopComponent {
 
             File afile = new File(fileLocation);
             newFileLocation = afile.getName();
-            File bfile = new File("Vector" + File.separator + newFileLocation);
+            File bfile = new File("Query" + File.separator + newFileLocation);
 
             inStream = new FileInputStream(afile);
             outStream = new FileOutputStream(bfile);
@@ -681,9 +681,7 @@ public final class queryTopComponent extends TopComponent {
             int length;
             //copy the file content in bytes 
             while ((length = inStream.read(buffer)) > 0) {
-
                 outStream.write(buffer, 0, length);
-
             }
 
             inStream.close();

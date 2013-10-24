@@ -354,8 +354,11 @@ public class ExtractorMainUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new ExtractorMainUI().setVisible(true);
+                ExtractorMainUI emu = new ExtractorMainUI();
+                emu.setVisible(true);
+                emu.setLocationRelativeTo(null);
             }
         });
     }
