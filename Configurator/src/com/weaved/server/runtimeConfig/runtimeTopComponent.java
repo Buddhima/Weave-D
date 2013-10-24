@@ -32,7 +32,7 @@ persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 preferredID = "runtimeTopComponent")
 @Messages({
     "CTL_runtimeAction=runtime",
-    "CTL_runtimeTopComponent=Runtime Settings",
+    "CTL_runtimeTopComponent=Settings",
     "HINT_runtimeTopComponent=This is a runtime window"
 })
 public final class runtimeTopComponent extends TopComponent {

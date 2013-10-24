@@ -49,7 +49,7 @@ persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 preferredID = "configuratorTopComponent")
 @Messages({
     "CTL_configuratorAction=configurator",
-    "CTL_configuratorTopComponent=Configurator",
+    "CTL_configuratorTopComponent=Perception Model Builder",
     "HINT_configuratorTopComponent=This is a configurator window"
 })
 public final class configuratorTopComponent extends TopComponent {

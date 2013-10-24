@@ -52,7 +52,7 @@ persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 preferredID = "controlTopComponent")
 @Messages({
     "CTL_controlAction=control",
-    "CTL_controlTopComponent=Control",
+    "CTL_controlTopComponent=Control Panel",
     "HINT_controlTopComponent=This is a control window"
 })
 public final class controlTopComponent extends TopComponent {
