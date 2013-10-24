@@ -438,7 +438,7 @@ public final class queryTopComponent extends TopComponent {
         jTextButton4.setVisible(false);
         //cleanDirectories();
 
-        list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(QueryObjectType.IMAGE, getInputFeatureVector("Vector" + File.separator + "existenceResult.txt"));
+        list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"));
         //list = weavedMain.runIKASL(getInputFeatureVector("Vector" + File.separator + "existenceResult.txt"));
 
         //System.out.println(">> " + UIValues.getINPUT_FILE_LOCATION());
