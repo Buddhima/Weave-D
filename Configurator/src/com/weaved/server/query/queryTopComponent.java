@@ -39,7 +39,7 @@ import org.openide.util.NbBundle.Messages;
 autostore = false)
 @TopComponent.Description(
     preferredID = "queryTopComponent",
-iconBase = "com/weaved/server/runtimeConfig/icon_16.png",
+iconBase = "com/weaved/server/query/icon_16.png",
 //iconBase="SET/PATH/TO/ICON/HERE", 
 persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "editor", openAtStartup = false)

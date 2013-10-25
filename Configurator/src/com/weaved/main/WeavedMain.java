@@ -8,6 +8,9 @@ import com.ikasl.objects.IKASLParams;
 import com.weaved.config.loaders.FeatureVectorsConfigLoader;
 import com.weaved.config.loaders.IKASLConfigLoader;
 import com.weaved.config.loaders.LinkGeneratorConfigLoader;
+import com.weaved.config.loaders.PercpModelConfigLoader;
+import com.weaved.config.models.PercpModelConfigModel;
+import com.weaved.enums.PercpModelEnums;
 import com.weaved.input.NumericalDataParser;
 import com.weaved.perception.model.main.PercpModelFacade;
 import com.weaved.server.xml.elements.FeatureVectorsConfigModelElement;
@@ -27,6 +30,8 @@ import java.util.Collections;
  */
 public class WeavedMain {
 
+    private PercpModelConfigLoader percpConfigLoader;
+    private PercpModelConfigModel percpConfigModel; 
     private PercpModelFacade percpModelFacade;
     private FeatureVectorsConfigLoader featureVectorsConfigLoader;
     private FeatureVectorsConfigModel featureVectorsConfigModel;
@@ -50,8 +55,35 @@ public class WeavedMain {
         //e.g. if counter == 1, we're reading input1.txt
         // if counter ==2, we're reading input2.txt        
         counter = 1;
+        
+        //================= THIS METHOD is GIVING THE PROBLEM =======================
+        //============ IllegalStateException Cannot find top component with preferred ID =======
+        //loadPercpConfigModel();
+        //loadLinkConfigModel();
+        //====================================================================================
+        
+        //ArrayList<String> links = percpModelFacade.getLinksForQueryUI(linkConfigModel,PercpModelEnums.FEATURE);
     }
 
+    public void loadLinkConfigModel(){
+        //TODO: Need to write code for loading the link configuration xml
+        //TODO: Need to check whether link config model/link config loader classes are working properly
+        linkConfigLoader = new LinkGeneratorConfigLoader();
+        linkConfigLoader.loadConfig(FileAndFolderNameList.rootConfigFolder + File.separator + FileAndFolderNameList.linkConfigFile);
+        linkConfigModel = (LinkConfigModel) linkConfigLoader.getPopulatedConfigModel();    
+    }
+    
+    public void loadPercpConfigModel(){
+        percpConfigLoader = new PercpModelConfigLoader();
+        percpConfigLoader.loadConfig(FileAndFolderNameList.rootConfigFolder + File.separator + FileAndFolderNameList.perceptionConfigFile);
+        percpConfigModel = (PercpModelConfigModel) percpConfigLoader.getPopulatedConfigModel();
+        
+        //calling test method to make sure the method is working fine.
+        //============= DELETE after TESTING =--------------------===
+        percpModelFacade.testImagePercp(percpConfigModel);
+        
+    }
+    
     /**
      * @param args the command line arguments
      */

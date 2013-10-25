@@ -41,7 +41,7 @@ import org.openide.windows.WindowManager;
 autostore = false)
 @TopComponent.Description(
     preferredID = "controlTopComponent",
-iconBase = "com/weaved/server/summary/icon_16.png",
+iconBase = "com/weaved/server/control/icon_16.png",
 //iconBase="SET/PATH/TO/ICON/HERE", 
 persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "editor", openAtStartup = false)

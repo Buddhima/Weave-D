@@ -19,6 +19,7 @@ import com.weaved.config.loaders.ImportantPercpConfigLoader;
 import com.weaved.config.loaders.LinkGeneratorConfigLoader;
 import com.weaved.config.loaders.PercpModelConfigLoader;
 import com.weaved.config.models.PercpModelConfigModel;
+import com.weaved.enums.PercpModelEnums;
 import com.weaved.query.enums.QueryObjectType;
 import com.weaved.server.xml.elements.IKASLConfigModelElement;
 import com.weaved.server.xml.elements.ImportantPercpConfigModelElement;
@@ -26,6 +27,7 @@ import com.weaved.server.xml.models.IKASLConfigModel;
 import com.weaved.server.xml.models.ImportantPercpConfigModel;
 import com.weaved.server.xml.models.LinkConfigModel;
 import com.weaved.utils.FileAndFolderNameList;
+import com.weaved.utils.PerceptionModelUtil;
 import com.weaved.utils.Tree;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -218,6 +220,52 @@ public class PercpModelFacade {
 
     }
 
+    //===================== This is a test method ======================================
+    public void testImagePercp(PercpModelConfigModel pmModel){
+        ArrayList<String> test = PerceptionModelUtil.getImagePercpModelElements(pmModel);
+        ArrayList<String> test2 = PerceptionModelUtil.getTextPercpModelElements(pmModel);
+       
+    }
+    //=================================================================================
+    
+    /**
+     * This method retrieve the cross feature and temporal links present in a particular level
+     * in the perception hierarchy
+     * @param lConfModel This is the link configuration model saved during creation of the perception model
+     * @param level This is an enum indicating the level which the links should be found
+     * @return 
+     */
+    public ArrayList<String> getLinksForQueryUI(LinkConfigModel lConfModel, PercpModelEnums level){
+        ArrayList<String> linksList = new ArrayList<String>();
+        ArrayList<String> cLinks = lConfModel.getCrossLinks();
+        ArrayList<String> tLinks = lConfModel.getTemporalLinks();
+        for(String str : cLinks){
+            if(level==PercpModelEnums.PERCEPTION && str.startsWith("L0")){
+                linksList.add(str);
+            }
+            if(level==PercpModelEnums.FEATURE && str.startsWith("L1")){
+                linksList.add(str);
+            }
+            if(level==PercpModelEnums.DIMENSION && str.startsWith("L2")){
+                linksList.add(str);
+            }
+        }
+        
+        for(String str : tLinks){
+            if(level==PercpModelEnums.PERCEPTION && str.startsWith("L0")){
+                linksList.add(str);
+            }
+            if(level==PercpModelEnums.FEATURE && str.startsWith("L1")){
+                linksList.add(str);
+            }
+            if(level==PercpModelEnums.DIMENSION && str.startsWith("L2")){
+                linksList.add(str);
+            }
+        }
+        
+        return linksList;
+    }
+    
     /**
      * This method will be used to create the high-level perception using information
      * available at the dimension level. Currently we're not interested in using
