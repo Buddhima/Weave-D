@@ -50,7 +50,7 @@ preferredID = "configuratorTopComponent")
 @Messages({
     "CTL_configuratorAction=configurator",
     "CTL_configuratorTopComponent=Perception Model Builder",
-    "HINT_configuratorTopComponent=This is a configurator window"
+    "HINT_configuratorTopComponent=Perception Model Builder"
 })
 public final class configuratorTopComponent extends TopComponent {
 
