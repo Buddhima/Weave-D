@@ -4,6 +4,7 @@
  */
 package com.weaved.server.control;
 
+import com.weaved.server.control.xmlparser.DomParser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -23,9 +24,9 @@ public class VisualizeSelectionForm extends javax.swing.JFrame {
     private String arena3dPath = System.getProperty("user.dir") + "\\Arena3D\\";
     String basePath = arena3dPath + "files\\";
     String currentPath = "";
+    VisualizationFormHelper helper = null;
 
     // Important: DO NOT use SPACE in Arena #D input file names
-    
     /**
      * Creates new form VisualizeSelectionForm
      */
@@ -34,7 +35,10 @@ public class VisualizeSelectionForm extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         // Set currentpath to default radio selected
-        changeCurrentPath();
+//        changeCurrentPath();
+
+        helper = new VisualizationFormHelper();
+        helper.getModel(System.getProperty("user.dir") + "\\Config\\perception_config_model.xml");
 
         // Load currently selected level files
         selectionChanged(null);
@@ -185,30 +189,37 @@ public class VisualizeSelectionForm extends javax.swing.JFrame {
     private void StartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartButtonActionPerformed
         try {
             // TODO add your handling code here:
-//            System.out.println(currentPath);
-            String executePath = currentPath+ fileList.getSelectedItem().toString()+".txt";
-//            System.out.println(executePath);
+            String executePath = basePath + "input.txt";
+
+            // Create output for Arena 3D -- * file override when doing several visualizing same time
+            currentPath = System.getProperty("user.dir") + "\\Output\\" + fileList.getSelectedItem().toString();
+            try {
+                new DomParser(currentPath).parseAndWriteToFile(executePath);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Please Makesure You have Extracted Features!", "Failed To Generate Visual Output", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             System.out.println("java -jar " + arena3dPath + "\\Arena.jar" + " " + executePath);
             Runtime.getRuntime().exec("java -jar " + arena3dPath + "\\Arena.jar" + " " + executePath);
-            
-            
-            
+
+
+
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
-        
+
     }//GEN-LAST:event_StartButtonActionPerformed
 
     private void selectionChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectionChanged
         // TODO add your handling code here:
         // on Radio button selection change
-
-
-        changeCurrentPath();
-
-        setTxtFileNames();
-
-
+        if (DimensionRadioButton.isSelected()) {
+            setTxtFileNames(helper.dimensions);
+        } else if (FeatureRadioButton.isSelected()) {
+            setTxtFileNames(helper.features);
+        } else if (PerceptionRadioButton.isSelected()) {
+            setTxtFileNames(helper.perceptions);
+        }
 
 
     }//GEN-LAST:event_selectionChanged
@@ -232,42 +243,35 @@ public class VisualizeSelectionForm extends javax.swing.JFrame {
         this.roundCount = roundCount;
     }
 
-    private void changeCurrentPath() {
-        if (DimensionRadioButton.isSelected()) {
-            currentPath = basePath + "dimension\\";
-        } else if (FeatureRadioButton.isSelected()) {
-            currentPath = basePath + "feature\\";
-        } else if (PerceptionRadioButton.isSelected()) {
-            currentPath = basePath + "perception\\";
-        }
-    }
-
-    private void setTxtFileNames() {
+//    private void changeCurrentPath() {
+//        if (DimensionRadioButton.isSelected()) {
+//            currentPath = basePath + "dimension\\";
+//        } else if (FeatureRadioButton.isSelected()) {
+//            currentPath = basePath + "feature\\";
+//        } else if (PerceptionRadioButton.isSelected()) {
+//            currentPath = basePath + "perception\\";
+//        }
+//    }
+    private void setTxtFileNames(ArrayList<String> componentList) {
         // get filed in given path
 
         String file;
-        File folder = new File(currentPath);
-        File[] listOfFiles = folder.listFiles();
+//        File folder = new File(currentPath);
+//        File[] listOfFiles = folder.listFiles();
         fileList.removeAllItems();
 
         // If preprocessing steps not taken, no files can be found
-        if (listOfFiles.length == 0) {
+        if (componentList.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Do Incrmental Learning and Generationg Links before visualizing", "Required files not fount", JOptionPane.ERROR_MESSAGE);
 
             return;
         }
 
 
-        for (int i = 0; i < listOfFiles.length; i++) {
+        for (int i = 0; i < componentList.size(); i++) {
 
-            if (listOfFiles[i].isFile()) {
-                file = listOfFiles[i].getName();
-                if (file.endsWith(".txt")) {
+            fileList.addItem(componentList.get(i));
 
-                    fileList.addItem(new String(file.substring(0, file.lastIndexOf('.'))));
-
-                }
-            }
         }
 
     }
