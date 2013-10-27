@@ -4,7 +4,6 @@
  */
 package com.weaved.server.query;
 
-
 import com.weaved.main.WeaveDMainHolder;
 import com.weaved.enums.PercpModelEnums;
 
@@ -58,17 +57,17 @@ preferredID = "queryTopComponent")
     "HINT_queryTopComponent=This is a query window"
 })
 public final class queryTopComponent extends TopComponent {
-
+    
     public static ArrayList<String> list = new ArrayList<String>();
     public WeavedMain weavedMain;
     public PercpModelFacade percpModelFacade;
-
+    
     public queryTopComponent() {
         initComponents();
         jpanelImageGrid = new JPanel();
         setName(Bundle.CTL_queryTopComponent());
         setToolTipText(Bundle.HINT_queryTopComponent());
-
+        
         weavedMain = WeaveDMainHolder.weavedMain;
 
 
@@ -76,28 +75,28 @@ public final class queryTopComponent extends TopComponent {
         for (PercpModelEnums item : PercpModelEnums.values()) {
             percptLevlCmb.addItem(("" + item).toString().toLowerCase());
         }
-
+        
         jLabelNoImages.setVisible(false);
         jTextButton1.setOpaque(false);
         jTextButton1.setContentAreaFilled(false);
         jTextButton1.setBorderPainted(false);
         jTextButton1.setVisible(false);
-
+        
         jTextButton2.setOpaque(false);
         jTextButton2.setContentAreaFilled(false);
         jTextButton2.setBorderPainted(false);
         jTextButton2.setVisible(false);
-
+        
         jTextButton3.setOpaque(false);
         jTextButton3.setContentAreaFilled(false);
         jTextButton3.setBorderPainted(false);
         jTextButton3.setVisible(false);
-
+        
         jTextButton4.setOpaque(false);
         jTextButton4.setContentAreaFilled(false);
         jTextButton4.setBorderPainted(false);
         jTextButton4.setVisible(false);
-
+        
     }
 
     /**
@@ -463,7 +462,7 @@ public final class queryTopComponent extends TopComponent {
     private void queryImageLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queryImageLocationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_queryImageLocationActionPerformed
-
+    
     private void browseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseBtnActionPerformed
         cleanPreviousImages();
         JFileChooser chooser = new JFileChooser(".");
@@ -486,7 +485,7 @@ public final class queryTopComponent extends TopComponent {
             browsedImageLbl.setIcon(imageIcon);
         }
     }//GEN-LAST:event_browseBtnActionPerformed
-
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         jpanelImageGrid.removeAll();
         jLabelNoImages.setVisible(false);
@@ -496,7 +495,7 @@ public final class queryTopComponent extends TopComponent {
         jTextButton4.setVisible(false);
         //cleanDirectories();
 
-        list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"),"L2F0");
+        list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"), "L2F0");
         ArrayList<String> temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"), "L2F0", 1);
         //list = weavedMain.runIKASL(getInputFeatureVector("Vector" + File.separator + "existenceResult.txt"));
 
@@ -514,7 +513,7 @@ public final class queryTopComponent extends TopComponent {
             jpanelImageGrid.setVisible(false);
             jImageScrollPane.setVisible(false);
         }
-
+        
         if (list.size() >= 4) {
             jTextButton1.setText("<html><u>" + list.get(0) + ".txt" + "</u></html>");
             jTextButton2.setText("<html><u>" + list.get(1) + ".txt" + "</u></html>");
@@ -531,25 +530,25 @@ public final class queryTopComponent extends TopComponent {
             jTextButton1.setVisible(true);
             jTextButton2.setVisible(true);
             jTextButton3.setVisible(true);
-
+            
         } else if (list.size() == 2) {
             jTextButton1.setText("<html><u>" + list.get(0) + ".txt" + "</u></html>");
             jTextButton2.setText("<html><u>" + list.get(1) + ".txt" + "</u></html>");
             jTextButton1.setVisible(true);
             jTextButton2.setVisible(true);
-
+            
         } else if (list.size() == 1) {
             jTextButton1.setText("<html><u>" + list.get(0) + ".txt" + "</u></html>");
             jTextButton1.setVisible(true);
         }
         JOptionPane.showMessageDialog(this, "Query Successful");
-
+        
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Copy file to the Query folder
         copyQueryFile(queryImageLocation.getText());
-
+        
         if (image_type.isSelected()) {
             System.out.println(">buttonGroup1.getSelection().getActionCommand()");
             try {
@@ -560,18 +559,18 @@ public final class queryTopComponent extends TopComponent {
             }
         }
         if (text_type.isSelected()) {
-
+            
             try {
 //                ProcessBuilder proc_edges = new ProcessBuilder("java", "-jar", "FeatureExtractor" + File.separator + "program" + File.separator + "TextFeatureExtrationLib" + File.separator + "TextFeatureExtractionLib.jar Query Query\\textfeatures.txt");
 //                proc_edges.start();
-                 Runtime.getRuntime().exec("java -jar FeatureExtractor\\TextFeatureExtractionLib.jar Query Query\\textFeatures.txt FeatureExtractor\\sportKeywords");
+                Runtime.getRuntime().exec("java -jar FeatureExtractor\\TextFeatureExtractionLib.jar Query Query\\textFeatures.txt FeatureExtractor\\sportKeywords");
             } catch (Exception hj) {
                 System.out.println("Error: " + hj);
             }
         }
-
+        
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
     private void jTextButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton1ActionPerformed
         try {
             ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Input\\Files\\Text\\" + list.get(0) + ".txt");
@@ -580,7 +579,7 @@ public final class queryTopComponent extends TopComponent {
             System.out.println("Error:" + hj);
         }
     }//GEN-LAST:event_jTextButton1ActionPerformed
-
+    
     private void jTextButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton2ActionPerformed
         try {
             ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Input\\Files\\Text\\" + list.get(1) + ".txt");
@@ -589,7 +588,7 @@ public final class queryTopComponent extends TopComponent {
             System.out.println("Error:" + hj);
         }
     }//GEN-LAST:event_jTextButton2ActionPerformed
-
+    
     private void jTextButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton3ActionPerformed
         try {
             ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Input\\Files\\Text\\" + list.get(2) + ".txt");
@@ -598,7 +597,7 @@ public final class queryTopComponent extends TopComponent {
             System.out.println("Error:" + hj);
         }
     }//GEN-LAST:event_jTextButton3ActionPerformed
-
+    
     private void jTextButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextButton4ActionPerformed
         try {
             ProcessBuilder proc = new ProcessBuilder("notepad.exe", "Input\\Files\\Text\\" + list.get(3) + ".txt");
@@ -607,16 +606,31 @@ public final class queryTopComponent extends TopComponent {
             System.out.println("Error:" + hj);
         }
     }//GEN-LAST:event_jTextButton4ActionPerformed
-
+    
     private void text_typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_typeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_text_typeActionPerformed
-
+    
     private void percptLevlCmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_percptLevlCmbActionPerformed
+        crossLnkCmb.removeAllItems();
         String selectedLevel = percptLevlCmb.getSelectedItem().toString();
-
+        ArrayList<String> allLinksofSelectedLevel = null;
+        
         if (!"Select a perception level".equals(selectedLevel)) {
-            //weavedMain.getDataOnTemporalLink();
+            if (selectedLevel.equalsIgnoreCase(PercpModelEnums.DIMENSION.toString())) {
+                allLinksofSelectedLevel = weavedMain.getCrossAndTempLinksInLevel(PercpModelEnums.DIMENSION);
+                System.out.println("");
+            } else if (selectedLevel.equalsIgnoreCase(PercpModelEnums.FEATURE.toString())) {
+                allLinksofSelectedLevel = weavedMain.getCrossAndTempLinksInLevel(PercpModelEnums.FEATURE);
+                System.out.println("");
+            } else if (selectedLevel.equalsIgnoreCase(PercpModelEnums.PERCEPTION.toString())) {
+                allLinksofSelectedLevel = weavedMain.getCrossAndTempLinksInLevel(PercpModelEnums.PERCEPTION);
+            }
+            for (String s : allLinksofSelectedLevel) {
+                if (s.contains("-")) {
+                    crossLnkCmb.addItem(s.toString());
+                }
+            }
         }
     }//GEN-LAST:event_percptLevlCmbActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -656,40 +670,40 @@ public final class queryTopComponent extends TopComponent {
     public void componentOpened() {
         // TODO add custom code on component opening
     }
-
+    
     @Override
     public void componentClosed() {
         // TODO add custom code on component closing
     }
-
+    
     void writeProperties(java.util.Properties p) {
         // better to version settings since initial version as advocated at
         // http://wiki.apidesign.org/wiki/PropertyFiles
         p.setProperty("version", "1.0");
         // TODO store your settings
     }
-
+    
     void readProperties(java.util.Properties p) {
         String version = p.getProperty("version");
         // TODO read your settings according to their version
     }
-
+    
     private double[] getInputFeatureVector(String featureVectorFile) {
         double[] featureVector = new double[15];
         String input = null;
         BufferedReader br = null;
-
+        
         try {
             String sCurrentLine;
             br = new BufferedReader(new FileReader(featureVectorFile));
-
+            
             while ((sCurrentLine = br.readLine()) != null) {
                 input = sCurrentLine;
             }
-
+            
         } catch (IOException e) {
             e.printStackTrace();
-
+            
         } finally {
             try {
                 if (br != null) {
@@ -700,15 +714,15 @@ public final class queryTopComponent extends TopComponent {
             }
         }
         String[] inputString = input.split(",");
-
+        
         for (int i = 1; i < inputString.length; i++) {
             featureVector[i - 1] = Double.parseDouble(inputString[i]);
         }
         return featureVector;
     }
-
+    
     private void cleanDirectories() {
-
+        
         File file1 = new File("L0F1");
         String[] myFiles1;
         if (file1.isDirectory()) {
@@ -718,7 +732,7 @@ public final class queryTopComponent extends TopComponent {
                 myFile.delete();
             }
         }
-
+        
         File file2 = new File("L0F2");
         String[] myFiles2;
         if (file2.isDirectory()) {
@@ -728,7 +742,7 @@ public final class queryTopComponent extends TopComponent {
                 myFile.delete();
             }
         }
-
+        
         File file3 = new File("Stacks" + File.separator + "L0F1" + File.separator + "lastGLayer.ser");
         File file4 = new File("Stacks" + File.separator + "L0F2" + File.separator + "lastGLayer.ser");
         File file5 = new File("Query");
@@ -737,11 +751,11 @@ public final class queryTopComponent extends TopComponent {
         for (File f : file5.listFiles()) {
             f.delete();
         }
-
+        
     }
-
+    
     private void cleanPreviousImages() {
-
+        
         File files = new File("Query");
         String[] myFiles2;
         if (files.isDirectory()) {
@@ -752,37 +766,37 @@ public final class queryTopComponent extends TopComponent {
             }
         }
     }
-
+    
     private void copyQueryFile(String fileLocation) {
         String newFileLocation = null;
         InputStream inStream = null;
         OutputStream outStream = null;
-
+        
         try {
-
+            
             File afile = new File(fileLocation);
             newFileLocation = afile.getName();
             File bfile = new File("Query" + File.separator + newFileLocation);
-
+            
             inStream = new FileInputStream(afile);
             outStream = new FileOutputStream(bfile);
-
+            
             byte[] buffer = new byte[1024];
-
+            
             int length;
             //copy the file content in bytes 
             while ((length = inStream.read(buffer)) > 0) {
                 outStream.write(buffer, 0, length);
             }
-
+            
             inStream.close();
             outStream.close();
-
+            
             System.out.println("File is copied successful!");
-
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        
     }
 }

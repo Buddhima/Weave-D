@@ -31,24 +31,18 @@ import java.util.Collections;
 public class WeavedMain {
 
     private PercpModelConfigLoader percpConfigLoader;
-    private PercpModelConfigModel percpConfigModel; 
+    private PercpModelConfigModel percpConfigModel;
     private PercpModelFacade percpModelFacade;
-    
     private FeatureVectorsConfigLoader featureVectorsConfigLoader;
     private FeatureVectorsConfigModel featureVectorsConfigModel;
     private ArrayList<FeatureVectorsConfigModelElement> featureVectorsConfigModelElements;
-    
     private IKASLConfigLoader iKASLConfigLoader;
     private IKASLConfigModel iKASLConfigModel;
     private ArrayList<IKASLConfigModelElement> iKASLConfigModelElements;
     ArrayList<IKASLCompAllInputs> iKASLRuntimeHelpers;
-            
     private LinkGeneratorConfigLoader linkConfigLoader;
     private LinkConfigModel linkConfigModel;
-    
     private String OUTPUT_LOCATION = FileAndFolderNameList.ikaslOutputFolder;
-    
-    
     Boolean counterLessOrEqualThanFile;
     int counter;
     /*--------------------------------------------------------
@@ -61,76 +55,76 @@ public class WeavedMain {
     public WeavedMain() {
 
         percpModelFacade = new PercpModelFacade();
-        
+
         // This counter is used to keep track of which input file we're currently reading
         //e.g. if counter == 1, we're reading input1.txt
         // if counter ==2, we're reading input2.txt        
         counter = 1;
-        
+
         //================= THIS METHOD is GIVING THE PROBLEM =======================
         //============ IllegalStateException Cannot find top component with preferred ID =======
-        
+
         //====================================================================================
-        
+
         //ArrayList<String> links = percpModelFacade.getLinksForQueryUI(linkConfigModel,PercpModelEnums.FEATURE);
     }
 
-    public void loadConfiguration(){
+    public void loadConfiguration() {
         loadPercpConfigModel();
         loadIKASLConfigModel();
         loadLinkConfigModel();
     }
-    
-    private void loadLinkConfigModel(){
+
+    private void loadLinkConfigModel() {
         //TODO: Need to write code for loading the link configuration xml
         //TODO: Need to check whether link config model/link config loader classes are working properly
         linkConfigLoader = new LinkGeneratorConfigLoader();
         linkConfigLoader.loadConfig(FileAndFolderNameList.rootConfigFolder + File.separator + FileAndFolderNameList.linkConfigFile);
-        linkConfigModel = (LinkConfigModel) linkConfigLoader.getPopulatedConfigModel();    
+        linkConfigModel = (LinkConfigModel) linkConfigLoader.getPopulatedConfigModel();
     }
-    
-    private void loadPercpConfigModel(){
+
+    private void loadPercpConfigModel() {
         percpConfigLoader = new PercpModelConfigLoader();
         percpConfigLoader.loadConfig(FileAndFolderNameList.rootConfigFolder + File.separator + FileAndFolderNameList.perceptionConfigFile);
         percpConfigModel = (PercpModelConfigModel) percpConfigLoader.getPopulatedConfigModel();
-        
+
         //calling test method to make sure the method is working fine.
         //============= DELETE after TESTING =--------------------===
         //percpModelFacade.testImagePercp(percpConfigModel);   
     }
-    
-    private void loadIKASLConfigModel(){
-        
+
+    private void loadIKASLConfigModel() {
+
         String configFolder = FileAndFolderNameList.rootConfigFolder;
         featureVectorsConfigLoader = new FeatureVectorsConfigLoader();
         featureVectorsConfigLoader.loadConfig(configFolder + File.separator + FileAndFolderNameList.featureVecConfigFile);
-        featureVectorsConfigModel =(FeatureVectorsConfigModel) featureVectorsConfigLoader.getPopulatedConfigModel();
+        featureVectorsConfigModel = (FeatureVectorsConfigModel) featureVectorsConfigLoader.getPopulatedConfigModel();
 
         iKASLConfigLoader = new IKASLConfigLoader();
-        iKASLConfigLoader.loadConfig(configFolder + File.separator + FileAndFolderNameList.ikaslParamFile);        
+        iKASLConfigLoader.loadConfig(configFolder + File.separator + FileAndFolderNameList.ikaslParamFile);
         iKASLConfigModel = (IKASLConfigModel) iKASLConfigLoader.getPopulatedConfigModel();
-        
+
         featureVectorsConfigModelElements = new ArrayList<FeatureVectorsConfigModelElement>();
         iKASLConfigModelElements = new ArrayList<IKASLConfigModelElement>();
-        
+
         iKASLConfigModelElements.addAll(getIKASLModelElementWithPrefix(
                 "L2", iKASLConfigModel.getiKASLConfigModelElements()));
-        
+
         for (IKASLConfigModelElement iKASLConfigModelElement : iKASLConfigModelElements) {
             featureVectorsConfigModelElements.add(getCorrespondingFeatureVectoreElement(iKASLConfigModelElement, getFeatureVectorsConfigModel().getFeatureVectorsConfigModelElements()));
         }
-        
+
         iKASLRuntimeHelpers = new ArrayList<IKASLCompAllInputs>();
         ArrayList<IKASLParams> paramList = new ArrayList<IKASLParams>();
         ArrayList<String> idList = new ArrayList<String>();
-        
+
         for (int i = 0; i < iKASLConfigModelElements.size(); i++) {
-            
+
             IKASLConfigModelElement iKASLConfigModelElement = iKASLConfigModelElements.get(i);
             FeatureVectorsConfigModelElement featureVectorsConfigModelElement = featureVectorsConfigModelElements.get(i);
-            
+
             IKASLCompAllInputs iKASLRuntimeHelper = new IKASLCompAllInputs();
-            
+
             IKASLParams iKASLParams = new IKASLParams();
             iKASLParams.setDimensions(featureVectorsConfigModelElement.getDimSize());
             iKASLParams.setSpreadFactor(iKASLConfigModelElement.getSpreadFactor());
@@ -149,14 +143,14 @@ public class WeavedMain {
             iKASLRuntimeHelpers.add(iKASLRuntimeHelper);
             paramList.add(iKASLParams);
             idList.add(iKASLConfigModelElement.getStackId());
-            
+
         }
-        
-        
+
+
         getPercpModelFacade().createIKASLComponents(paramList.size(), paramList, idList);
-        
+
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -205,14 +199,14 @@ public class WeavedMain {
                 parser.parseInput(featureVectorsConfigModelElements.get(i).getFeatureVectorLocation() + File.separator + currFileName);
 
                 IKASLCompAllInputs helper = iKASLRuntimeHelpers.get(i);
-                
+
                 helper.setiWeights(parser.getiWeights());
                 helper.setiNames(parser.getiNames());
 
-                
+
                 getPercpModelFacade().runIKASLTest(helper.getStackId(), helper.getiKASLParams(),
-                            helper.getiWeights(), helper.getiNames(), helper.getMin(), helper.getMax(), helper.getDimension());
-                
+                        helper.getiWeights(), helper.getiNames(), helper.getMin(), helper.getMax(), helper.getDimension());
+
             }
             //increment the counter so the program will read the next input file, when we click
             //'learn incrementally' button next.
@@ -227,7 +221,7 @@ public class WeavedMain {
      * dynamically
      */
     public void runLinkGenerator() {
-        
+
         //=================== OBSOLETE CODE ==========================================
         //create only cross feature links, no temporal links
         //getPercpModelFacade().runLinkGeneration("L0F1", "L0F2", false, true);
@@ -238,19 +232,19 @@ public class WeavedMain {
         //TODO: Check whether temporal links are workng properly
         for (String link : linkConfigModel.getCrossLinks()) {
             String[] items = link.split("-");
-            getPercpModelFacade().runCrossFeatureLinkGeneration(OUTPUT_LOCATION ,items[0], items[1]);
+            getPercpModelFacade().runCrossFeatureLinkGeneration(OUTPUT_LOCATION, items[0], items[1]);
         }
-        
+
         ArrayList<String> allNodeVals = percpConfigModel.getPercpModelTree().getAllNodeVals();
-        for(String id : allNodeVals){
-            if(id.startsWith("L2")){
-                getPercpModelFacade().runTemporalLinkGeneration(OUTPUT_LOCATION ,id);
+        for (String id : allNodeVals) {
+            if (id.startsWith("L2")) {
+                getPercpModelFacade().runTemporalLinkGeneration(OUTPUT_LOCATION, id);
             }
         }
         /*
-        for(String id : idList){
-            getPercpModelFacade().runTemporalLinkGeneration(OUTPUT_LOCATION ,id);
-        }*/
+         for(String id : idList){
+         getPercpModelFacade().runTemporalLinkGeneration(OUTPUT_LOCATION ,id);
+         }*/
     }
 
     /**
@@ -259,7 +253,6 @@ public class WeavedMain {
     public PercpModelFacade getPercpModelFacade() {
         return percpModelFacade;
     }
-
 
     /**
      * Returns the IKASLConfigModelElements with the given prefix. E.g. if the
@@ -335,5 +328,9 @@ public class WeavedMain {
      */
     public void setiKASLConfigModel(IKASLConfigModel iKASLConfigModel) {
         this.iKASLConfigModel = iKASLConfigModel;
+    }
+
+    public ArrayList<String> getCrossAndTempLinksInLevel(PercpModelEnums level) {
+        return getPercpModelFacade().getLinksForQueryUI(linkConfigModel, level);
     }
 }
