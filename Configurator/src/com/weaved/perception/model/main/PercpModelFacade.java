@@ -10,10 +10,14 @@ import com.ikasl.objects.IKASLParams;
 import com.ikasl.objects.TemporalLinkData;
 import com.ikasl.objects.cross.GNodeHitValueObject;
 import com.ikasl.objects.cross.GNodeHitValueObjectList;
+import com.ikasl.objects.temporal.GNodeHitValTemplObject;
+
+
 import com.ikasl.utils.IKASLConstants;
 import com.vhlinker.commands.VHLinkerCommand;
 import com.vhlinker.main.VHLinkerFacade;
 import com.vhlinker.util.EntityIDGenerator;
+
 import com.weaved.config.loaders.IKASLConfigLoader;
 import com.weaved.config.loaders.ImportantPercpConfigLoader;
 import com.weaved.config.loaders.LinkGeneratorConfigLoader;
@@ -29,10 +33,13 @@ import com.weaved.server.xml.models.LinkConfigModel;
 import com.weaved.utils.FileAndFolderNameList;
 import com.weaved.utils.PerceptionModelUtil;
 import com.weaved.utils.Tree;
+import com.weaved.utils.TreeNode;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -45,7 +52,7 @@ public class PercpModelFacade {
     private ArrayList<IKASLConfigModelElement> ikaslParamList;
     private ArrayList<String> cfLinks;
     private ArrayList<IKASLMain> ikaslMainList;
-    private ArrayList<VHLinkerFacade> vhLinkerList = new ArrayList<VHLinkerFacade>();
+    private Map<String,VHLinkerFacade> vhLinkerList = new HashMap<String,VHLinkerFacade>();
 
     public PercpModelFacade() {
         ikaslMainList = new ArrayList<IKASLMain>();
@@ -287,14 +294,14 @@ public class PercpModelFacade {
      * @param temporalLinksIsSet Do you want temporal links to be generated?
      * @param crossFLinksIsSet Do you want cross feature links to be generated
      */
-    public void runLinkGeneration(String ikaslStack1Location, String ikaslStack2Location, boolean temporalLinksIsSet, boolean crossFLinksIsSet) {
+    public void runCrossFeatureLinkGeneration(String rootFolder, String ikaslID1, String ikaslID2) {
 
         Properties prop = new Properties();
 
         try {
             //set the properties value
-            prop.setProperty("sourceFolder1", ikaslStack1Location);
-            prop.setProperty("sourceFolder2", ikaslStack2Location);
+            prop.setProperty("sourceFolder1", rootFolder + File.separator + ikaslID1);
+            prop.setProperty("sourceFolder2", rootFolder + File.separator + ikaslID2);
 
             //save properties to project root folder
             prop.store(new FileOutputStream("config.properties"), null);
@@ -305,9 +312,34 @@ public class PercpModelFacade {
 
 
         VHLinkerFacade vHLinkerFacade = new VHLinkerFacade();
-        VHLinkerCommand vHLinkerCommand = vHLinkerFacade.generateVHLinkerCommand("config.properties", temporalLinksIsSet, crossFLinksIsSet);
+        VHLinkerCommand vHLinkerCommand = vHLinkerFacade.generateVHLinkerCommand("config.properties", false, true);
         vHLinkerFacade.runLinkersWithCommand(vHLinkerCommand);
-        vhLinkerList.add(vHLinkerFacade);
+        
+        vhLinkerList.put(ikaslID1+"-"+ikaslID2, vHLinkerFacade);
+    }
+    
+    public void runTemporalLinkGeneration(String rootFolder, String ikaslID1) {
+
+        Properties prop = new Properties();
+
+        try {
+            //set the properties value
+            prop.setProperty("sourceFolder1", rootFolder + File.separator + ikaslID1);
+
+            //save properties to project root folder
+            prop.store(new FileOutputStream("config.properties"), null);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+
+        VHLinkerFacade vHLinkerFacade = new VHLinkerFacade();
+        VHLinkerCommand vHLinkerCommand = vHLinkerFacade.generateVHLinkerCommand("config.properties", true, false);
+        vHLinkerFacade.runLinkersWithCommand(vHLinkerCommand);
+        
+        vhLinkerList.put(ikaslID1, vHLinkerFacade);
+        
     }
 
     /**
@@ -319,17 +351,58 @@ public class PercpModelFacade {
      * @param query feature vector of the input
      * @return Winner node for the input which is in the Last IKASL layer 
      */
-    private String findGNodeFromIKASLForQuery(QueryObjectType type, double[] query) {
+    private String findGNodeFromIKASLForQuery(QueryObjectType type, double[] query, String ikaslID) {
 
-        IKASLMain ikaslMain;
+        IKASLMain ikaslMain = null;
+        /*
         if (type == QueryObjectType.IMAGE) {
             ikaslMain = getIkaslMainList().get(0); //color existence
         } else {
             ikaslMain = getIkaslMainList().get(1); //text
+        }*/
+        for(IKASLMain main : ikaslMainList){
+            if(main.getMyID().equals(ikaslID)){
+                ikaslMain = main;
+                return ikaslMain.getLastLayersWinnerNodeForQuery(query);
+            }
         }
-        return ikaslMain.getLastLayersWinnerNodeForQuery(query);
+        
+        return null;
     }
 
+    public ArrayList<String> getDataOnTemporalLink(QueryObjectType type, double[] query, String ikaslID, int depth){
+        String gNodeID = findGNodeFromIKASLForQuery(type, query, ikaslID);
+        
+        VHLinkerFacade vHLinkerFacade = vhLinkerList.get(ikaslID);
+        TemporalLinkData tData = vHLinkerFacade.getTemporalLinkObject();
+        
+        com.ikasl.objects.temporal.Tree tree =tData.getTemporalNodeList();
+        com.ikasl.objects.temporal.TreeNode node=null;
+        
+        for(com.ikasl.objects.temporal.TreeNode n : tree.getNodeList()){
+            String currID = EntityIDGenerator.generateEntityIDString(((GNodeHitValTemplObject)n.getNode()).getId());
+            if(currID.equals(gNodeID)){
+                node = n;
+            }
+        }
+        
+        if (node != null) {
+            for (int i = 0; i < depth; i++) {
+                if (node.getParent().getLevelID() >= 0) {
+                    node = node.getParent();
+                } else {
+                    return null;
+                }
+            }
+        }else{
+            return null;
+        }
+        
+        ArrayList<String> results = ((GNodeHitValTemplObject) node.getNode()).getDataList();
+        //TODO: Read the necessary XML file and get the images
+        return results;
+    }
+    
     /**
      * Assumption: We consider ikaslMainList[0] runs for Image color existence
      * Assumption: ikaslMainList[1] runs for Text 
@@ -344,14 +417,17 @@ public class PercpModelFacade {
      * @param query feature vector of the input
      * @return Returns a String with all the related nodes from other IKASL stack
      */
-    public ArrayList<String> getHorizontalLinksForQuery(QueryObjectType type, double[] query) {
-        String winnerID = this.findGNodeFromIKASLForQuery(type, query);
+    public ArrayList<String> getHorizontalLinksForQuery(QueryObjectType type,String ikaslIDForQuery, String ikaslID2, double[] query) {
+        String winnerID = this.findGNodeFromIKASLForQuery(type, query, ikaslIDForQuery);
         System.out.println("--------------- Winner ID : " + winnerID + " -----------------------");
 
-        VHLinkerFacade vhLinkerFacade = vhLinkerList.get(0);
+        VHLinkerFacade vhLinkerFacade;
+        vhLinkerFacade = vhLinkerList.get(ikaslIDForQuery+"-"+ikaslID2);
+        if(vhLinkerFacade == null){
+            vhLinkerFacade = vhLinkerList.get(ikaslID2+"-"+ikaslIDForQuery);
+        }
 
-        CrossFeatureData crossFeatureData = vhLinkerFacade.getCrossLinkObject();
-        TemporalLinkData temporalLinkData = vhLinkerFacade.getTemporalLinkObject();
+        CrossFeatureData crossFeatureData = vhLinkerFacade.getCrossLinkObject();       
 
         ArrayList<GNodeHitValueObjectList> gnHVList = crossFeatureData.getgNodeHitValueObjectList();
         ArrayList<ArrayList<String>> dataVals = new ArrayList<ArrayList<String>>();
@@ -387,17 +463,18 @@ public class PercpModelFacade {
      * @param query feature vector of the input
      * @return ArrayList of String of image names
      */
-    public ArrayList<String> getImageSetForQuery(QueryObjectType type, double[] query) {
-        String winnerID = this.findGNodeFromIKASLForQuery(type, query);
+    public ArrayList<String> getImageSetForQuery(QueryObjectType type, double[] query, String ikaslID) {
+        String winnerID = this.findGNodeFromIKASLForQuery(type, query, ikaslID);
         IKASLMain ikaslMain;
-        if (type == QueryObjectType.IMAGE) {
-            ikaslMain = getIkaslMainList().get(0); //color existence
-        } else {
-            ikaslMain = getIkaslMainList().get(1); //text
+        for (IKASLMain main : ikaslMainList) {
+            if (main.getMyID().equals(ikaslID)) {
+                ikaslMain = main; 
+                ArrayList<String> imgList = ikaslMain.getImageListForGNode(winnerID);
+                return imgList;
+            }
         }
 
-        ArrayList<String> imgList = ikaslMain.getImageListForGNode(winnerID);
-        return imgList;
+        return null;
     }
 
     /**

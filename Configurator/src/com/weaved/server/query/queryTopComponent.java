@@ -4,6 +4,7 @@
  */
 package com.weaved.server.query;
 
+import com.weaved.main.WeaveDMainHolder;
 import com.weaved.main.WeavedMain;
 import com.weaved.perception.model.main.PercpModelFacade;
 import com.weaved.query.enums.QueryObjectType;
@@ -64,7 +65,7 @@ public final class queryTopComponent extends TopComponent {
         jpanelImageGrid = new JPanel();
         setName(Bundle.CTL_queryTopComponent());
         setToolTipText(Bundle.HINT_queryTopComponent());
-        weavedMain = new WeavedMain();
+        weavedMain = WeaveDMainHolder.weavedMain;
         jLabelNoImages.setVisible(false);
         jTextButton1.setOpaque(false);
         jTextButton1.setContentAreaFilled(false);
@@ -438,7 +439,8 @@ public final class queryTopComponent extends TopComponent {
         jTextButton4.setVisible(false);
         //cleanDirectories();
 
-        list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"));
+        list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"),"L2F0");
+        ArrayList<String> temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"), "L2F0", 1);
         //list = weavedMain.runIKASL(getInputFeatureVector("Vector" + File.separator + "existenceResult.txt"));
 
         //System.out.println(">> " + UIValues.getINPUT_FILE_LOCATION());

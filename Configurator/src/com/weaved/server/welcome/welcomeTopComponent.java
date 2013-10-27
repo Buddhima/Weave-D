@@ -4,6 +4,8 @@
  */
 package com.weaved.server.welcome;
 
+import com.weaved.main.WeaveDMainHolder;
+import com.weaved.main.WeavedMain;
 import java.awt.BorderLayout;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
@@ -35,6 +37,8 @@ preferredID = "welcomeTopComponent")
 })
 public final class welcomeTopComponent extends TopComponent {
 
+    WeavedMain weavedMain;
+    
     public welcomeTopComponent() {
         initComponents();
         setName(Bundle.CTL_welcomeTopComponent());
@@ -51,6 +55,8 @@ public final class welcomeTopComponent extends TopComponent {
         //add(firstStepPanel,BorderLayout.EAST);
 //        add(topPanel,BorderLayout.NORTH);
         add(allPanel,BorderLayout.CENTER);
+        
+        weavedMain = WeaveDMainHolder.weavedMain;
 
     }
 
@@ -251,6 +257,7 @@ public final class welcomeTopComponent extends TopComponent {
             tc.open();
             tc.requestActive();
         }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

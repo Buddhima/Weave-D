@@ -4,6 +4,7 @@
  */
 package com.weaved.server.control;
 
+import com.weaved.main.WeaveDMainHolder;
 import com.weaved.main.WeavedMain;
 import com.weaved.perception.model.main.PercpModelFacade;
 import com.weaved.server.xml.elements.PerceptionHierarchyNode;
@@ -66,15 +67,14 @@ public final class controlTopComponent extends TopComponent {
         setName(Bundle.CTL_controlTopComponent());
         setToolTipText(Bundle.HINT_controlTopComponent());
 
-        weavedMain = new WeavedMain();
-
+        weavedMain = WeaveDMainHolder.weavedMain;
+        PERCEP_MODEL_FACADE = weavedMain.getPercpModelFacade();
+        
         add(controlPanel);
         add(buttonPanel);
         add(infoImage);
 
-
-
-
+        weavedMain.loadConfiguration();
     }
 
     /**
@@ -450,49 +450,8 @@ public final class controlTopComponent extends TopComponent {
     private void generateLinkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateLinkButtonActionPerformed
         consoleTxtArea.append("Links are generating....\n");
         weavedMain.runLinkGenerator();
-        consoleTxtArea.append("Links have been successfully generated!\n");
-        PERCEP_MODEL_FACADE = weavedMain.getPercpModelFacade();
+        consoleTxtArea.append("Links have been successfully generated!\n");        
         JOptionPane.showMessageDialog(this, "Link Generation Successfull");
-        // TODO add your handling code here:
-        //        progressLabel.setText("Reading Hiararchy ....");
-        //
-        //        try {
-        //            Thread.sleep(1500);
-        //        } catch (InterruptedException ex) {
-        //            Exceptions.printStackTrace(ex);
-        //        }
-        //
-        //        progressLabel.setText("Generating Links ....");
-        ////        configProgressBar.setValue(100);
-        //
-        //        try {
-        //            Thread.sleep(2000);
-        //        } catch (InterruptedException ex) {
-        //            Exceptions.printStackTrace(ex);
-        //        }
-        //        progressLabel.setText("Link Generation done ....");
-        //
-        //        try {
-        //            Thread.sleep(1000);
-        //        } catch (InterruptedException ex) {
-        //            Exceptions.printStackTrace(ex);
-        //        }
-        //        progressLabel.setText("");
-        //        JOptionPane.showMessageDialog(null, "Links Generated!");
-        ////        configProgressBar.setVisible(false);
-
-        //        JFrame processingFrame = new ProcessingForm();
-        //
-        //
-        //        processingFrame.setVisible(true);
-        //
-        //        try {
-        //            Thread.sleep(1500);
-        //        } catch (InterruptedException ex) {
-        //            Exceptions.printStackTrace(ex);
-        //        }
-        ////
-        //        processingFrame.setVisible(false);
     }//GEN-LAST:event_generateLinkButtonActionPerformed
 
     private void generateLinksMouseEnter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generateLinksMouseEnter
@@ -541,7 +500,6 @@ public final class controlTopComponent extends TopComponent {
         // get Starting time
         long startTime = System.currentTimeMillis();
         consoleTxtArea.append("IKASL Algorithm is being executed...\n");
-        weavedMain.LoadConfigurations();
         weavedMain.runIKASL();
         
         synchronized(lock){

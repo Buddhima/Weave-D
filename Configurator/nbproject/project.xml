@@ -15,7 +15,7 @@
                     </run-dependency>
                 </dependency>
                 <dependency>
-                    <code-name-base>com.vhlinker</code-name-base>
+                    <code-name-base>com.vhlink</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
                     <run-dependency>
