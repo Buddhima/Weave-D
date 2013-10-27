@@ -728,7 +728,7 @@ public final class queryTopComponent extends TopComponent {
             myFiles2 = files.list();
             for (int i = 0; i < myFiles2.length; i++) {
                 File myFile = new File(files, myFiles2[i]);
-                if (myFile.getName().equalsIgnoreCase(".gitignore")) {
+                if (!myFile.getName().equalsIgnoreCase(".gitignore")) {
                     myFile.delete();
                 }
             }
