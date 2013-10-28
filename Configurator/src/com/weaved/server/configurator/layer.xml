@@ -8,13 +8,14 @@
                 <attr name="delegate" newvalue="com.weaved.server.configurator.menu.ResetWeaveDMenuItemAction"/>
                 <attr name="displayName" stringvalue="Reset WeaveD"/>
                 <attr name="instanceCreate" methodvalue="org.openide.awt.actions.alwaysEnabled"/>
-                <attr name="noIconInMenu" boolvalue="false"/>
+                <attr name="noIconInMenu" boolvalue="true"/>
             </file>
         </folder>
     </folder>
     <folder name="Menu">
         <folder name="Edit">
             <file name="com-weaved-server-configurator-menu-ResetWeaveDMenuItemAction.shadow">
+                <attr name="iconBase" stringvalue="com/weaved/server/configurator/menu/reset_icon_16.png"/>
                 <attr name="originalFile" stringvalue="Actions/Edit/com-weaved-server-configurator-menu-ResetWeaveDMenuItemAction.instance"/>
                 <attr name="position" intvalue="0"/>
             </file>
