@@ -45,7 +45,9 @@ public class ImageGridCreator {
             } catch (IOException ex) {
                 //Logger.getLogger(ImageNetworkViewer.class.getName()).log(Level.SEVERE, null, ex);
             }
-            gridHolderPanel.add(cells[i]);
+            if (cells[i] != null) {
+                gridHolderPanel.add(cells[i]);
+            }
         }
 
         for (int i = fNames.size(); i < fNames.size() + Math.abs((rows * cols) - fNames.size()); i++) {
