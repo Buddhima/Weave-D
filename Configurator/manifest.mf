@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 OpenIDE-Module: com.weaved.server.configurator
 OpenIDE-Module-Localizing-Bundle: com/weaved/server/configurator/Bundle.properties
+OpenIDE-Module-Install: com/weaved/server/configurator/ModuleInstall
 OpenIDE-Module-Layer: com/weaved/server/configurator/layer.xml
 OpenIDE-Module-Requires: org.openide.windows.WindowManager
 OpenIDE-Module-Specification-Version: 1.0
