@@ -453,12 +453,20 @@ public final class queryTopComponent extends TopComponent {
     }//GEN-LAST:event_browseBtnActionPerformed
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
+
+        QueryObjectType qObjType = null;
+        if(image_type.isSelected()&& !text_type.isSelected()){
+            qObjType = QueryObjectType.IMAGE;
+        }else if(!image_type.isSelected()&& text_type.isSelected()){
+            qObjType = QueryObjectType.TEXT;
+        }
+        
         jpanelImageGrid.removeAll();
         txtOutputPanel.removeAll(); 
         jLabelNoImages.setVisible(false);        
 
         ArrayList<String> list = new ArrayList<String>();
-        list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"), "L2F0");
+        list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"), "L2F0");
         
         //list = weavedMain.runIKASL(getInputFeatureVector("Vector" + File.separator + "existenceResult.txt"));
 
