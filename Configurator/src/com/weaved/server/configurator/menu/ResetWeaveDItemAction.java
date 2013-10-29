@@ -24,7 +24,7 @@ public final class ResetWeaveDItemAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        FilesCleanup.cleanupConfigDirectory(FileAndFolderNameList.rootConfigFolder);
+        FilesCleanup.cleanupConfigDirectory(FileAndFolderNameList.ikaslConfigFolder);
         FilesCleanup.deleteFilesInsideFolders(FileAndFolderNameList.ikaslOutputFolder);
     }
 }

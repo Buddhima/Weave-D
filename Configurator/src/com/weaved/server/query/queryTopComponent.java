@@ -122,7 +122,7 @@ public final class queryTopComponent extends TopComponent {
         jLabel7 = new javax.swing.JLabel();
         percptLevlCmb = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
-        crossLnkCmb = new javax.swing.JComboBox();
+        linkCmb = new javax.swing.JComboBox();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         jImageScrollPane = new javax.swing.JScrollPane();
@@ -141,7 +141,7 @@ public final class queryTopComponent extends TopComponent {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         org.openide.awt.Mnemonics.setLocalizedText(browsedImageLbl, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.browsedImageLbl.text")); // NOI18N
-        browsedImageLbl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        browsedImageLbl.setBorder(new javax.swing.border.SoftBevelBorder(0));
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jButton2.text")); // NOI18N
         jButton2.setToolTipText(org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jButton2.toolTipText")); // NOI18N
@@ -201,7 +201,7 @@ public final class queryTopComponent extends TopComponent {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel8, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jLabel8.text")); // NOI18N
 
-        crossLnkCmb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select a cross link" }));
+        linkCmb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select a link" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -242,7 +242,7 @@ public final class queryTopComponent extends TopComponent {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(crossLnkCmb, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(linkCmb, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30))))
@@ -272,7 +272,7 @@ public final class queryTopComponent extends TopComponent {
                                 .addComponent(jLabel7)
                                 .addComponent(percptLevlCmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel8)
-                                .addComponent(crossLnkCmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(linkCmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButton3)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -546,10 +546,14 @@ public final class queryTopComponent extends TopComponent {
     }//GEN-LAST:event_text_typeActionPerformed
 
     private void percptLevlCmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_percptLevlCmbActionPerformed
-        crossLnkCmb.removeAllItems();
+        linkCmb.removeAllItems();
         String selectedLevel = percptLevlCmb.getSelectedItem().toString();
         ArrayList<String> allLinksofSelectedLevel = null;
 
+        if(weavedMain.getLinkConfigModel()==null){
+            weavedMain.loadConfiguration();
+        }
+        
         if (!"Select a perception level".equals(selectedLevel)) {
             if (selectedLevel.equalsIgnoreCase(PercpModelEnums.DIMENSION.toString())) {
                 allLinksofSelectedLevel = weavedMain.getCrossAndTempLinksInLevel(PercpModelEnums.DIMENSION);
@@ -561,9 +565,7 @@ public final class queryTopComponent extends TopComponent {
                 allLinksofSelectedLevel = weavedMain.getCrossAndTempLinksInLevel(PercpModelEnums.PERCEPTION);
             }
             for (String s : allLinksofSelectedLevel) {
-                if (s.contains("-")) {
-                    crossLnkCmb.addItem(s.toString());
-                }
+                    linkCmb.addItem(s.toString());
             }
         }
     }//GEN-LAST:event_percptLevlCmbActionPerformed
@@ -571,7 +573,6 @@ public final class queryTopComponent extends TopComponent {
     private javax.swing.JButton browseBtn;
     private javax.swing.JLabel browsedImageLbl;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox crossLnkCmb;
     private javax.swing.JRadioButton image_type;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -590,6 +591,7 @@ public final class queryTopComponent extends TopComponent {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel jpanelImageGrid;
+    private javax.swing.JComboBox linkCmb;
     private javax.swing.JComboBox percptLevlCmb;
     private javax.swing.JTextField queryImageLocation;
     private javax.swing.JRadioButton text_type;

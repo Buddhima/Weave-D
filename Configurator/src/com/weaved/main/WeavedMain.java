@@ -333,4 +333,16 @@ public class WeavedMain {
     public ArrayList<String> getCrossAndTempLinksInLevel(PercpModelEnums level) {
         return getPercpModelFacade().getLinksForQueryUI(linkConfigModel, level);
     }
+    
+    public LinkConfigModel getLinkConfigModel(){
+        return linkConfigModel;
+    }
+    
+    public PercpModelConfigModel getPercpConfigModel(){
+        return percpConfigModel;
+    }
+    
+    public IKASLConfigModel getIKASLConfigModel(){
+        return iKASLConfigModel;
+    }
 }

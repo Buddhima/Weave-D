@@ -11,6 +11,7 @@ package com.weaved.utils;
 public class FileAndFolderNameList {
 
     public static String rootConfigFolder = "Config";
+    public static String ikaslConfigFolder = "Config\\Stacks";
     public static String featureVecConfigFile = "feature_vectors_config.xml";
     public static String ikaslParamFile = "ikasl_params.xml";
     public static String linkConfigFile = "link_config_model.xml";
