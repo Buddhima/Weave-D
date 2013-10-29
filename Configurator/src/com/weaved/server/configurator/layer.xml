@@ -4,21 +4,15 @@
 
     <folder name="Actions">
         <folder name="Edit">
-            <file name="com-weaved-server-configurator-menu-ResetWeaveDMenuItemAction.instance">
-                <attr name="delegate" newvalue="com.weaved.server.configurator.menu.ResetWeaveDMenuItemAction"/>
-                <attr name="displayName" stringvalue="Reset WeaveD"/>
-                <attr name="instanceCreate" methodvalue="org.openide.awt.actions.alwaysEnabled"/>
-                <attr name="noIconInMenu" boolvalue="false"/>
-            </file>
         </folder>
     </folder>
     <folder name="Menu">
         <folder name="Edit">
-            <file name="com-weaved-server-configurator-menu-ResetWeaveDMenuItemAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/Edit/com-weaved-server-configurator-menu-ResetWeaveDMenuItemAction.instance"/>
-                <attr name="position" intvalue="0"/>
-            </file>
+            <file name="org-openide-actions-CopyAction.shadow_hidden"/>
+            <file name="org-openide-actions-CutAction.shadow_hidden"/>
+            <file name="org-openide-actions-DeleteAction.shadow_hidden"/>
             <file name="org-openide-actions-FindAction.shadow_hidden"/>
+            <file name="org-openide-actions-PasteAction.shadow_hidden"/>
             <file name="org-openide-actions-ReplaceAction.shadow_hidden"/>
         </folder>
         <file name="GoTo_hidden"/>

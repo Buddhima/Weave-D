@@ -26,20 +26,23 @@ public class FilesCleanup {
     /**
      * Deletes all the files inside all the directories of the specified
      * directory recursively. Does not delete .gitignore files. Can be used to
-     * cleanup the Input and Output directories directly. Cannot be used to
-     * cleanup Config Directory since it contains a config.properties file
+     * cleanup the Input and Output directories directly. 
+     * Cannot be used to cleanup Config Directory since it contains a config.properties file
      *
      * @param folder
      */
-    public static void deleteFilesInsideFolders(File folder) {
-        File[] files = folder.listFiles();
-        if (files != null) { //some JVMs return null for empty dirs
-            for (File f : files) {
-                if (f.isDirectory()) {
-                    deleteFilesInsideFolders(f);
-                } else {
-                    if (!f.getName().equalsIgnoreCase(".gitignore")) {
-                        f.delete();
+    public static void deleteFilesInsideFolders(String folderName) {
+        File folder = new File(folderName);
+        if (folder.exists()) {
+            File[] files = folder.listFiles();
+            if (files != null) { //some JVMs return null for empty dirs
+                for (File f : files) {
+                    if (f.isDirectory()) {
+                        deleteFilesInsideFolders(f.getPath());
+                    } else {
+                        if (!f.getName().equalsIgnoreCase(".gitignore")) {
+                            f.delete();
+                        }
                     }
                 }
             }
@@ -54,15 +57,18 @@ public class FilesCleanup {
      *
      * @param folder
      */
-    public static void cleanupConfigDirectory(File folder) {
-        File[] files = folder.listFiles();
-        if (files != null) { //some JVMs return null for empty dirs
-            for (File f : files) {
-                if (f.isDirectory()) {
-                    cleanupConfigDirectory(f);
-                } else {
-                    if (!f.getName().equalsIgnoreCase(".gitignore") && !f.getName().equalsIgnoreCase("config.properties")) {
-                        f.delete();
+    public static void cleanupConfigDirectory(String folderName) {
+        File folder = new File(folderName);
+        if (folder.exists()) {
+            File[] files = folder.listFiles();
+            if (files != null) { //some JVMs return null for empty dirs
+                for (File f : files) {
+                    if (f.isDirectory()) {
+                        cleanupConfigDirectory(f.getPath());
+                    } else {
+                        if (!f.getName().equalsIgnoreCase(".gitignore") && !f.getName().equalsIgnoreCase("config.properties")) {
+                            f.delete();
+                        }
                     }
                 }
             }
