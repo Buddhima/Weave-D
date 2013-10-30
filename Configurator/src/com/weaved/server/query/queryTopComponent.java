@@ -132,6 +132,7 @@ public final class queryTopComponent extends TopComponent {
         txtOutputPanel = new javax.swing.JPanel();
         backBtn = new javax.swing.JButton();
         nxtBtn = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -143,7 +144,7 @@ public final class queryTopComponent extends TopComponent {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         org.openide.awt.Mnemonics.setLocalizedText(browsedImageLbl, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.browsedImageLbl.text")); // NOI18N
-        browsedImageLbl.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        browsedImageLbl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jButton2.text")); // NOI18N
         jButton2.setToolTipText(org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jButton2.toolTipText")); // NOI18N
@@ -332,6 +333,8 @@ public final class queryTopComponent extends TopComponent {
 
         org.openide.awt.Mnemonics.setLocalizedText(nxtBtn, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.nxtBtn.text")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jLabel6.text")); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -340,12 +343,14 @@ public final class queryTopComponent extends TopComponent {
                 .addContainerGap()
                 .addComponent(jImageScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 736, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(backBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(nxtBtn)
                 .addGap(11, 11, 11))
         );
@@ -355,7 +360,8 @@ public final class queryTopComponent extends TopComponent {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(backBtn)
-                    .addComponent(nxtBtn))
+                    .addComponent(nxtBtn)
+                    .addComponent(jLabel6))
                 .addGap(4, 4, 4)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
@@ -469,30 +475,29 @@ public final class queryTopComponent extends TopComponent {
         list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"), "L2F0");
         
         //list = weavedMain.runIKASL(getInputFeatureVector("Vector" + File.separator + "existenceResult.txt"));
-
         //System.out.println(">> " + UIValues.getINPUT_FILE_LOCATION());
-
         //map = model.getHitAndImageMap();
+        
          if (list.size() > 0) {
             jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, list, 5, "Input\\Files\\Images");
             // Set the scrollpane viewport
             jImageScrollPane.setViewportView(jpanelImageGrid);
             jpanelImageGrid.setVisible(true);
             jImageScrollPane.setVisible(true);
+            
+            // Displaying text results
+            TextOutputCreator toc = new TextOutputCreator(list,"Input\\Files\\Text\\");           
+            txtOutputPanel = toc.getTextOutputPanel();
+            jScrollPane2.setViewportView(txtOutputPanel);
+            txtOutputPanel.setVisible(true);
+            jScrollPane2.setVisible(true);
+            
         } else {
             jLabelNoImages.setVisible(true);
             jpanelImageGrid.setVisible(false);
             jImageScrollPane.setVisible(false);
         }
-        
-            TextOutputCreator toc = new TextOutputCreator(list,"Input\\Files\\Text\\");
-           
-            txtOutputPanel = toc.getTextOutputPanel();
-           // txtOutputPanel = new JPanel();
-            jScrollPane2.setViewportView(txtOutputPanel);
-            txtOutputPanel.setVisible(true);
-            jScrollPane2.setVisible(true);
-       
+               
         JOptionPane.showMessageDialog(this, "Query Successful");
 
     }//GEN-LAST:event_submitBtnActionPerformed
@@ -559,13 +564,20 @@ public final class queryTopComponent extends TopComponent {
         jLabelNoImages.setVisible(false);  
         
         ArrayList<String> temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"), "L2F0", 1);
-        
+                
         if (temporal.size() > 0) {
             jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, temporal, 5, "Input\\Files\\Images");
             // Set the scrollpane viewport
             jImageScrollPane.setViewportView(jpanelImageGrid);
             jpanelImageGrid.setVisible(true);
             jImageScrollPane.setVisible(true);
+            
+            // Displaying text results
+            TextOutputCreator toc = new TextOutputCreator(temporal,"Input\\Files\\Text\\");           
+            txtOutputPanel = toc.getTextOutputPanel();
+            jScrollPane2.setViewportView(txtOutputPanel);
+            txtOutputPanel.setVisible(true);
+            jScrollPane2.setVisible(true);
         } else {
             jLabelNoImages.setVisible(true);
             jpanelImageGrid.setVisible(false);
@@ -586,6 +598,7 @@ public final class queryTopComponent extends TopComponent {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelNoImages;
