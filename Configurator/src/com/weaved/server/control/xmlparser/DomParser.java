@@ -7,6 +7,7 @@ package com.weaved.server.control.xmlparser;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -23,6 +24,10 @@ import org.w3c.dom.NodeList;
  * @author BUDDHIMA
  */
 public class DomParser extends XmlParser {
+
+    Random randomX = new Random();
+    Random randomY = new Random();
+    String imagesPath = System.getProperty("user.dir") + "\\Input\\Files\\Images\\";
 
     public DomParser(String filePath) {
         super(filePath);
@@ -68,13 +73,12 @@ public class DomParser extends XmlParser {
 
                         String value = eElement.getElementsByTagName("value").item(0).getTextContent();
                         // write them in a string
-                        if (!value.isEmpty()) 
-                        {
+                        if (!value.isEmpty()) {
                             String[] images = value.split(idSeperator);
                             if (images.length > 1) {
                                 value = "";
                                 for (int i = 0; i < images.length; i++) {
-                                    value += (images[i] + ".jpg");
+                                    value += (imagesPath + images[i] + ".jpg");
 
                                     if (i != images.length - 1) {
                                         value += ":::";
@@ -82,7 +86,7 @@ public class DomParser extends XmlParser {
                                 }
 
                             } else {
-                                value += ".jpg";
+                                value = imagesPath + value + ".jpg";
                             }
                         }
                         // Split label in to parts
@@ -91,8 +95,12 @@ public class DomParser extends XmlParser {
                         String[] labelParts = {"0", "0"};
 
                         // get x,y from attributes of eElement
-                        labelParts[0] = eElement.getAttribute("x");
-                        labelParts[1] = eElement.getAttribute("y");
+//                        labelParts[0] = eElement.getAttribute("x");
+//                        labelParts[1] = eElement.getAttribute("y");
+
+                        // Generate random values
+                        labelParts[0] = String.valueOf((randomX.nextInt(20) - 10));
+                        labelParts[1] = String.valueOf((randomY.nextInt(20) - 10));
 
 
                         if (layers.get(nodeLayer) != null)// if the layer is already exists
