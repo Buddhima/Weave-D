@@ -60,10 +60,9 @@ preferredID = "queryTopComponent")
 })
 public final class queryTopComponent extends TopComponent {
 
-    
     public WeavedMain weavedMain;
     public PercpModelFacade percpModelFacade;
-      
+
     public queryTopComponent() {
         initComponents();
         jpanelImageGrid = new JPanel();
@@ -74,18 +73,18 @@ public final class queryTopComponent extends TopComponent {
 
         // Set percptLvlCmb combobox values 
         for (PercpModelEnums item : PercpModelEnums.values()) {
-            String str = (""+item);
-            String chars = str.substring(0,1)+str.substring(1,str.length()).toLowerCase();            
+            String str = ("" + item);
+            String chars = str.substring(0, 1) + str.substring(1, str.length()).toLowerCase();
             percptLevlCmb.addItem(chars);
-            
+
             // Set the dimension item get selected
-            if("Dimension".equals(chars)){
+            if ("Dimension".equals(chars)) {
                 percptLevlCmb.setSelectedItem(chars);
             }
         }
-        
+
         jLabelNoImages.setVisible(false);
-        
+
     }
 
     /**
@@ -408,44 +407,44 @@ public final class queryTopComponent extends TopComponent {
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
 
-        QueryObjectType qObjType = null;
-        if(image_type.isSelected()&& !text_type.isSelected()){
-            qObjType = QueryObjectType.IMAGE;
-        }else if(!image_type.isSelected()&& text_type.isSelected()){
-            qObjType = QueryObjectType.TEXT;
-        }
-        
-        jpanelImageGrid.removeAll();
-        txtOutputPanel.removeAll(); 
-        jLabelNoImages.setVisible(false);        
-
         ArrayList<String> list = new ArrayList<String>();
-        list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"), "L2F0");
-        
+        QueryObjectType qObjType = null;
+        if (image_type.isSelected() && !text_type.isSelected()) {
+            qObjType = QueryObjectType.IMAGE;
+            list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"), "L2F0");
+        } else if (!image_type.isSelected() && text_type.isSelected()) {
+            qObjType = QueryObjectType.TEXT;
+            list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, getInputFeatureVector("Query" + File.separator + "textFeatures.txt"), "L2F0");
+        }
+
+        jpanelImageGrid.removeAll();
+        txtOutputPanel.removeAll();
+        jLabelNoImages.setVisible(false);
+
         //list = weavedMain.runIKASL(getInputFeatureVector("Vector" + File.separator + "existenceResult.txt"));
         //System.out.println(">> " + UIValues.getINPUT_FILE_LOCATION());
         //map = model.getHitAndImageMap();
-        
-         if (list.size() > 0) {
+
+        if (list.size() > 0) {
             jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, list, 5, "Input\\Files\\Images");
             // Set the scrollpane viewport
             jImageScrollPane.setViewportView(jpanelImageGrid);
             jpanelImageGrid.setVisible(true);
             jImageScrollPane.setVisible(true);
-            
+
             // Displaying text results
-            TextOutputCreator toc = new TextOutputCreator(list,"Input\\Files\\Text\\");           
+            TextOutputCreator toc = new TextOutputCreator(list, "Input\\Files\\Text\\");
             txtOutputPanel = toc.getTextOutputPanel();
             jScrollPane2.setViewportView(txtOutputPanel);
             txtOutputPanel.setVisible(true);
             jScrollPane2.setVisible(true);
-            
+
         } else {
             jLabelNoImages.setVisible(true);
             jpanelImageGrid.setVisible(false);
             jImageScrollPane.setVisible(false);
         }
-               
+
         JOptionPane.showMessageDialog(this, "Query Successful");
 
     }//GEN-LAST:event_submitBtnActionPerformed
@@ -455,7 +454,7 @@ public final class queryTopComponent extends TopComponent {
         copyQueryFile(queryImageLocation.getText());
 
         if (image_type.isSelected()) {
-            
+
             try {
                 ProcessBuilder proc_color = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query", "hsl_15", "t");
                 proc_color.start();
@@ -466,6 +465,7 @@ public final class queryTopComponent extends TopComponent {
         if (text_type.isSelected()) {
             try {
                 Runtime.getRuntime().exec("java -jar FeatureExtractor\\TextFeatureExtractionLib.jar Query Query\\textFeatures.txt FeatureExtractor\\sportKeywords");
+                JOptionPane.showMessageDialog(null,"Text Features are extracted successfully!");
             } catch (Exception hj) {
                 System.out.println("Error: " + hj);
             }
@@ -482,40 +482,46 @@ public final class queryTopComponent extends TopComponent {
         String selectedLevel = percptLevlCmb.getSelectedItem().toString();
         ArrayList<String> allLinksofSelectedLevel = null;
 
-        if(weavedMain.getLinkConfigModel()==null){
+        if (weavedMain.getLinkConfigModel() == null) {
             weavedMain.loadConfiguration();
         }
-        
-       if (selectedLevel.equalsIgnoreCase(PercpModelEnums.DIMENSION.toString())) {
-                allLinksofSelectedLevel = weavedMain.getCrossAndTempLinksInLevel(PercpModelEnums.DIMENSION);
-            } else if (selectedLevel.equalsIgnoreCase(PercpModelEnums.FEATURE.toString())) {
-                allLinksofSelectedLevel = weavedMain.getCrossAndTempLinksInLevel(PercpModelEnums.FEATURE);
-            } else if (selectedLevel.equalsIgnoreCase(PercpModelEnums.PERCEPTION.toString())) {
-                allLinksofSelectedLevel = weavedMain.getCrossAndTempLinksInLevel(PercpModelEnums.PERCEPTION);
-            }
-            for (String s : allLinksofSelectedLevel) {
-                    linkCmb.addItem(s.toString());
-            }
-       
+
+        if (selectedLevel.equalsIgnoreCase(PercpModelEnums.DIMENSION.toString())) {
+            allLinksofSelectedLevel = weavedMain.getCrossAndTempLinksInLevel(PercpModelEnums.DIMENSION);
+        } else if (selectedLevel.equalsIgnoreCase(PercpModelEnums.FEATURE.toString())) {
+            allLinksofSelectedLevel = weavedMain.getCrossAndTempLinksInLevel(PercpModelEnums.FEATURE);
+        } else if (selectedLevel.equalsIgnoreCase(PercpModelEnums.PERCEPTION.toString())) {
+            allLinksofSelectedLevel = weavedMain.getCrossAndTempLinksInLevel(PercpModelEnums.PERCEPTION);
+        }
+        for (String s : allLinksofSelectedLevel) {
+            linkCmb.addItem(s.toString());
+        }
+
     }//GEN-LAST:event_percptLevlCmbActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        
+
         jpanelImageGrid.removeAll();
-        txtOutputPanel.removeAll(); 
-        jLabelNoImages.setVisible(false);  
-        
-        ArrayList<String> temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"), "L2F0", 1);
-                
+        txtOutputPanel.removeAll();
+        jLabelNoImages.setVisible(false);
+        ArrayList<String> temporal = new ArrayList<String>();
+
+        // Get the related temporal link based on selected query object type
+        if (image_type.isSelected() && !text_type.isSelected()) {
+            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"), "L2F0", 1);
+        } else if (!image_type.isSelected() && text_type.isSelected()) {
+            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, getInputFeatureVector("Query" + File.separator + "textFeatures.txt"), "L2F0", 1);
+        }
+
         if (temporal.size() > 0) {
             jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, temporal, 5, "Input\\Files\\Images");
             // Set the scrollpane viewport
             jImageScrollPane.setViewportView(jpanelImageGrid);
             jpanelImageGrid.setVisible(true);
             jImageScrollPane.setVisible(true);
-            
+
             // Displaying text results
-            TextOutputCreator toc = new TextOutputCreator(temporal,"Input\\Files\\Text\\");           
+            TextOutputCreator toc = new TextOutputCreator(temporal, "Input\\Files\\Text\\");
             txtOutputPanel = toc.getTextOutputPanel();
             jScrollPane2.setViewportView(txtOutputPanel);
             txtOutputPanel.setVisible(true);
@@ -526,7 +532,6 @@ public final class queryTopComponent extends TopComponent {
             jImageScrollPane.setVisible(false);
         }
     }//GEN-LAST:event_backBtnActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JButton browseBtn;
@@ -579,7 +584,7 @@ public final class queryTopComponent extends TopComponent {
     }
 
     private double[] getInputFeatureVector(String featureVectorFile) {
-        double[] featureVector = new double[15];
+
         String input = null;
         BufferedReader br = null;
 
@@ -604,7 +609,7 @@ public final class queryTopComponent extends TopComponent {
             }
         }
         String[] inputString = input.split(",");
-
+        double[] featureVector = new double[inputString.length - 1];
         for (int i = 1; i < inputString.length; i++) {
             featureVector[i - 1] = Double.parseDouble(inputString[i]);
         }
