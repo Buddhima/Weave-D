@@ -15,13 +15,13 @@ public class ConfigNode {
     private Image image;
     private String id;
     private String name = new String();
-    private Double SF = new Double(0);// spread factor
-    private Integer ITR = new Integer(0); // iterations
-    private Double NR = new Double(0);// neighbourhod radious
-    private Double LR = new Double(0);// learning rate
+    private Double SF = new Double(0.5);// spread factor
+    private Integer ITR = new Integer(200); // iterations
+    private Double NR = new Double(2.0);// neighbourhod radious
+    private Double LR = new Double(0.45);// learning rate
     private Integer HT = new Integer(0);// hit threshold
     private String FVL = new String();// feature vector location
-    private Integer MaxBound = new Integer(0);//Max bound
+    private Integer MaxBound = new Integer(1);//Max bound
     private Integer MinBound = new Integer(0);//Min bound
     private Integer DimSize = new Integer(0); // Dimension Size
     private Boolean selected = new Boolean(false);// selected
