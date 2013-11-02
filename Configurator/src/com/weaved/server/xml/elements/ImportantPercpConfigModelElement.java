@@ -31,4 +31,5 @@ public class ImportantPercpConfigModelElement {
     public boolean isIsSelected() {
         return isSelected;
     }
+
 }

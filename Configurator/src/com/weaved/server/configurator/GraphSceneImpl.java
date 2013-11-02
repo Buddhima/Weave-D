@@ -7,6 +7,8 @@ package com.weaved.server.configurator;
 import com.weaved.server.configurator.misc.ConfigNode;
 import com.weaved.server.configurator.misc.ConfigPropNode;
 import com.weaved.server.configurator.misc.NodeLinks;
+import com.weaved.server.configurator.misc.PerceptionConfigNode;
+import com.weaved.server.configurator.misc.PerceptionConfigPropNode;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
@@ -147,7 +149,7 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
                 } else {
 
                     String key = "L0F" + String.valueOf(perceptionCount++);
-                    cn = new ConfigNode(image, key);
+                    cn = new PerceptionConfigNode(image, key);
                     nodeMap.put(key, cn);
                     w = GraphSceneImpl.this.addNode(cn);
                 }
@@ -206,41 +208,6 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
             }
         }, ObjectSceneEventType.OBJECT_SELECTION_CHANGED);
 
-
-
-
-//         example nodes // at initially
-    /*    Widget w1 = addNode("1. Hammer");
-         w1.setPreferredLocation(new Point(10, 100));
-         w1.getActions().addAction(selectAction);
-         Widget w2 = addNode("2. Saw");
-         w2.setPreferredLocation(new Point(100, 250));
-         w2.getActions().addAction(selectAction);
-         Widget w3 = addNode("Nail");
-         w3.setPreferredLocation(new Point(250, 250));
-         w3.getActions().addAction(selectAction);
-         Widget w4 = addNode("Bolt");
-         w4.setPreferredLocation(new Point(250, 350));
-         w4.getActions().addAction(selectAction); */
-
-
-//        Widget w1 = addNode(new ConfigNode(null, "1. Hammer"));
-//        w1.setPreferredLocation(new Point(10, 100));
-//        w1.getActions().addAction(selectAction);
-//        Widget w2 = addNode(new ConfigNode(null, "2. Saw"));
-//        w2.setPreferredLocation(new Point(100, 250));
-//        w2.getActions().addAction(selectAction);
-//        Widget w3 = addNode(new ConfigNode(null, "Nail"));
-//        w3.setPreferredLocation(new Point(250, 250));
-//        w3.getActions().addAction(selectAction);
-//        Widget w4 = addNode(new ConfigNode(null, "Bolt"));
-//        w4.setPreferredLocation(new Point(250, 350));
-//        w4.getActions().addAction(selectAction);
-
-
-
-
-
     }
 
     @Override
@@ -275,12 +242,21 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
                     public void actionPerformed(ActionEvent e) {
 
                         Object object = findObject(widget);// consider a map "string" => ShapeObj at creation (drop)
+                        ConfigNode node =(ConfigNode) object;
 
-                        ConfigPropNode propNode = new ConfigPropNode((ConfigNode) object);
+                        if(node.getId().startsWith("L0")){
+                            PerceptionConfigPropNode propNode = new PerceptionConfigPropNode((PerceptionConfigNode) node);
+                            propNode.setDisplayName("Node Settings");
+                            propNode.setShortDescription("Click on properties to get a small discription about the property");
+                            NodeOperation.getDefault().showProperties(propNode);
+                        } else {
+                            ConfigPropNode propNode = new ConfigPropNode(node);
+                            propNode.setDisplayName("Node Settings");
+                            propNode.setShortDescription("Click on properties to get a small discription about the property");
+                            NodeOperation.getDefault().showProperties(propNode);
+                        }
 
-                        propNode.setDisplayName("Node Settings");
-                        propNode.setShortDescription("Short Discription");
-                        NodeOperation.getDefault().showProperties(propNode);
+                        
                     }
                 });
 
@@ -438,11 +414,19 @@ public class GraphSceneImpl extends GraphScene<ConfigNode, String> {
         public void select(Widget widget, Point localLocation, boolean invertSelection) {
             Object object = scene.findObject(widget);// consider a map "string" => ShapeObj at creation (drop)
 
-            ConfigPropNode propNode = new ConfigPropNode((ConfigNode) object);
+            if(((ConfigNode)object).getId().startsWith("L0")){
+                PerceptionConfigPropNode propNode = new PerceptionConfigPropNode((PerceptionConfigNode) object);
+                propNode.setDisplayName("Node Settings");
+                propNode.setShortDescription("Short Discription");
+                NodeOperation.getDefault().showProperties(propNode);
+            }else{
+                ConfigPropNode propNode = new ConfigPropNode((ConfigNode) object);
+                propNode.setDisplayName("Node Settings");
+                propNode.setShortDescription("Short Discription");
+                NodeOperation.getDefault().showProperties(propNode);
+            }
 
-            propNode.setDisplayName("Node Settings");
-            propNode.setShortDescription("Short Discription");
-            NodeOperation.getDefault().showProperties(propNode);
+            
 
 
             if (object != null) {

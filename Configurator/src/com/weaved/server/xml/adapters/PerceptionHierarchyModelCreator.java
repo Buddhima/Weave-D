@@ -6,11 +6,13 @@ package com.weaved.server.xml.adapters;
 
 import com.weaved.server.configurator.misc.ConfigNode;
 import com.weaved.server.configurator.misc.NodeLinks;
+import com.weaved.server.configurator.misc.PerceptionConfigNode;
 import com.weaved.server.xml.elements.PerceptionHierarchyNode;
 import com.weaved.server.xml.models.ConfigModel;
 import com.weaved.server.xml.models.PerceptionHierarchyModel;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  *
@@ -30,29 +32,30 @@ public class PerceptionHierarchyModelCreator extends ConfigModelCreator {
         componentMap = nodeMap;
         connectionsMap = edgeMap;
 
-        ArrayList<String> perceptionNodes = getNodesStartingWith("L0");
+        ArrayList<ConfigNode> perceptionNodes = getNodesStartingWith("L0");
 
         ArrayList<PerceptionHierarchyNode> percepHierarchyNodes = new ArrayList<PerceptionHierarchyNode>();
-        PerceptionHierarchyNode root = new PerceptionHierarchyNode("L-1F-1");
+        PerceptionHierarchyNode root = new PerceptionHierarchyNode("L-1F-1",null);
         root.setParentNode(null);
         root.setStackName("ROOT");
 
-        for (String percepNode : perceptionNodes) {
-            PerceptionHierarchyNode perceptionNode = new PerceptionHierarchyNode(percepNode);
+        for (ConfigNode percepNode : perceptionNodes) {
+            PerceptionConfigNode pcNode = (PerceptionConfigNode) percepNode;
+            PerceptionHierarchyNode perceptionNode = new PerceptionHierarchyNode(percepNode.getId(),pcNode.getDataType());
             perceptionNode.setParentNode(root);
-            perceptionNode.setStackName(getNodeNameFromID(percepNode));
-            ArrayList<String> percepChildern = getChildNodes(percepNode);
+            perceptionNode.setStackName(getNodeNameFromID(percepNode.getId()));
+            ArrayList<String> percepChildern = getChildNodes(percepNode.getId());
             ArrayList<PerceptionHierarchyNode> featureHierarchyNodes = new ArrayList<PerceptionHierarchyNode>();
 
             for (String fNode : percepChildern) {
-                PerceptionHierarchyNode featureNode = new PerceptionHierarchyNode(fNode);
+                PerceptionHierarchyNode featureNode = new PerceptionHierarchyNode(fNode,null);
                 featureNode.setParentNode(perceptionNode);
                 featureNode.setStackName(getNodeNameFromID(fNode));
                 ArrayList<String> featureChildern = getChildNodes(fNode);
                 ArrayList<PerceptionHierarchyNode> dimHierarchyNodes = new ArrayList<PerceptionHierarchyNode>();
 
                 for (String dimNode : featureChildern) {
-                    PerceptionHierarchyNode dimensionNode = new PerceptionHierarchyNode(dimNode);
+                    PerceptionHierarchyNode dimensionNode = new PerceptionHierarchyNode(dimNode,null);
                     dimensionNode.setParentNode(featureNode);
                     dimensionNode.setChildNodes(null);
                     dimensionNode.setStackName(getNodeNameFromID(dimNode));
@@ -74,12 +77,12 @@ public class PerceptionHierarchyModelCreator extends ConfigModelCreator {
         return perceptionHierarchyModel;
     }
 
-    private ArrayList<String> getNodesStartingWith(String prefix) {
+    private ArrayList<ConfigNode> getNodesStartingWith(String prefix) {
 
-        ArrayList<String> nodes = new ArrayList<String>();
-        for (String s : componentMap.keySet()) {
-            if (s.startsWith(prefix)) {
-                nodes.add(s);
+        ArrayList<ConfigNode> nodes = new ArrayList<ConfigNode>();
+        for (Entry<String,ConfigNode> entry : componentMap.entrySet()) {
+            if (entry.getKey().startsWith(prefix)) {
+                nodes.add(entry.getValue());
             }
         }
         return nodes;
