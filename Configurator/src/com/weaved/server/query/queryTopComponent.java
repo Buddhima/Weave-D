@@ -411,9 +411,9 @@ public final class queryTopComponent extends TopComponent {
 
         ArrayList<String> list = new ArrayList<String>();
         QueryObjectType qObjType = null;
-        
+
         String selectedLink = (String) linkCmb.getSelectedItem();
-        
+
         if (image_type.isSelected() && !text_type.isSelected()) {
             qObjType = QueryObjectType.IMAGE;
             double[] query = getInputFeatureVector("Query" + File.separator + "existenceResult.txt");
@@ -468,7 +468,7 @@ public final class queryTopComponent extends TopComponent {
                  * 2: Run DCD to extract Proportion features
                  * 3: Run CLD to extract Position features
                  */
-                
+
                 ProcessBuilder proc_color_existence = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Color\\Existence\\existence.txt", "hsl_15", "t", "1");
                 proc_color_existence.start();
 
@@ -477,6 +477,14 @@ public final class queryTopComponent extends TopComponent {
 
                 ProcessBuilder proc_color_position = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Color\\Position\\position.txt", "hsl_15", "t", "3");
                 proc_color_position.start();
+
+                // Extract edge features  
+                
+                Runtime.getRuntime().exec("java -jar FeatureExtractor\\EdgeFeatureExtractionLib.jar Query Query\\Edge existence");
+                Runtime.getRuntime().exec("java -jar FeatureExtractor\\EdgeFeatureExtractionLib.jar Query Query\\Edge proportion");
+                Runtime.getRuntime().exec("java -jar FeatureExtractor\\EdgeFeatureExtractionLib.jar Query Query\\Edge position");
+
+
 
                 JOptionPane.showMessageDialog(null, "Color Features are extracted!");
             } catch (Exception hj) {
@@ -529,9 +537,9 @@ public final class queryTopComponent extends TopComponent {
 
         // Get the related temporal link based on selected query object type
         if (image_type.isSelected() && !text_type.isSelected()) {
-            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator +"Existence"+File.separator + "existence.txt"), "L2F0", 1);
+            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "Existence" + File.separator + "existence.txt"), "L2F0", 1);
         } else if (!image_type.isSelected() && text_type.isSelected()) {
-            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, getInputFeatureVector("Query" + File.separator +"Text"+File.separator + "text.txt"), "L2F1", 1);
+            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, getInputFeatureVector("Query" + File.separator + "Text" + File.separator + "text.txt"), "L2F1", 1);
         }
 
         if (temporal.size() > 0) {
