@@ -12,6 +12,7 @@ import com.weaved.perception.model.main.PercpModelFacade;
 import com.weaved.query.enums.QueryObjectType;
 import com.weaved.server.control.controlTopComponent;
 import com.weaved.server.query.text.TextOutputCreator;
+import com.weaved.utils.FilesCleanup;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -383,7 +384,8 @@ public final class queryTopComponent extends TopComponent {
     }//GEN-LAST:event_queryImageLocationActionPerformed
 
     private void browseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseBtnActionPerformed
-        cleanPreviousImages();
+        //cleanPreviousQuery();
+        FilesCleanup.deleteFilesInsideFolders("Query");
         JFileChooser chooser = new JFileChooser(".");
         int choice = chooser.showOpenDialog(null);
         if (choice != JFileChooser.APPROVE_OPTION) {
@@ -456,16 +458,30 @@ public final class queryTopComponent extends TopComponent {
         if (image_type.isSelected()) {
 
             try {
-                ProcessBuilder proc_color = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query", "hsl_15", "t");
-                proc_color.start();
+                /*
+                 * 1: Run DCD to extract Existance features
+                 * 2: Run DCD to extract Proportion features
+                 * 3: Run CLD to extract Position features
+                 */
+                
+                ProcessBuilder proc_color_existence = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Color\\Existence\\existence.txt", "hsl_15", "t", "1");
+                proc_color_existence.start();
+
+                ProcessBuilder proc_color_proportion = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Color\\Proportion\\proportion.txt", "hsl_15", "t", "2");
+                proc_color_proportion.start();
+
+                ProcessBuilder proc_color_position = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Color\\Position\\position.txt", "hsl_15", "t", "3");
+                proc_color_position.start();
+
+                JOptionPane.showMessageDialog(null, "Color Features are extracted!");
             } catch (Exception hj) {
                 System.out.println("Error: " + hj);
             }
         }
         if (text_type.isSelected()) {
             try {
-                Runtime.getRuntime().exec("java -jar FeatureExtractor\\TextFeatureExtractionLib.jar Query Query\\textFeatures.txt FeatureExtractor\\sportKeywords");
-                JOptionPane.showMessageDialog(null,"Text Features are extracted successfully!");
+                Runtime.getRuntime().exec("java -jar FeatureExtractor\\TextFeatureExtractionLib.jar Query Query\\Text\\text.txt FeatureExtractor\\sportKeywords");
+                JOptionPane.showMessageDialog(null, "Text Features are extracted successfully!");
             } catch (Exception hj) {
                 System.out.println("Error: " + hj);
             }
@@ -616,8 +632,7 @@ public final class queryTopComponent extends TopComponent {
         return featureVector;
     }
 
-    private void cleanPreviousImages() {
-
+    private void cleanPreviousQuery() {
         File files = new File("Query");
         String[] myFiles2;
         if (files.isDirectory()) {
