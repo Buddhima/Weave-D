@@ -13,12 +13,14 @@ import java.util.ArrayList;
 public class PerceptionHierarchyNode {
 
     private String stackId;
+    private String dataType;
     private String StackName;
     private ArrayList<PerceptionHierarchyNode> childNodes;
     private PerceptionHierarchyNode parentNode;
 
-    public PerceptionHierarchyNode(String stackId) {
+    public PerceptionHierarchyNode(String stackId,String dataType) {
         this.stackId = stackId;
+        this.dataType = dataType;
     }
 
     /**
@@ -81,5 +83,19 @@ public class PerceptionHierarchyNode {
         } else {
             return 3;
         }
+    }
+
+    /**
+     * @return the dataType
+     */
+    public String getDataType() {
+        return dataType;
+    }
+
+    /**
+     * @param dataType the dataType to set
+     */
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
     }
 }

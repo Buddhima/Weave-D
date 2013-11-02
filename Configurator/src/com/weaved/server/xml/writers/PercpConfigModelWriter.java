@@ -54,6 +54,9 @@ public class PercpConfigModelWriter implements ConfigXMLWriter {
                 Element perceptionElement = doc.createElement("perception");
                 perceptionElement.setAttribute("id", perceptNode.getStackId());
                 perceptionElement.setAttribute("name", perceptNode.getStackName());
+                if(perceptNode.getDataType()!=null){
+                    perceptionElement.setAttribute("type", perceptNode.getDataType());
+                }
                 perceptionConfigModelElement.appendChild(perceptionElement);
 
                 ArrayList<PerceptionHierarchyNode> featureLevelNodes = perceptNode.getChildNodes();
