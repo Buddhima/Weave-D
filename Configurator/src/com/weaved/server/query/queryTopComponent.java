@@ -529,9 +529,9 @@ public final class queryTopComponent extends TopComponent {
 
         // Get the related temporal link based on selected query object type
         if (image_type.isSelected() && !text_type.isSelected()) {
-            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "existenceResult.txt"), "L2F0", 1);
+            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator +"Existence"+File.separator + "existence.txt"), "L2F0", 1);
         } else if (!image_type.isSelected() && text_type.isSelected()) {
-            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, getInputFeatureVector("Query" + File.separator + "textFeatures.txt"), "L2F0", 1);
+            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, getInputFeatureVector("Query" + File.separator +"Text"+File.separator + "text.txt"), "L2F1", 1);
         }
 
         if (temporal.size() > 0) {
