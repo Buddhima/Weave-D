@@ -5,6 +5,7 @@
 package com.weaved.main;
 
 import com.ikasl.objects.IKASLParams;
+import com.weaved.config.loaders.DataTypeToIKASLIDConfigLoader;
 import com.weaved.config.loaders.FeatureVectorsConfigLoader;
 import com.weaved.config.loaders.IKASLConfigLoader;
 import com.weaved.config.loaders.LinkGeneratorConfigLoader;
@@ -15,6 +16,7 @@ import com.weaved.input.NumericalDataParser;
 import com.weaved.perception.model.main.PercpModelFacade;
 import com.weaved.server.xml.elements.FeatureVectorsConfigModelElement;
 import com.weaved.server.xml.elements.IKASLConfigModelElement;
+import com.weaved.server.xml.models.DataTypeToIKASLIDModel;
 import com.weaved.server.xml.models.FeatureVectorsConfigModel;
 import com.weaved.server.xml.models.IKASLConfigModel;
 import com.weaved.server.xml.models.LinkConfigModel;
@@ -35,6 +37,8 @@ public class WeavedMain {
     private PercpModelFacade percpModelFacade;
     private FeatureVectorsConfigLoader featureVectorsConfigLoader;
     private FeatureVectorsConfigModel featureVectorsConfigModel;
+    private DataTypeToIKASLIDConfigLoader dataTypeToIKASLIDConfigLoader;
+    private DataTypeToIKASLIDModel dataTypeToIKASLIDModel;
     private ArrayList<FeatureVectorsConfigModelElement> featureVectorsConfigModelElements;
     private IKASLConfigLoader iKASLConfigLoader;
     private IKASLConfigModel iKASLConfigModel;
@@ -73,6 +77,8 @@ public class WeavedMain {
         loadPercpConfigModel();
         loadIKASLConfigModel();
         loadLinkConfigModel();
+        loadDataTypeToIKASLIDModel();
+
     }
 
     private void loadLinkConfigModel() {
@@ -91,6 +97,12 @@ public class WeavedMain {
         //calling test method to make sure the method is working fine.
         //============= DELETE after TESTING =--------------------===
         //percpModelFacade.testImagePercp(percpConfigModel);   
+    }
+
+    private void loadDataTypeToIKASLIDModel() {
+        dataTypeToIKASLIDConfigLoader = new DataTypeToIKASLIDConfigLoader();
+        dataTypeToIKASLIDConfigLoader.loadConfig(FileAndFolderNameList.rootConfigFolder + File.separator + FileAndFolderNameList.perceptionConfigFile);
+        dataTypeToIKASLIDModel = (DataTypeToIKASLIDModel) dataTypeToIKASLIDConfigLoader.getPopulatedConfigModel();
     }
 
     private void loadIKASLConfigModel() {
@@ -333,16 +345,20 @@ public class WeavedMain {
     public ArrayList<String> getCrossAndTempLinksInLevel(PercpModelEnums level) {
         return getPercpModelFacade().getLinksForQueryUI(linkConfigModel, level);
     }
-    
-    public LinkConfigModel getLinkConfigModel(){
+
+    public LinkConfigModel getLinkConfigModel() {
         return linkConfigModel;
     }
-    
-    public PercpModelConfigModel getPercpConfigModel(){
+
+    public PercpModelConfigModel getPercpConfigModel() {
         return percpConfigModel;
     }
-    
-    public IKASLConfigModel getIKASLConfigModel(){
+
+    public IKASLConfigModel getIKASLConfigModel() {
         return iKASLConfigModel;
+    }
+
+    public DataTypeToIKASLIDModel getDataTypeToIKASLIDModel() {
+        return dataTypeToIKASLIDModel;
     }
 }
