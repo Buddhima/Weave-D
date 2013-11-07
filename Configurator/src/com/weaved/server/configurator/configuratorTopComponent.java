@@ -64,8 +64,8 @@ public final class configuratorTopComponent extends TopComponent {
         setLayout(new BorderLayout());
         GraphSceneImpl scene = new GraphSceneImpl();
         JScrollPane shapePane = new JScrollPane();
-        HelpPane = new JEditorPane("text/html", "");
-        HelpPane.setEditable(false);
+//        HelpPane = new JEditorPane("text/html", "");
+//        HelpPane.setEditable(false);
 
 
 //        associateLookup(ExplorerUtils.createLookup(scene.em, getActionMap()));
@@ -79,13 +79,13 @@ public final class configuratorTopComponent extends TopComponent {
 
 
 
-        HelpPane.setSize(160, 100);
-        HelpPane.setText(getHelpText());
+//        HelpPane.setSize(160, 100);
+//        HelpPane.setText(getHelpText());
 
         add(shapePane, BorderLayout.CENTER);
         add(scene.createSatelliteView(), BorderLayout.WEST);
         add(jPanel1, BorderLayout.SOUTH);
-        add(HelpPane, BorderLayout.EAST);
+//        add(HelpPane, BorderLayout.EAST);
 
 
 
