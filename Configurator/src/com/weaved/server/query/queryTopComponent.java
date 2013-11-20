@@ -416,12 +416,12 @@ public final class queryTopComponent extends TopComponent {
 
         if (image_type.isSelected() && !text_type.isSelected()) {
             qObjType = QueryObjectType.IMAGE;
-            double[] query = getInputFeatureVector("Query" + File.separator + "existenceResult.txt");
+            double[] query = getInputFeatureVector("Query" + File.separator +"Color"+ File.separator +"Existence"+File.separator+ "existence.txt");
             list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, query, "L2F0");
             controlTopComponent.PERCEP_MODEL_FACADE.getHorizontalLinksForQuery(qObjType, "L2F0", "L2F1", query);
         } else if (!image_type.isSelected() && text_type.isSelected()) {
             qObjType = QueryObjectType.TEXT;
-            list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, getInputFeatureVector("Query" + File.separator + "textResults.txt"), "L2F1");
+            list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, getInputFeatureVector("Query" + File.separator + "Text"+ File.separator +"text.txt"), "L2F1");
         }
 
         jpanelImageGrid.removeAll();
