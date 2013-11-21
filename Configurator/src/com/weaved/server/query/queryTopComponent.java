@@ -432,28 +432,33 @@ public final class queryTopComponent extends TopComponent {
         //System.out.println(">> " + UIValues.getINPUT_FILE_LOCATION());
         //map = model.getHitAndImageMap();
 
-        if (list.size() > 0) {
-            jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, list, 5, "Input\\Files\\Images");
-            // Set the scrollpane viewport
-            jImageScrollPane.setViewportView(jpanelImageGrid);
-            jpanelImageGrid.setVisible(true);
-            jImageScrollPane.setVisible(true);
+        if (list != null) {
+            if (list.size() > 0) {
+                jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, list, 5, "Input\\Files\\Images");
+                // Set the scrollpane viewport
+                jImageScrollPane.setViewportView(jpanelImageGrid);
+                jpanelImageGrid.setVisible(true);
+                jImageScrollPane.setVisible(true);
 
-            // Displaying text results
-            TextOutputCreator toc = new TextOutputCreator(list, "Input\\Files\\Text\\");
-            txtOutputPanel = toc.getTextOutputPanel();
-            jScrollPane2.setViewportView(txtOutputPanel);
-            txtOutputPanel.setVisible(true);
-            jScrollPane2.setVisible(true);
+                // Displaying text results
+                TextOutputCreator toc = new TextOutputCreator(list, "Input\\Files\\Text\\");
+                txtOutputPanel = toc.getTextOutputPanel();
+                jScrollPane2.setViewportView(txtOutputPanel);
+                txtOutputPanel.setVisible(true);
+                jScrollPane2.setVisible(true);
 
-        } else {
-            jLabelNoImages.setVisible(true);
-            jpanelImageGrid.setVisible(false);
-            jImageScrollPane.setVisible(false);
+            } else {
+                jLabelNoImages.setVisible(true);
+                jpanelImageGrid.setVisible(false);
+                jImageScrollPane.setVisible(false);
+            }
+
+            JOptionPane.showMessageDialog(this, "Query Successful");
         }
-
-        JOptionPane.showMessageDialog(this, "Query Successful");
-
+        else{
+            // Need to update the Message Text
+            JOptionPane.showMessageDialog(this, "No Images found");
+        }
     }//GEN-LAST:event_submitBtnActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
