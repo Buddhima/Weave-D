@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Stack;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -60,16 +61,19 @@ preferredID = "queryTopComponent")
     "HINT_queryTopComponent=This is a query window"
 })
 public final class queryTopComponent extends TopComponent {
-    
+
     public WeavedMain weavedMain;
     public PercpModelFacade percpModelFacade;
-    
+    // set up a stack to deal with layer navigation buttons 
+    // Next and Back
+    private Stack stack;
+
     public queryTopComponent() {
         initComponents();
         jpanelImageGrid = new JPanel();
         setName(Bundle.CTL_queryTopComponent());
         setToolTipText(Bundle.HINT_queryTopComponent());
-        
+
         weavedMain = WeaveDMainHolder.weavedMain;
 
         // Set percptLvlCmb combobox values 
@@ -83,9 +87,9 @@ public final class queryTopComponent extends TopComponent {
                 percptLevlCmb.setSelectedItem(chars);
             }
         }
-        
+
         jLabelNoImages.setVisible(false);
-        
+
     }
 
     /**
@@ -312,6 +316,7 @@ public final class queryTopComponent extends TopComponent {
         jScrollPane2.setViewportView(txtOutputPanel);
 
         org.openide.awt.Mnemonics.setLocalizedText(backBtn, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.backBtn.text")); // NOI18N
+        backBtn.setEnabled(false);
         backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backBtnActionPerformed(evt);
@@ -319,6 +324,12 @@ public final class queryTopComponent extends TopComponent {
         });
 
         org.openide.awt.Mnemonics.setLocalizedText(nxtBtn, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.nxtBtn.text")); // NOI18N
+        nxtBtn.setEnabled(false);
+        nxtBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nxtBtnActionPerformed(evt);
+            }
+        });
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jLabel6.text")); // NOI18N
 
@@ -382,7 +393,7 @@ public final class queryTopComponent extends TopComponent {
     private void queryImageLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queryImageLocationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_queryImageLocationActionPerformed
-    
+
     private void browseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseBtnActionPerformed
         //cleanPreviousQuery();
         FilesCleanup.deleteFilesInsideFolders("Query");
@@ -406,14 +417,14 @@ public final class queryTopComponent extends TopComponent {
             browsedImageLbl.setIcon(imageIcon);
         }
     }//GEN-LAST:event_browseBtnActionPerformed
-    
+
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
-        
+
         ArrayList<String> list = new ArrayList<String>();
         QueryObjectType qObjType = null;
-        
+
         String selectedLink = (String) linkCmb.getSelectedItem();
-        
+
         if (image_type.isSelected() && !text_type.isSelected()) {
             qObjType = QueryObjectType.IMAGE;
             double[] query = getInputFeatureVector("Query" + File.separator + "Color" + File.separator + "Existence" + File.separator + "existence.txt");
@@ -423,7 +434,7 @@ public final class queryTopComponent extends TopComponent {
             qObjType = QueryObjectType.TEXT;
             list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, getInputFeatureVector("Query" + File.separator + "Text" + File.separator + "text.txt"), "L2F1");
         }
-        
+
         jpanelImageGrid.removeAll();
         txtOutputPanel.removeAll();
         jLabelNoImages.setVisible(false);
@@ -446,39 +457,43 @@ public final class queryTopComponent extends TopComponent {
                 jScrollPane2.setViewportView(txtOutputPanel);
                 txtOutputPanel.setVisible(true);
                 jScrollPane2.setVisible(true);
-                
+
+                // Initiate a stack object and add the current result
+                stack = new Stack();
+                stack.push(list);
+
             } else {
                 jLabelNoImages.setVisible(true);
                 jpanelImageGrid.setVisible(false);
                 jImageScrollPane.setVisible(false);
             }
-            
+            backBtn.setEnabled(true);
             JOptionPane.showMessageDialog(this, "Query Successful");
         } else {
             // Need to update the Message Text
             JOptionPane.showMessageDialog(this, "No Images found");
         }
     }//GEN-LAST:event_submitBtnActionPerformed
-    
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Copy file to the Query folder
         copyQueryFile(queryImageLocation.getText());
-        
+
         if (image_type.isSelected()) {
-            
+
             try {
                 /*
                  * 1: Run DCD to extract Existance features
                  * 2: Run DCD to extract Proportion features
                  * 3: Run CLD to extract Position features
                  */
-                
+
                 ProcessBuilder proc_color_existence = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Color\\Existence\\existence.txt", "hsl_15", "t", "1");
                 proc_color_existence.start();
-                
+
                 ProcessBuilder proc_color_proportion = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Color\\Proportion\\proportion.txt", "hsl_15", "t", "2");
                 proc_color_proportion.start();
-                
+
                 ProcessBuilder proc_color_position = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Color\\Position\\position.txt", "hsl_15", "t", "3");
                 proc_color_position.start();
 
@@ -487,8 +502,8 @@ public final class queryTopComponent extends TopComponent {
                 Runtime.getRuntime().exec("java -jar FeatureExtractor\\EdgeFeatureExtractionLib.jar Query Query\\Edge existence");
                 Runtime.getRuntime().exec("java -jar FeatureExtractor\\EdgeFeatureExtractionLib.jar Query Query\\Edge proportion");
                 Runtime.getRuntime().exec("java -jar FeatureExtractor\\EdgeFeatureExtractionLib.jar Query Query\\Edge position");
-                
-                
+
+
                 Thread.sleep(5000);
                 JOptionPane.showMessageDialog(null, "Color Features are extracted!");
             } catch (Exception hj) {
@@ -503,22 +518,22 @@ public final class queryTopComponent extends TopComponent {
                 System.out.println("Error: " + hj);
             }
         }
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     private void text_typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_typeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_text_typeActionPerformed
-    
+
     private void percptLevlCmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_percptLevlCmbActionPerformed
         linkCmb.removeAllItems();
         String selectedLevel = percptLevlCmb.getSelectedItem().toString();
         ArrayList<String> allLinksofSelectedLevel = null;
-        
+
         if (weavedMain.getLinkConfigModel() == null) {
             weavedMain.loadConfiguration();
         }
-        
+
         if (selectedLevel.equalsIgnoreCase(PercpModelEnums.DIMENSION.toString())) {
             allLinksofSelectedLevel = weavedMain.getCrossAndTempLinksInLevel(PercpModelEnums.DIMENSION);
         } else if (selectedLevel.equalsIgnoreCase(PercpModelEnums.FEATURE.toString())) {
@@ -529,11 +544,11 @@ public final class queryTopComponent extends TopComponent {
         for (String s : allLinksofSelectedLevel) {
             linkCmb.addItem(s.toString());
         }
-        
+
     }//GEN-LAST:event_percptLevlCmbActionPerformed
-    
+
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        
+
         jpanelImageGrid.removeAll();
         txtOutputPanel.removeAll();
         jLabelNoImages.setVisible(false);
@@ -545,7 +560,7 @@ public final class queryTopComponent extends TopComponent {
         } else if (!image_type.isSelected() && text_type.isSelected()) {
             temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, getInputFeatureVector("Query" + File.separator + "Text" + File.separator + "text.txt"), "L2F1", 1);
         }
-        
+
         if (temporal.size() > 0) {
             jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, temporal, 5, "Input\\Files\\Images");
             // Set the scrollpane viewport
@@ -559,12 +574,37 @@ public final class queryTopComponent extends TopComponent {
             jScrollPane2.setViewportView(txtOutputPanel);
             txtOutputPanel.setVisible(true);
             jScrollPane2.setVisible(true);
+
+            // push the returned results to the stack, at this point stack must be 
+            // initialized 
+            stack.push(temporal);
+
+            nxtBtn.setEnabled(true);
         } else {
             jLabelNoImages.setVisible(true);
             jpanelImageGrid.setVisible(false);
             jImageScrollPane.setVisible(false);
         }
     }//GEN-LAST:event_backBtnActionPerformed
+
+    private void nxtBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nxtBtnActionPerformed
+        stack.pop();
+        ArrayList<String> previousResults = ((ArrayList<String>) stack.peek());
+        jpanelImageGrid.removeAll();
+        jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, previousResults, 5, "Input\\Files\\Images");
+        // Set the scrollpane viewport
+        jImageScrollPane.setViewportView(jpanelImageGrid);
+        jpanelImageGrid.setVisible(true);
+        jImageScrollPane.setVisible(true);
+
+        // Displaying text results
+        TextOutputCreator toc = new TextOutputCreator(previousResults, "Input\\Files\\Text\\");
+        txtOutputPanel = toc.getTextOutputPanel();
+        jScrollPane2.setViewportView(txtOutputPanel);
+        txtOutputPanel.setVisible(true);
+        jScrollPane2.setVisible(true);
+
+    }//GEN-LAST:event_nxtBtnActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JButton browseBtn;
@@ -598,40 +638,40 @@ public final class queryTopComponent extends TopComponent {
     public void componentOpened() {
         // TODO add custom code on component opening
     }
-    
+
     @Override
     public void componentClosed() {
         // TODO add custom code on component closing
     }
-    
+
     void writeProperties(java.util.Properties p) {
         // better to version settings since initial version as advocated at
         // http://wiki.apidesign.org/wiki/PropertyFiles
         p.setProperty("version", "1.0");
         // TODO store your settings
     }
-    
+
     void readProperties(java.util.Properties p) {
         String version = p.getProperty("version");
         // TODO read your settings according to their version
     }
-    
+
     private double[] getInputFeatureVector(String featureVectorFile) {
-        
+
         String input = null;
         BufferedReader br = null;
-        
+
         try {
             String sCurrentLine;
             br = new BufferedReader(new FileReader(featureVectorFile));
-            
+
             while ((sCurrentLine = br.readLine()) != null) {
                 input = sCurrentLine;
             }
-            
+
         } catch (IOException e) {
             e.printStackTrace();
-            
+
         } finally {
             try {
                 if (br != null) {
@@ -641,7 +681,7 @@ public final class queryTopComponent extends TopComponent {
                 ex.printStackTrace();
             }
         }
-        
+
         String[] inputString = input.split(",");
         double[] featureVector = new double[inputString.length - 1];
         for (int i = 1; i < inputString.length; i++) {
@@ -649,7 +689,7 @@ public final class queryTopComponent extends TopComponent {
         }
         return featureVector;
     }
-    
+
     private void cleanPreviousQuery() {
         File files = new File("Query");
         String[] myFiles2;
@@ -663,37 +703,52 @@ public final class queryTopComponent extends TopComponent {
             }
         }
     }
-    
+
     private void copyQueryFile(String fileLocation) {
         String newFileLocation = null;
         InputStream inStream = null;
         OutputStream outStream = null;
-        
+
         try {
-            
+
             File afile = new File(fileLocation);
             newFileLocation = afile.getName();
             File bfile = new File("Query" + File.separator + newFileLocation);
-            
+
             inStream = new FileInputStream(afile);
             outStream = new FileOutputStream(bfile);
-            
+
             byte[] buffer = new byte[1024];
-            
+
             int length;
             //copy the file content in bytes 
             while ((length = inStream.read(buffer)) > 0) {
                 outStream.write(buffer, 0, length);
             }
-            
+
             inStream.close();
             outStream.close();
-            
+
             System.out.println("File is copied successful!");
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
+    }
+
+    private void showResults(ArrayList<String> temporal) {
+        jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, temporal, 5, "Input\\Files\\Images");
+        // Set the scrollpane viewport
+        jImageScrollPane.setViewportView(jpanelImageGrid);
+        jpanelImageGrid.setVisible(true);
+        jImageScrollPane.setVisible(true);
+
+        // Displaying text results
+        TextOutputCreator toc = new TextOutputCreator(temporal, "Input\\Files\\Text\\");
+        txtOutputPanel = toc.getTextOutputPanel();
+        jScrollPane2.setViewportView(txtOutputPanel);
+        txtOutputPanel.setVisible(true);
+        jScrollPane2.setVisible(true);
     }
 }
