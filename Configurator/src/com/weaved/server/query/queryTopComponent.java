@@ -67,6 +67,7 @@ public final class queryTopComponent extends TopComponent {
     // set up a stack to deal with layer navigation buttons 
     // Next and Back
     private Stack stack;
+    private int depth = 0;
 
     public queryTopComponent() {
         initComponents();
@@ -422,6 +423,7 @@ public final class queryTopComponent extends TopComponent {
 
         ArrayList<String> list = new ArrayList<String>();
         QueryObjectType qObjType = null;
+        depth = 0;
 
         String selectedLink = (String) linkCmb.getSelectedItem();
 
@@ -445,7 +447,7 @@ public final class queryTopComponent extends TopComponent {
 
         if (list != null) {
             if (list.size() > 0) {
-                jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, list, 5, "Input\\Files\\Images");
+                jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, list, 4, "Input\\Files\\Images");
                 // Set the scrollpane viewport
                 jImageScrollPane.setViewportView(jpanelImageGrid);
                 jpanelImageGrid.setVisible(true);
@@ -556,14 +558,16 @@ public final class queryTopComponent extends TopComponent {
 
         // Get the related temporal link based on selected query object type
         if (image_type.isSelected() && !text_type.isSelected()) {
-            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "Color" + File.separator + "Existence" + File.separator + "existence.txt"), "L2F0", 1);
+            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "Color" + File.separator + "Existence" + File.separator + "existence.txt"), "L2F0", depth++);
         } else if (!image_type.isSelected() && text_type.isSelected()) {
-            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, getInputFeatureVector("Query" + File.separator + "Text" + File.separator + "text.txt"), "L2F1", 1);
+            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, getInputFeatureVector("Query" + File.separator + "Text" + File.separator + "text.txt"), "L2F1", depth++);
         }
 
         if (temporal.size() > 0) {
-            jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, temporal, 5, "Input\\Files\\Images");
+            jpanelImageGrid.removeAll();
+            jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, temporal, 4, "Input\\Files\\Images");
             // Set the scrollpane viewport
+
             jImageScrollPane.setViewportView(jpanelImageGrid);
             jpanelImageGrid.setVisible(true);
             jImageScrollPane.setVisible(true);
@@ -588,10 +592,11 @@ public final class queryTopComponent extends TopComponent {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void nxtBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nxtBtnActionPerformed
+        depth--;
         stack.pop();
         ArrayList<String> previousResults = ((ArrayList<String>) stack.peek());
         jpanelImageGrid.removeAll();
-        jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, previousResults, 5, "Input\\Files\\Images");
+        jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, previousResults, 4, "Input\\Files\\Images");
         // Set the scrollpane viewport
         jImageScrollPane.setViewportView(jpanelImageGrid);
         jpanelImageGrid.setVisible(true);
@@ -738,7 +743,7 @@ public final class queryTopComponent extends TopComponent {
     }
 
     private void showResults(ArrayList<String> temporal) {
-        jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, temporal, 5, "Input\\Files\\Images");
+        jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, temporal, 4, "Input\\Files\\Images");
         // Set the scrollpane viewport
         jImageScrollPane.setViewportView(jpanelImageGrid);
         jpanelImageGrid.setVisible(true);
