@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  *
@@ -23,7 +24,7 @@ import java.util.Set;
 public abstract class XmlParser {
 
     protected String idSeperator = ",";
-    protected HashMap<String, ArrayList<Vertex>> layers = new HashMap<String, ArrayList<Vertex>>();
+    protected TreeMap<String, ArrayList<Vertex>> layers = new TreeMap<String, ArrayList<Vertex>>();// TreeMap to preserve order
     protected ArrayList<Edge> links = new ArrayList<Edge>();
 //    protected File fXmlFile;
     protected File[] listOfFiles;
@@ -35,7 +36,7 @@ public abstract class XmlParser {
      */
     public XmlParser(String filePath) {
         idSeperator = ",";
-        layers = new HashMap<String, ArrayList<Vertex>>();
+        layers = new TreeMap<String, ArrayList<Vertex>>();
 //        fXmlFile = new File(filePath);
         File folder = new File(filePath);
 //        listOfFiles = folder.listFiles();
