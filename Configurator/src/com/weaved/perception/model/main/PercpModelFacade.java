@@ -4,17 +4,17 @@
  */
 package com.weaved.perception.model.main;
 
-import com.ikasl.core.IKASLMain;
+import com.weaved.ikasl.core.IKASLMain;
 import com.ikasl.objects.CrossFeatureData;
-import com.ikasl.objects.IKASLParams;
-import com.ikasl.objects.LastIKASLLayer;
+import com.weaved.ikasl.objects.IKASLParams;
+import com.weaved.ikasl.objects.LastIKASLLayer;
 import com.ikasl.objects.TemporalLinkData;
 import com.ikasl.objects.cross.GNodeHitValueObject;
 import com.ikasl.objects.cross.GNodeHitValueObjectList;
 import com.ikasl.objects.temporal.GNodeHitValTemplObject;
 
 
-import com.ikasl.utils.IKASLConstants;
+import com.weaved.ikasl.utils.IKASLConstants;
 import com.vhlinker.commands.VHLinkerCommand;
 import com.vhlinker.main.VHLinkerFacade;
 import com.vhlinker.util.EntityIDGenerator;
@@ -471,7 +471,7 @@ public class PercpModelFacade {
         for (IKASLMain main : ikaslMainList) {
             if (main.getMyID().equals(ikaslID)) {
                 ikaslMain = main; 
-                ArrayList<String> imgList = ikaslMain.getImageListForGNode(winnerID);
+                ArrayList<String> imgList = ikaslMain.getDataForGNode(winnerID);
                 return imgList;
             }
         }

@@ -1,6 +1,5 @@
 package com.weaved.input;
 
-import com.ikasl.enums.NormalizeType;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

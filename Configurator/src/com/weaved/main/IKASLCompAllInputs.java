@@ -4,7 +4,8 @@
  */
 package com.weaved.main;
 
-import com.ikasl.objects.IKASLParams;
+
+import com.weaved.ikasl.objects.IKASLParams;
 import java.util.ArrayList;
 
 /**

@@ -4,7 +4,7 @@
  */
 package com.weaved.main;
 
-import com.ikasl.core.IKASLMain;
+import com.weaved.ikasl.core.IKASLMain;
 import com.weaved.config.loaders.FeatureVectorsConfigLoader;
 import com.weaved.config.loaders.IKASLConfigLoader;
 import com.weaved.config.loaders.LinkGeneratorConfigLoader;

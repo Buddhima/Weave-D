@@ -4,7 +4,7 @@
  */
 package com.weaved.input;
 
-import com.ikasl.utils.IKASLConstants;
+import com.weaved.ikasl.utils.IKASLConstants;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

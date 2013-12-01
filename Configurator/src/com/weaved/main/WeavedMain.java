@@ -4,7 +4,7 @@
  */
 package com.weaved.main;
 
-import com.ikasl.objects.IKASLParams;
+import com.weaved.ikasl.objects.IKASLParams;
 import com.weaved.config.loaders.DataTypeToIKASLIDConfigLoader;
 import com.weaved.config.loaders.FeatureVectorsConfigLoader;
 import com.weaved.config.loaders.IKASLConfigLoader;
