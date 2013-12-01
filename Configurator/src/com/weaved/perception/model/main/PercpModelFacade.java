@@ -7,6 +7,7 @@ package com.weaved.perception.model.main;
 import com.ikasl.core.IKASLMain;
 import com.ikasl.objects.CrossFeatureData;
 import com.ikasl.objects.IKASLParams;
+import com.ikasl.objects.LastIKASLLayer;
 import com.ikasl.objects.TemporalLinkData;
 import com.ikasl.objects.cross.GNodeHitValueObject;
 import com.ikasl.objects.cross.GNodeHitValueObjectList;
@@ -363,6 +364,7 @@ public class PercpModelFacade {
         for(IKASLMain main : ikaslMainList){
             if(main.getMyID().equals(ikaslID)){
                 ikaslMain = main;
+                LastIKASLLayer l = ikaslMain.retrieveLastLayer();
                 return ikaslMain.getLastLayersWinnerNodeForQuery(query);
             }
         }

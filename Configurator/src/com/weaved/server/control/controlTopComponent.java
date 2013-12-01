@@ -60,7 +60,7 @@ public final class controlTopComponent extends TopComponent {
 
     public static int countRound = 0;
     public WeavedMain weavedMain;
-    public static PercpModelFacade PERCEP_MODEL_FACADE;
+    private static PercpModelFacade PERCEP_MODEL_FACADE;
 
     public controlTopComponent() {
         initComponents();

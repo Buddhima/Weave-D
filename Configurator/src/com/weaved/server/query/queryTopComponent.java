@@ -12,6 +12,7 @@ import com.weaved.perception.model.main.PercpModelFacade;
 import com.weaved.query.enums.QueryObjectType;
 import com.weaved.server.control.controlTopComponent;
 import com.weaved.server.query.text.TextOutputCreator;
+import com.weaved.server.xml.elements.FeatureVectorsConfigModelElement;
 import com.weaved.utils.FilesCleanup;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -24,10 +25,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -69,6 +71,9 @@ public final class queryTopComponent extends TopComponent {
     private Stack stack;
     private int depth = 0;
 
+    private PercpModelFacade PERCEP_MODEL_FACADE;
+    
+    
     public queryTopComponent() {
         initComponents();
         jpanelImageGrid = new JPanel();
@@ -76,7 +81,8 @@ public final class queryTopComponent extends TopComponent {
         setToolTipText(Bundle.HINT_queryTopComponent());
 
         weavedMain = WeaveDMainHolder.weavedMain;
-
+        PERCEP_MODEL_FACADE = weavedMain.getPercpModelFacade();
+        
         // Set percptLvlCmb combobox values 
         for (PercpModelEnums item : PercpModelEnums.values()) {
             String str = ("" + item);
@@ -421,29 +427,96 @@ public final class queryTopComponent extends TopComponent {
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
 
+        jpanelImageGrid.removeAll();
+        txtOutputPanel.removeAll();
+        jLabelNoImages.setVisible(false);
+        
+        HashMap<String,String> idToInputLocMap = new HashMap<String, String>();
+        idToInputLocMap.putAll(weavedMain.getIdToInputLocMap());
+        
         ArrayList<String> list = new ArrayList<String>();
         QueryObjectType qObjType = null;
         depth = 0;
 
         String selectedLink = (String) linkCmb.getSelectedItem();
-
-        if (image_type.isSelected() && !text_type.isSelected()) {
-            qObjType = QueryObjectType.IMAGE;
-            double[] query = getInputFeatureVector("Query" + File.separator + "Color" + File.separator + "Existence" + File.separator + "existence.txt");
-            list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, query, "L2F0");
-            controlTopComponent.PERCEP_MODEL_FACADE.getHorizontalLinksForQuery(qObjType, "L2F0", "L2F1", query);
-        } else if (!image_type.isSelected() && text_type.isSelected()) {
-            qObjType = QueryObjectType.TEXT;
-            list = controlTopComponent.PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, getInputFeatureVector("Query" + File.separator + "Text" + File.separator + "text.txt"), "L2F1");
+        boolean isCross=false;
+        String[] stacks = new String[2];
+        if(selectedLink.contains("-")){
+            isCross = true;
+            stacks = selectedLink.split("-");
+        }else{
+            isCross = false;
+            stacks[0]=selectedLink;
         }
-
-        jpanelImageGrid.removeAll();
-        txtOutputPanel.removeAll();
-        jLabelNoImages.setVisible(false);
-
-        //list = weavedMain.runIKASL(getInputFeatureVector("Vector" + File.separator + "existenceResult.txt"));
-        //System.out.println(">> " + UIValues.getINPUT_FILE_LOCATION());
-        //map = model.getHitAndImageMap();
+        
+        if (isCross) {
+            String primaryID = null;
+            String primaryLoc = null;
+            
+            if (image_type.isSelected() && !text_type.isSelected()) {
+                qObjType = QueryObjectType.IMAGE;
+                for(Map.Entry<String,String> entry : idToInputLocMap.entrySet()){
+                    if(entry.getValue().contains("Image") && 
+                            (entry.getKey().equals(stacks[0]) || entry.getKey().equals(stacks[1]))){
+                        primaryID = entry.getKey();
+                        primaryLoc = entry.getValue();
+                        break;
+                    }
+                }
+                
+                //making the query location
+                primaryLoc = primaryLoc.replace(File.separator, "/");
+                String[] tokens = primaryLoc.split("/");
+                ArrayList<String> nonEmptyTokens = new ArrayList<String>();
+                for(String s : tokens){
+                    if(!s.isEmpty()){
+                        nonEmptyTokens.add(s);
+                    }
+                }
+                        
+                String temp = "";
+                for(int i = 2;i<nonEmptyTokens.size();i++){
+                        temp += nonEmptyTokens.get(i) +File.separator;
+                }
+                String fullLoc = "Query"+File.separator+temp+"result.txt";
+                
+                double[] query = getInputFeatureVector(fullLoc);
+                list = PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, query, primaryID);
+                PERCEP_MODEL_FACADE.getHorizontalLinksForQuery(qObjType, stacks[0], stacks[1], query);
+                
+            } else if (!image_type.isSelected() && text_type.isSelected()) {
+                qObjType = QueryObjectType.TEXT;
+                
+                for(Map.Entry<String,String> entry : idToInputLocMap.entrySet()){
+                    if(entry.getValue().contains("Text") && 
+                            (entry.getKey().equals(stacks[0]) || entry.getKey().equals(stacks[1]))){
+                        primaryID = entry.getKey();
+                        primaryLoc = entry.getValue();
+                        break;
+                    }
+                }
+                
+                //making the query location
+                primaryLoc = primaryLoc.replace(File.separator, "/");
+                String[] tokens = primaryLoc.split("/");
+                ArrayList<String> nonEmptyTokens = new ArrayList<String>();
+                for(String s : tokens){
+                    if(!s.isEmpty()){
+                        nonEmptyTokens.add(s);
+                    }
+                }
+                        
+                String temp = "";
+                for(int i = 2;i<nonEmptyTokens.size();i++){
+                        temp += nonEmptyTokens.get(i) +File.separator;
+                }
+                String fullLoc = "Query"+File.separator+temp+"result.txt";
+                
+                double[] query = getInputFeatureVector(fullLoc);
+                list = PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, query, primaryID);
+            }
+        }else{
+        }
 
         if (list != null) {
             if (list.size() > 0) {
@@ -490,13 +563,13 @@ public final class queryTopComponent extends TopComponent {
                  * 3: Run CLD to extract Position features
                  */
 
-                ProcessBuilder proc_color_existence = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Color\\Existence\\existence.txt", "hsl_15", "t", "1");
+                ProcessBuilder proc_color_existence = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Images\\Color\\Existence\\result.txt", "hsl_15", "t", "1");
                 proc_color_existence.start();
 
-                ProcessBuilder proc_color_proportion = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Color\\Proportion\\proportion.txt", "hsl_15", "t", "2");
+                ProcessBuilder proc_color_proportion = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Images\\Color\\Proportion\\result.txt", "hsl_15", "t", "2");
                 proc_color_proportion.start();
 
-                ProcessBuilder proc_color_position = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Color\\Position\\position.txt", "hsl_15", "t", "3");
+                ProcessBuilder proc_color_position = new ProcessBuilder("ColorFeatureExtractor" + File.separator + "MPEG7_DCD.exe", "Query", "Query\\Images\\Color\\Position\\result.txt", "hsl_15", "t", "3");
                 proc_color_position.start();
 
                 // Extract edge features  
@@ -558,9 +631,9 @@ public final class queryTopComponent extends TopComponent {
 
         // Get the related temporal link based on selected query object type
         if (image_type.isSelected() && !text_type.isSelected()) {
-            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "Color" + File.separator + "Existence" + File.separator + "existence.txt"), "L2F0", depth++);
+            temporal = PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "Color" + File.separator + "Existence" + File.separator + "existence.txt"), "L2F0", depth++);
         } else if (!image_type.isSelected() && text_type.isSelected()) {
-            temporal = controlTopComponent.PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, getInputFeatureVector("Query" + File.separator + "Text" + File.separator + "text.txt"), "L2F1", depth++);
+            temporal = PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, getInputFeatureVector("Query" + File.separator + "Text" + File.separator + "text.txt"), "L2F1", depth++);
         }
 
         if (temporal.size() > 0) {

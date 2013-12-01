@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 /**
  *
@@ -46,6 +47,8 @@ public class WeavedMain {
     ArrayList<IKASLCompAllInputs> iKASLRuntimeHelpers;
     private LinkGeneratorConfigLoader linkConfigLoader;
     private LinkConfigModel linkConfigModel;
+    
+    private HashMap<String,String> idToInputLocMap;
     private String OUTPUT_LOCATION = FileAndFolderNameList.ikaslOutputFolder;
     Boolean counterLessOrEqualThanFile;
     int counter;
@@ -59,7 +62,7 @@ public class WeavedMain {
     public WeavedMain() {
 
         percpModelFacade = new PercpModelFacade();
-
+        idToInputLocMap = new HashMap<String, String>();
         // This counter is used to keep track of which input file we're currently reading
         //e.g. if counter == 1, we're reading input1.txt
         // if counter ==2, we're reading input2.txt        
@@ -69,7 +72,6 @@ public class WeavedMain {
         //============ IllegalStateException Cannot find top component with preferred ID =======
 
         //====================================================================================
-
         //ArrayList<String> links = percpModelFacade.getLinksForQueryUI(linkConfigModel,PercpModelEnums.FEATURE);
     }
 
@@ -82,8 +84,6 @@ public class WeavedMain {
     }
 
     private void loadLinkConfigModel() {
-        //TODO: Need to write code for loading the link configuration xml
-        //TODO: Need to check whether link config model/link config loader classes are working properly
         linkConfigLoader = new LinkGeneratorConfigLoader();
         linkConfigLoader.loadConfig(FileAndFolderNameList.rootConfigFolder + File.separator + FileAndFolderNameList.linkConfigFile);
         linkConfigModel = (LinkConfigModel) linkConfigLoader.getPopulatedConfigModel();
@@ -116,7 +116,8 @@ public class WeavedMain {
         iKASLConfigLoader.loadConfig(configFolder + File.separator + FileAndFolderNameList.ikaslParamFile);
         iKASLConfigModel = (IKASLConfigModel) iKASLConfigLoader.getPopulatedConfigModel();
 
-        featureVectorsConfigModelElements = new ArrayList<FeatureVectorsConfigModelElement>();
+        featureVectorsConfigModelElements = new ArrayList<FeatureVectorsConfigModelElement>();              
+        
         iKASLConfigModelElements = new ArrayList<IKASLConfigModelElement>();
 
         iKASLConfigModelElements.addAll(getIKASLModelElementWithPrefix(
@@ -126,6 +127,10 @@ public class WeavedMain {
             featureVectorsConfigModelElements.add(getCorrespondingFeatureVectoreElement(iKASLConfigModelElement, getFeatureVectorsConfigModel().getFeatureVectorsConfigModelElements()));
         }
 
+        for(FeatureVectorsConfigModelElement ele : featureVectorsConfigModelElements){
+            idToInputLocMap.put(ele.getStackId(), ele.getFeatureVectorLocation());
+        }
+        
         iKASLRuntimeHelpers = new ArrayList<IKASLCompAllInputs>();
         ArrayList<IKASLParams> paramList = new ArrayList<IKASLParams>();
         ArrayList<String> idList = new ArrayList<String>();
@@ -360,5 +365,9 @@ public class WeavedMain {
 
     public DataTypeToIKASLIDModel getDataTypeToIKASLIDModel() {
         return dataTypeToIKASLIDModel;
+    }
+    
+    public HashMap<String,String> getIdToInputLocMap(){
+        return idToInputLocMap;
     }
 }
