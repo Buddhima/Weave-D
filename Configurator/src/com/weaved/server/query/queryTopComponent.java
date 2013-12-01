@@ -70,10 +70,8 @@ public final class queryTopComponent extends TopComponent {
     // Next and Back
     private Stack stack;
     private int depth = 0;
-
     private PercpModelFacade PERCEP_MODEL_FACADE;
-    
-    
+
     public queryTopComponent() {
         initComponents();
         jpanelImageGrid = new JPanel();
@@ -82,7 +80,7 @@ public final class queryTopComponent extends TopComponent {
 
         weavedMain = WeaveDMainHolder.weavedMain;
         PERCEP_MODEL_FACADE = weavedMain.getPercpModelFacade();
-        
+
         // Set percptLvlCmb combobox values 
         for (PercpModelEnums item : PercpModelEnums.values()) {
             String str = ("" + item);
@@ -430,95 +428,67 @@ public final class queryTopComponent extends TopComponent {
         jpanelImageGrid.removeAll();
         txtOutputPanel.removeAll();
         jLabelNoImages.setVisible(false);
-        
-        HashMap<String,String> idToInputLocMap = new HashMap<String, String>();
+
+        HashMap<String, String> idToInputLocMap = new HashMap<String, String>();
         idToInputLocMap.putAll(weavedMain.getIdToInputLocMap());
-        
+
         ArrayList<String> list = new ArrayList<String>();
         QueryObjectType qObjType = null;
         depth = 0;
 
         String selectedLink = (String) linkCmb.getSelectedItem();
-        boolean isCross=false;
+        boolean isCross = false;
         String[] stacks = new String[2];
-        if(selectedLink.contains("-")){
+        if (selectedLink.contains("-")) {
             isCross = true;
             stacks = selectedLink.split("-");
-        }else{
+        } else {
             isCross = false;
-            stacks[0]=selectedLink;
+            stacks[0] = selectedLink;
         }
-        
+
         if (isCross) {
-            String primaryID = null;
-            String primaryLoc = null;
-            
+
             if (image_type.isSelected() && !text_type.isSelected()) {
                 qObjType = QueryObjectType.IMAGE;
-                for(Map.Entry<String,String> entry : idToInputLocMap.entrySet()){
-                    if(entry.getValue().contains("Image") && 
-                            (entry.getKey().equals(stacks[0]) || entry.getKey().equals(stacks[1]))){
+
+                String primaryID = null;
+                String primaryLoc = null;
+                for (Map.Entry<String, String> entry : idToInputLocMap.entrySet()) {
+                    if (entry.getValue().contains("Image")
+                            && (entry.getKey().equals(stacks[0]) || entry.getKey().equals(stacks[1]))) {
                         primaryID = entry.getKey();
                         primaryLoc = entry.getValue();
                         break;
                     }
                 }
-                
-                //making the query location
-                primaryLoc = primaryLoc.replace(File.separator, "/");
-                String[] tokens = primaryLoc.split("/");
-                ArrayList<String> nonEmptyTokens = new ArrayList<String>();
-                for(String s : tokens){
-                    if(!s.isEmpty()){
-                        nonEmptyTokens.add(s);
-                    }
-                }
-                        
-                String temp = "";
-                for(int i = 2;i<nonEmptyTokens.size();i++){
-                        temp += nonEmptyTokens.get(i) +File.separator;
-                }
-                String fullLoc = "Query"+File.separator+temp+"result.txt";
-                
+                String fullLoc = this.getFullQueryInputLoc(qObjType, idToInputLocMap, primaryID, primaryLoc);
                 double[] query = getInputFeatureVector(fullLoc);
                 list = PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, query, primaryID);
-                
+
                 // If link generation button is not clicked in Control panel,
                 //This line will throw a nullpointer exception
                 //PERCEP_MODEL_FACADE.getHorizontalLinksForQuery(qObjType, stacks[0], stacks[1], query);
-                
+
             } else if (!image_type.isSelected() && text_type.isSelected()) {
                 qObjType = QueryObjectType.TEXT;
-                
-                for(Map.Entry<String,String> entry : idToInputLocMap.entrySet()){
-                    if(entry.getValue().contains("Text") && 
-                            (entry.getKey().equals(stacks[0]) || entry.getKey().equals(stacks[1]))){
+
+                String primaryID = null;
+                String primaryLoc = null;
+                for (Map.Entry<String, String> entry : idToInputLocMap.entrySet()) {
+                    if (entry.getValue().contains("Text")
+                            && (entry.getKey().equals(stacks[0]) || entry.getKey().equals(stacks[1]))) {
                         primaryID = entry.getKey();
                         primaryLoc = entry.getValue();
                         break;
                     }
                 }
-                
-                //making the query location
-                primaryLoc = primaryLoc.replace(File.separator, "/");
-                String[] tokens = primaryLoc.split("/");
-                ArrayList<String> nonEmptyTokens = new ArrayList<String>();
-                for(String s : tokens){
-                    if(!s.isEmpty()){
-                        nonEmptyTokens.add(s);
-                    }
-                }
-                        
-                String temp = "";
-                for(int i = 2;i<nonEmptyTokens.size();i++){
-                        temp += nonEmptyTokens.get(i) +File.separator;
-                }
-                String fullLoc = "Query"+File.separator+temp+"result.txt";
-                
+
+                String fullLoc = this.getFullQueryInputLoc(qObjType, idToInputLocMap, primaryID, primaryLoc);
                 double[] query = getInputFeatureVector(fullLoc);
                 list = PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, query, primaryID);
             }
-        }else{
+        } else {
         }
 
         if (list != null) {
@@ -590,7 +560,7 @@ public final class queryTopComponent extends TopComponent {
         }
         if (text_type.isSelected()) {
             try {
-                Runtime.getRuntime().exec("java -jar FeatureExtractor\\TextFeatureExtractionLib.jar Query Query\\Text\\text.txt FeatureExtractor\\sportKeywords");
+                Runtime.getRuntime().exec("java -jar FeatureExtractor\\TextFeatureExtractionLib.jar Query Query\\Text\\result.txt FeatureExtractor\\sportKeywords");
                 JOptionPane.showMessageDialog(null, "Text Features are extracted successfully!");
             } catch (Exception hj) {
                 System.out.println("Error: " + hj);
@@ -627,19 +597,68 @@ public final class queryTopComponent extends TopComponent {
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
 
+        if(!weavedMain.getLinkGenExecuted()){
+            JOptionPane.showMessageDialog(null, "Link Generation not have been executed");
+            return;
+        }
+        
         jpanelImageGrid.removeAll();
         txtOutputPanel.removeAll();
         jLabelNoImages.setVisible(false);
         ArrayList<String> temporal = new ArrayList<String>();
 
-        // Get the related temporal link based on selected query object type
-        if (image_type.isSelected() && !text_type.isSelected()) {
-            temporal = PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, getInputFeatureVector("Query" + File.separator + "Color" + File.separator + "Existence" + File.separator + "existence.txt"), "L2F0", depth++);
-        } else if (!image_type.isSelected() && text_type.isSelected()) {
-            temporal = PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, getInputFeatureVector("Query" + File.separator + "Text" + File.separator + "text.txt"), "L2F1", depth++);
+        String selectedLink = (String) linkCmb.getSelectedItem();
+        HashMap<String, String> idToInputLocMap = new HashMap<String, String>();
+        idToInputLocMap.putAll(weavedMain.getIdToInputLocMap());
+
+        String[] stacks = new String[2];
+        if (selectedLink.contains("-")) {
+            stacks = selectedLink.split("-");
+        } else {
+            stacks[0] = selectedLink;
         }
 
-        if (temporal.size() > 0) {
+        // Get the related temporal link based on selected query object type
+        if (image_type.isSelected() && !text_type.isSelected()) {
+
+
+            String primaryID = null;
+            String primaryLoc = null;
+            for (Map.Entry<String, String> entry : idToInputLocMap.entrySet()) {
+                if (entry.getValue().contains("Image")
+                        && (entry.getKey().equals(stacks[0]) || entry.getKey().equals(stacks[1]))) {
+                    primaryID = entry.getKey();
+                    primaryLoc = entry.getValue();
+                    break;
+                }
+            }
+
+            String fullLoc = this.getFullQueryInputLoc(QueryObjectType.IMAGE, idToInputLocMap, primaryID, primaryLoc);
+            double[] query = getInputFeatureVector(fullLoc);
+            depth=depth+1;
+            temporal = PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, query, primaryID, depth);
+            
+        } else if (!image_type.isSelected() && text_type.isSelected()) {
+
+            String primaryID = null;
+            String primaryLoc = null;
+            for (Map.Entry<String, String> entry : idToInputLocMap.entrySet()) {
+                if (entry.getValue().contains("Text")
+                        && (entry.getKey().equals(stacks[0]) || entry.getKey().equals(stacks[1]))) {
+                    primaryID = entry.getKey();
+                    primaryLoc = entry.getValue();
+                    break;
+                }
+            }
+            
+            String fullLoc = this.getFullQueryInputLoc(QueryObjectType.TEXT, idToInputLocMap, primaryID, primaryLoc);
+            double[] query = getInputFeatureVector(fullLoc);
+            
+            depth=depth+1;
+            temporal = PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, query, primaryID, depth);
+        }
+
+        if (temporal != null && temporal.size() > 0) {
             jpanelImageGrid.removeAll();
             jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, temporal, 4, "Input\\Files\\Images");
             // Set the scrollpane viewport
@@ -831,5 +850,52 @@ public final class queryTopComponent extends TopComponent {
         jScrollPane2.setViewportView(txtOutputPanel);
         txtOutputPanel.setVisible(true);
         jScrollPane2.setVisible(true);
+    }
+
+    private String getFullQueryInputLoc(QueryObjectType type, HashMap<String, String> idToInputLocMap, String primaryID, String primaryLoc) {
+
+        String fullLoc = null;
+
+        if (type == QueryObjectType.IMAGE) {
+
+            //making the query location
+            primaryLoc = primaryLoc.replace(File.separator, "/");
+            String[] tokens = primaryLoc.split("/");
+            ArrayList<String> nonEmptyTokens = new ArrayList<String>();
+            for (String s : tokens) {
+                if (!s.isEmpty()) {
+                    nonEmptyTokens.add(s);
+                }
+            }
+
+            String temp = "";
+            for (int i = 2; i < nonEmptyTokens.size(); i++) {
+                temp += nonEmptyTokens.get(i) + File.separator;
+            }
+            fullLoc = "Query" + File.separator + temp + "result.txt";
+
+        }
+
+        if (type == QueryObjectType.TEXT) {
+
+            //making the query location
+            primaryLoc = primaryLoc.replace(File.separator, "/");
+            String[] tokens = primaryLoc.split("/");
+            ArrayList<String> nonEmptyTokens = new ArrayList<String>();
+            for (String s : tokens) {
+                if (!s.isEmpty()) {
+                    nonEmptyTokens.add(s);
+                }
+            }
+
+            String temp = "";
+            for (int i = 2; i < nonEmptyTokens.size(); i++) {
+                temp += nonEmptyTokens.get(i) + File.separator;
+            }
+            fullLoc = "Query" + File.separator + temp + "result.txt";
+
+        }
+
+        return fullLoc;
     }
 }

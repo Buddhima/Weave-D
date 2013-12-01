@@ -380,12 +380,14 @@ public class PercpModelFacade {
             String currID = EntityIDGenerator.generateEntityIDString(((GNodeHitValTemplObject)n.getNode()).getId());
             if(currID.equals(gNodeID)){
                 node = n;
+                break;
             }
         }
         
         if (node != null) {
             for (int i = 0; i < depth; i++) {
-                if (node.getParent().getLevelID() >= 0) {
+                String id = EntityIDGenerator.generateEntityIDString(((GNodeHitValTemplObject) node.getParent().getNode()).getId());
+                if (node.getParent().getLevelID() >= 0 && !id.equals("LC-1,GC-1,GN-1")) {
                     node = node.getParent();
                 } else {
                     return null;

@@ -52,6 +52,9 @@ public class WeavedMain {
     private String OUTPUT_LOCATION = FileAndFolderNameList.ikaslOutputFolder;
     Boolean counterLessOrEqualThanFile;
     int counter;
+    
+    private boolean linkGenExecuted;
+    private boolean ikaslExecuted;
     /*--------------------------------------------------------
      * Things to beware of
      * 1. Make sure you delete the lastGLayer.ser before runing IKASL from the scratch. 
@@ -230,6 +233,8 @@ public class WeavedMain {
             //'learn incrementally' button next.
             counter++;
         }
+        
+        ikaslExecuted = true;
     }
 
     /**
@@ -259,10 +264,8 @@ public class WeavedMain {
                 getPercpModelFacade().runTemporalLinkGeneration(OUTPUT_LOCATION, id);
             }
         }
-        /*
-         for(String id : idList){
-         getPercpModelFacade().runTemporalLinkGeneration(OUTPUT_LOCATION ,id);
-         }*/
+        
+        linkGenExecuted = true;
     }
 
     /**
@@ -370,5 +373,13 @@ public class WeavedMain {
     
     public HashMap<String,String> getIdToInputLocMap(){
         return idToInputLocMap;
+    }
+    
+    public boolean getLinkGenExecuted(){
+        return linkGenExecuted;
+    }
+    
+    public boolean getIKASLExecuted(){
+        return ikaslExecuted;
     }
 }
