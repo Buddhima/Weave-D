@@ -47,7 +47,12 @@ public class Utils {
         double currDist = Double.MAX_VALUE;
         double minDist = Double.MAX_VALUE;
         for (Map.Entry<String, Node> entry : nodeMap.entrySet()) {
-            currDist = Utils.calcEucDist(input, entry.getValue().getWeights(), IKASLConstants.DIMENSIONS);
+            currDist = Utils.calcEucDist(input, entry.getValue().getWeights(), input.length);
+            
+            if(entry.getValue().getWeights().length != input.length){
+                System.out.println("PROBLEM: Input Weight Dimension Mismatch");
+            }
+            
             if (currDist < minDist) {
                 winner = entry.getValue();
                 minDist = currDist;
@@ -99,8 +104,8 @@ public class Utils {
         return result;
     }
     
-    public static int getSTDevCountForColsGreaterThan(ArrayList<double[]> inputs,double thresh){
-        ArrayList<Double> stdevs = getSTDForColumns(inputs, IKASLConstants.DIMENSIONS);
+    public static int getSTDevCountForColsGreaterThan(ArrayList<double[]> inputs,double thresh, int dimensions){
+        ArrayList<Double> stdevs = getSTDForColumns(inputs, dimensions);
         int colCount=0;
         for(double val : stdevs){
             if(val>thresh){

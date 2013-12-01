@@ -19,9 +19,7 @@ public class IKASLCompAllInputs {
     private ArrayList<double[]> iWeights;   //input feature vectos
     private ArrayList<String> iNames;   //input names
     private IKASLParams iKASLParams;
-    private int min;    //min bound
-    private int max;    //max bound
-    private int dimension;
+
 
     /**
      * @return the stackId
@@ -79,45 +77,4 @@ public class IKASLCompAllInputs {
         this.iKASLParams = iKASLParams;
     }
 
-    /**
-     * @return the min
-     */
-    public int getMin() {
-        return min;
-    }
-
-    /**
-     * @param min the min to set
-     */
-    public void setMin(int min) {
-        this.min = min;
-    }
-
-    /**
-     * @return the max
-     */
-    public int getMax() {
-        return max;
-    }
-
-    /**
-     * @param max the max to set
-     */
-    public void setMax(int max) {
-        this.max = max;
-    }
-
-    /**
-     * @return the dimension
-     */
-    public int getDimension() {
-        return dimension;
-    }
-
-    /**
-     * @param dimension the dimension to set
-     */
-    public void setDimension(int dimension) {
-        this.dimension = dimension;
-    }
 }

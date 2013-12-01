@@ -482,7 +482,10 @@ public final class queryTopComponent extends TopComponent {
                 
                 double[] query = getInputFeatureVector(fullLoc);
                 list = PERCEP_MODEL_FACADE.getImageSetForQuery(qObjType, query, primaryID);
-                PERCEP_MODEL_FACADE.getHorizontalLinksForQuery(qObjType, stacks[0], stacks[1], query);
+                
+                // If link generation button is not clicked in Control panel,
+                //This line will throw a nullpointer exception
+                //PERCEP_MODEL_FACADE.getHorizontalLinksForQuery(qObjType, stacks[0], stacks[1], query);
                 
             } else if (!image_type.isSelected() && text_type.isSelected()) {
                 qObjType = QueryObjectType.TEXT;

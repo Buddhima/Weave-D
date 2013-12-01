@@ -46,7 +46,6 @@ public class NumericalDataParser extends InputParser {
                         weights.add(weightArr);
                     }
                 }
-                IKASLConstants.DIMENSIONS = weights.get(0).length;
                 
             } catch (Exception ex) {
                 System.out.println("Error While Reading");

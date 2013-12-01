@@ -207,12 +207,7 @@ public class PercpModelFacade {
      * @param max - Maximum bound for the inputs
      * @param dims - Number of dimensions
      */
-    public void runIKASLTest(String id, IKASLParams params, ArrayList<double[]> iWeights, ArrayList<String> iNames,
-            int min, int max, int dims) {
-
-        IKASLConstants.MIN_BOUND = min;
-        IKASLConstants.MAX_BOUND = max;
-        IKASLConstants.DIMENSIONS = dims;
+    public void runIKASLTest(String id, IKASLParams params, ArrayList<double[]> iWeights, ArrayList<String> iNames) {
 
         IKASLMain currIKASL = null;
         for (IKASLMain ikasl : getIkaslMainList()) {

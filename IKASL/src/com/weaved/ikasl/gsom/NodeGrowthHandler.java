@@ -11,8 +11,11 @@ public class NodeGrowthHandler {
     //This class is responsible of growing nodes in the GSOM map.
     //It'll check the free spaces around the winning neuron and grow new nodes accordingly
     //Also, it'll assign optimal weights for the new neurons
-	Map<String,Node> map;
-	
+	private Map<String,Node> map;
+	private int dimensions;
+        public NodeGrowthHandler(int dimensions){
+            this.dimensions = dimensions;
+        }
         
         public Map<String,Node> growNodes(Map<String,Node> map, Node winner){
 		this.map = map;
@@ -44,7 +47,7 @@ public class NodeGrowthHandler {
 	//calc and get weights for the new node
 	private double[] getNewNodeWeights(Node winner, int X, int Y){
 		
-		double[] newWeights= new double[IKASLConstants.DIMENSIONS];
+		double[] newWeights= new double[dimensions];
 		
 		if(winner.getY()==Y){
 			//two consecutive nodes 
@@ -185,7 +188,7 @@ public class NodeGrowthHandler {
 			}
 		}
 		
-		for(int i=0;i<IKASLConstants.DIMENSIONS;i++){
+		for(int i=0;i<dimensions;i++){
 			if(newWeights[i]<0){
 				newWeights[i]=0;
 			}

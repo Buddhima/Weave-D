@@ -10,7 +10,7 @@ public abstract class Node implements Serializable{
     protected double[] weights;
     protected String parentID;
     protected int hitValue;
-
+    
     public Node(){
         
     }
@@ -46,7 +46,7 @@ public abstract class Node implements Serializable{
 
     public void adjustWeights(double[] iWeights, double influence, double learningRate) {
 
-        for (int i = 0; i < IKASLConstants.DIMENSIONS; i++) {
+        for (int i = 0; i < weights.length; i++) {
             weights[i] += influence * learningRate * (iWeights[i] - weights[i]);
         }
     }

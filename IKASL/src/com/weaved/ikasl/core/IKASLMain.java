@@ -57,7 +57,7 @@ public class IKASLMain {
         this.params = params;
         learner = new IKASLLearner(params);
         aggregator = new IKASLAggregator(params);
-        gTester = new GeneralizeLayerTester();
+        gTester = new GeneralizeLayerTester(params);
         currLearnCycle = 0;
         
         gTesterTestResults = new HashMap<String, String>();
@@ -116,8 +116,8 @@ public class IKASLMain {
         }
         
         //normalize each column in inputs with max and min bounds for each column
-        InputReadUtils.normalizeWithBounds(IKASLConstants.DIMENSIONS, inputs, IKASLConstants.MIN_BOUND, IKASLConstants.MAX_BOUND);
-        LOGGER.info("Inputs are normalized with MIN Bound: "+IKASLConstants.MIN_BOUND + ", MAX Bound:"+IKASLConstants.MAX_BOUND);
+        InputReadUtils.normalizeWithBounds(params.getDimensions(), inputs, params.getMinBound(), params.getMaxBound());
+        LOGGER.info("Inputs are normalized with MIN Bound: "+params.getMinBound() + ", MAX Bound:"+params.getMaxBound());
         
         if(lastLayer == null){
             currLearnCycle=0;
@@ -157,7 +157,7 @@ public class IKASLMain {
     public String getLastLayersWinnerNodeForQuery(double[] query){
         ArrayList<double[]> qInput = new ArrayList<double[]>();
         qInput.add(query);
-        InputReadUtils.normalizeWithBounds(IKASLConstants.DIMENSIONS, qInput, IKASLConstants.MIN_BOUND, IKASLConstants.MIN_BOUND);
+        InputReadUtils.normalizeWithBounds(params.getDimensions(), qInput, params.getMinBound(), params.getMaxBound());
         double[] normQInput = qInput.get(0);
         LastIKASLLayer lastLayer = retrieveLastLayer();
         NeuronLayer nl = lastLayer.getNeuronLayer();

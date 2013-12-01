@@ -21,9 +21,9 @@ public class GSOMTrainer {
     private double startLR;
     private double maxNR;
 
-    public GSOMTrainer() {
+    public GSOMTrainer(int dimensions) {
         
-        growthHandler = new NodeGrowthHandler();
+        growthHandler = new NodeGrowthHandler(dimensions);
     }
 
     public Map<String, Node> trainNetwork(IKASLParams params, ArrayList<String> iStrings, ArrayList<double[]> iWeights) {

@@ -152,12 +152,13 @@ public class WeavedMain {
             iKASLParams.setAggregationType(0);
             iKASLParams.setHitThreshold(iKASLConfigModelElement.getHitThreshold());
             iKASLParams.setLearningCycleCount(1);
+            iKASLParams.setMinBound(featureVectorsConfigModelElement.getMinBound());
+            iKASLParams.setMaxBound(featureVectorsConfigModelElement.getMaxBound());
+            
             iKASLRuntimeHelper.setiKASLParams(iKASLParams);
-            iKASLRuntimeHelper.setStackId(iKASLConfigModelElement.getStackId());
-            iKASLRuntimeHelper.setDimension(featureVectorsConfigModelElement.getDimSize());
-            iKASLRuntimeHelper.setMin(featureVectorsConfigModelElement.getMinBound());
-            iKASLRuntimeHelper.setMax(featureVectorsConfigModelElement.getMaxBound());
+            iKASLRuntimeHelper.setStackId(iKASLConfigModelElement.getStackId());            
             iKASLRuntimeHelpers.add(iKASLRuntimeHelper);
+            
             paramList.add(iKASLParams);
             idList.add(iKASLConfigModelElement.getStackId());
 
@@ -222,7 +223,7 @@ public class WeavedMain {
 
 
                 getPercpModelFacade().runIKASLTest(helper.getStackId(), helper.getiKASLParams(),
-                        helper.getiWeights(), helper.getiNames(), helper.getMin(), helper.getMax(), helper.getDimension());
+                        helper.getiWeights(), helper.getiNames());
 
             }
             //increment the counter so the program will read the next input file, when we click

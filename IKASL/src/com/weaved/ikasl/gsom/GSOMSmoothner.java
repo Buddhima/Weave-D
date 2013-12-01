@@ -14,6 +14,11 @@ public class GSOMSmoothner{
 
 	private int maxIter;
 	private Map<String, Node> map;
+        private int dimensions;
+        
+        public GSOMSmoothner(int dimensions){
+            this.dimensions = dimensions;
+        }
 	
         /* ---------- Deprecated --------------------------------------------
 	public Map<String,Node> smoothGSOM(IKASLParams params,Map<String, Node> map,ArrayList<double[]> inputs){
@@ -38,7 +43,7 @@ public class GSOMSmoothner{
             double learningRate = Utils.getLearningRate(iter, map.size(),startLearningRate,params.getMaxIte());
             double radius = Utils.getRadius(iter, maxRadius, Utils.getTimeConst(params.getMaxIte(),maxRadius));
             for (double[] singleInput : inputs) {
-                if (singleInput.length == IKASLConstants.DIMENSIONS) {
+                if (singleInput.length == dimensions) {
                     smoothSingleIterSingleInput(map, iter, singleInput, learningRate, radius);
                 } else {
                     //error

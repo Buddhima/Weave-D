@@ -22,11 +22,14 @@ public class IKASLParams {
     private int maxIte;
     private int hitThresh;
     private int aggregationType;
+    private int minBound;
+    private int maxBound;
 
     public IKASLParams(){}
     
     public IKASLParams(int dims, int learnCycleCount, double SF,
-            double NR, double FD, double LR, int maxIter, int hitThresh, int aggregationType) {
+            double NR, double FD, double LR, int maxIter, 
+            int hitThresh, int aggregationType, int minBound, int maxBound) {
         this.dimensions = dims;
         this.learningCycleCount = learnCycleCount;
         this.spreadFactor = SF;
@@ -36,6 +39,8 @@ public class IKASLParams {
         this.maxIte = maxIter;
         this.hitThresh = hitThresh;
         this.aggregationType = aggregationType;
+        this.minBound = minBound;
+        this.maxBound = maxBound;
     }
 
     public double getGT() {
@@ -167,5 +172,33 @@ public class IKASLParams {
      */
     public void setAggregationType(int aggregationType) {
         this.aggregationType = aggregationType;
+    }
+
+    /**
+     * @return the minBound
+     */
+    public int getMinBound() {
+        return minBound;
+    }
+
+    /**
+     * @param minBound the minBound to set
+     */
+    public void setMinBound(int minBound) {
+        this.minBound = minBound;
+    }
+
+    /**
+     * @return the maxBound
+     */
+    public int getMaxBound() {
+        return maxBound;
+    }
+
+    /**
+     * @param maxBound the maxBound to set
+     */
+    public void setMaxBound(int maxBound) {
+        this.maxBound = maxBound;
     }
 }

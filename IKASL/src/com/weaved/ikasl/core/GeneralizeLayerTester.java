@@ -6,6 +6,7 @@ package com.weaved.ikasl.core;
 
 import com.weaved.ikasl.id.EntityID;
 import com.weaved.ikasl.objects.GNode;
+import com.weaved.ikasl.objects.IKASLParams;
 import com.weaved.ikasl.objects.NeuronLayer;
 import com.weaved.ikasl.objects.Node;
 import com.weaved.ikasl.utils.ArrayHelper;
@@ -24,9 +25,10 @@ public class GeneralizeLayerTester {
 
     private GNodeHitValueData ghData;
     private ArrayList<String> specialData;  //keeps track of non-hit data
+    private IKASLParams params;
     
-    
-    public GeneralizeLayerTester() {
+    public GeneralizeLayerTester(IKASLParams params) {
+        this.params = params;
     }
 
     public Map<String, String> testGenLayer(int cycle, NeuronLayer layer, ArrayList<double[]> inputs, ArrayList<String> names) {
@@ -34,7 +36,7 @@ public class GeneralizeLayerTester {
         specialData = new ArrayList<String>();
         String nonHitData = "";  //inputs that are not belonging to any node
         
-        int colCount = Utils.getSTDevCountForColsGreaterThan(inputs, IKASLConstants.STD_DEV_THRESHOLD);
+        int colCount = Utils.getSTDevCountForColsGreaterThan(inputs, IKASLConstants.STD_DEV_THRESHOLD,params.getDimensions());
         Map<String, String> map = new HashMap<String, String>();
 
         for (int i = 0; i < inputs.size(); i++) {
@@ -42,7 +44,7 @@ public class GeneralizeLayerTester {
             
             
             //Do not put the input to the test result map if the disparity threshold is high
-            if (Utils.calcEucDist(winner.getWeights(), inputs.get(i), IKASLConstants.DIMENSIONS) <
+            if (Utils.calcEucDist(winner.getWeights(), inputs.get(i), params.getDimensions()) <
                     IKASLConstants.getDisparityThreshold(colCount)) {                
                 
                 if (!map.containsKey(winner.getNodeSequence())) {
@@ -95,10 +97,10 @@ public class GeneralizeLayerTester {
     
     private int getAvgNumOfDiffElementValue(double[] input,double[] winner){
         
-        double[] total = ArrayHelper.add(input, winner, IKASLConstants.DIMENSIONS);
+        double[] total = ArrayHelper.add(input, winner, params.getDimensions());
         
         int result=0;
-        for(int i=0;i<IKASLConstants.DIMENSIONS;i++){
+        for(int i=0;i<params.getDimensions();i++){
             if(total[i]>0){
                 result++;
             }
@@ -108,14 +110,14 @@ public class GeneralizeLayerTester {
     }
     
     private int getAvgNumOfDiffElementValue(ArrayList<double[]> inputs){
-        double[] total = new double[IKASLConstants.DIMENSIONS];
+        double[] total = new double[params.getDimensions()];
         for(double[] val : inputs){
-            for(int i=0;i<IKASLConstants.DIMENSIONS;i++){
+            for(int i=0;i<params.getDimensions();i++){
                 total[i]+=val[i];
             }
         }
         int result=0;
-        for(int i=0;i<IKASLConstants.DIMENSIONS;i++){
+        for(int i=0;i<params.getDimensions();i++){
             if(total[i]>0){
                 result++;
             }

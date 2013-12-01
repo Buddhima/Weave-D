@@ -70,7 +70,7 @@ public class IKASLLearner {
         //add input weights
         gNodesAndInputWeights.addAll(inputs);
         
-        int colCount = Utils.getSTDevCountForColsGreaterThan(gNodesAndInputWeights, IKASLConstants.STD_DEV_THRESHOLD);
+        int colCount = Utils.getSTDevCountForColsGreaterThan(gNodesAndInputWeights, IKASLConstants.STD_DEV_THRESHOLD, params.getDimensions());
         disThreshold = IKASLConstants.getDisparityThreshold(colCount);
         
         //initial time: starting with 4 nodes
@@ -227,9 +227,9 @@ public class IKASLLearner {
      * 4. GSOMTester - Test the GSOM network by feeding the input entries
      */
     private void initializeGSOMObjects() {
-        trainer = new GSOMTrainer();
+        trainer = new GSOMTrainer(params.getDimensions());
         adjuster = new GCoordAdjuster();
-        smoothner = new GSOMSmoothner();
+        smoothner = new GSOMSmoothner(params.getDimensions());
         tester = new GSOMTester();
     }
 
@@ -304,7 +304,7 @@ public class IKASLLearner {
             //check whether this node is lot different from the new input
             //if so, keep the parent node                   
             if (!leftOutGNodes.contains(winner)
-                    && Utils.calcEucDist(inputs.get(i), winner.getWeights(), IKASLConstants.DIMENSIONS) > disThreshold) {
+                    && Utils.calcEucDist(inputs.get(i), winner.getWeights(), params.getDimensions()) > disThreshold) {
                 //winner.setDisparityThreshExceeded(true);
                 inputObj.setDisparityExceeded(true);
                 leftOutGNodes.add(winner);
@@ -313,7 +313,7 @@ public class IKASLLearner {
             }
 
             if (leftOutGNodes.contains(winner)
-                    && Utils.calcEucDist(inputs.get(i), winner.getWeights(), IKASLConstants.DIMENSIONS) < disThreshold) {
+                    && Utils.calcEucDist(inputs.get(i), winner.getWeights(), params.getDimensions()) < disThreshold) {
                 nodeToNoSimilarInputsMap.put(winner.getNodeSequence(), Boolean.FALSE);
             }
 
