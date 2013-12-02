@@ -214,7 +214,7 @@ public final class configuratorTopComponent extends TopComponent {
         // write to xml files
         configModelWriterFacade.createConfigXMLs();
 
-        TopComponent tc = WindowManager.getDefault().findTopComponent("runtimeTopComponent");
+        TopComponent tc = WindowManager.getDefault().findTopComponent("controlTopComponent");
 
         if (tc != null) {
             tc.open();

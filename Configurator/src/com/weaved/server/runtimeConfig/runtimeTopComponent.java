@@ -43,7 +43,7 @@ public final class runtimeTopComponent extends TopComponent {
         initComponents();
         setName(Bundle.CTL_runtimeTopComponent());
         setToolTipText(Bundle.HINT_runtimeTopComponent());
-        putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
+//        putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
         putClientProperty(TopComponent.PROP_DRAGGING_DISABLED, Boolean.TRUE);
         
         setLayout(new BorderLayout());
