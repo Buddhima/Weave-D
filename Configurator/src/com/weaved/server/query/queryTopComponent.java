@@ -420,6 +420,8 @@ public final class queryTopComponent extends TopComponent {
             }
             ImageIcon imageIcon = new ImageIcon(image);
             browsedImageLbl.setIcon(imageIcon);
+        }else{
+            browsedImageLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/weaved/server/query/Text_Document.png")));
         }
     }//GEN-LAST:event_browseBtnActionPerformed
 
