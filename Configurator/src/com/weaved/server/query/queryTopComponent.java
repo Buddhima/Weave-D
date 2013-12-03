@@ -137,8 +137,9 @@ public final class queryTopComponent extends TopComponent {
         jPanel1.setBackground(new java.awt.Color(233, 233, 233));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        browsedImageLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         org.openide.awt.Mnemonics.setLocalizedText(browsedImageLbl, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.browsedImageLbl.text")); // NOI18N
-        browsedImageLbl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        browsedImageLbl.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jButton2.text")); // NOI18N
         jButton2.setToolTipText(org.openide.util.NbBundle.getMessage(queryTopComponent.class, "queryTopComponent.jButton2.toolTipText")); // NOI18N
