@@ -53,20 +53,22 @@ public class PercpModelFacade {
     private ArrayList<IKASLConfigModelElement> ikaslParamList;
     private ArrayList<String> cfLinks;
     private ArrayList<IKASLMain> ikaslMainList;
-    private Map<String,VHLinkerFacade> vhLinkerList = new HashMap<String,VHLinkerFacade>();
+    private Map<String, VHLinkerFacade> vhLinkerList = new HashMap<String, VHLinkerFacade>();
 
     public PercpModelFacade() {
         ikaslMainList = new ArrayList<IKASLMain>();
     }
-    
+
     /**
-     * This method should be called before calling runIKASL or runIKASLTest
-     * This method creates IKASLMain components. 
-     * IKASLMain components run IKASL algorithm with given parameters
-     * 
+     * This method should be called before calling runIKASL or runIKASLTest This
+     * method creates IKASLMain components. IKASLMain components run IKASL
+     * algorithm with given parameters
+     *
      * @param count The number of IKASLMain components to be created
-     * @param params An arraylist of IKASLParam objects which contains IKASL parameters for each IKASLMain component
-     * @param ids  An arraylist of Strings which has the ID of each IKASLMain component created 
+     * @param params An arraylist of IKASLParam objects which contains IKASL
+     * parameters for each IKASLMain component
+     * @param ids An arraylist of Strings which has the ID of each IKASLMain
+     * component created
      */
     public void createIKASLComponents(int count, ArrayList<IKASLParams> params, ArrayList<String> ids) {
         for (int i = 0; i < count; i++) {
@@ -76,9 +78,12 @@ public class PercpModelFacade {
     }
 
     /**
-     * This method takes an IKASLConfigModelElement object (This object is created by reading
-     * required xml file) And return an IKASLParam object with the properties found in IKASLConfigModelElement
-     * @param element The ModelElement created by reading the <ikasl_params>.xml file
+     * This method takes an IKASLConfigModelElement object (This object is
+     * created by reading required xml file) And return an IKASLParam object
+     * with the properties found in IKASLConfigModelElement
+     *
+     * @param element The ModelElement created by reading the <ikasl_params>.xml
+     * file
      * @return IKASLParam object
      */
     private IKASLParams getIKASLParamsFromModelElement(IKASLConfigModelElement element) {
@@ -153,8 +158,8 @@ public class PercpModelFacade {
     ImportantPercpConfigModel ipConfModel;
 
     /**
-     * This method is used to load all the configuration files required to
-     * run WeaveD
+     * This method is used to load all the configuration files required to run
+     * WeaveD
      */
     public void loadAllConfig() {
         PercpModelConfigLoader pmConfLoader = new PercpModelConfigLoader();
@@ -195,15 +200,15 @@ public class PercpModelFacade {
     }
 
     /**
-     * This method run IKASL algorithm for a given set of inputs. First it find the correct
-     * IKASLMain component with specified ID. Then it run algorithm for given inputs
-     * by giving the parameters specified by input. 
-     * 
+     * This method run IKASL algorithm for a given set of inputs. First it find
+     * the correct IKASLMain component with specified ID. Then it run algorithm
+     * for given inputs by giving the parameters specified by input.
+     *
      * @param id - ID of the IKASLMain comp
      * @param params - Algorithmic parameters for the IKASL algorithm
      * @param iWeights - input Feature vector set (ex. Image-color vectors)
      * @param iNames - input name list (ex. Image names, Text file names)
-     * @param min - Minimum bound for the inputs 
+     * @param min - Minimum bound for the inputs
      * @param max - Maximum bound for the inputs
      * @param dims - Number of dimensions
      */
@@ -214,7 +219,7 @@ public class PercpModelFacade {
             if (ikasl.getMyID().equalsIgnoreCase(id)) {
                 currIKASL = ikasl;
                 currIKASL.runIKASLForCycle(currIKASL.retrieveLastLayer(), iWeights, iNames);
-                currIKASL.writeLearnCycleXML(FileAndFolderNameList.ikaslOutputFolder+File.separator+id);
+                currIKASL.writeLearnCycleXML(FileAndFolderNameList.ikaslOutputFolder + File.separator + id);
                 System.out.println("----------------------- IKASL test results:" + currIKASL.getTesterTestResults().size() + " -------------------------------");
                 break;
             }
@@ -224,69 +229,72 @@ public class PercpModelFacade {
     }
 
     //===================== This is a test method ======================================
-    public void testImagePercp(PercpModelConfigModel pmModel){
+    public void testImagePercp(PercpModelConfigModel pmModel) {
         ArrayList<String> test = PerceptionModelUtil.getImagePercpModelElements(pmModel);
         ArrayList<String> test2 = PerceptionModelUtil.getTextPercpModelElements(pmModel);
-       
+
     }
     //=================================================================================
-    
+
     /**
-     * This method retrieve the cross feature and temporal links present in a particular level
-     * in the perception hierarchy
-     * @param lConfModel This is the link configuration model saved during creation of the perception model
-     * @param level This is an enum indicating the level which the links should be found
-     * @return 
+     * This method retrieve the cross feature and temporal links present in a
+     * particular level in the perception hierarchy
+     *
+     * @param lConfModel This is the link configuration model saved during
+     * creation of the perception model
+     * @param level This is an enum indicating the level which the links should
+     * be found
+     * @return
      */
-    public ArrayList<String> getLinksForQueryUI(LinkConfigModel lConfModel, PercpModelEnums level){
+    public ArrayList<String> getLinksForQueryUI(LinkConfigModel lConfModel, PercpModelEnums level) {
         ArrayList<String> linksList = new ArrayList<String>();
         ArrayList<String> cLinks = lConfModel.getCrossLinks();
         ArrayList<String> tLinks = lConfModel.getTemporalLinks();
-        for(String str : cLinks){
-            if(level==PercpModelEnums.PERCEPTION && str.startsWith("L0")){
+        for (String str : cLinks) {
+            if (level == PercpModelEnums.PERCEPTION && str.startsWith("L0")) {
                 linksList.add(str);
             }
-            if(level==PercpModelEnums.FEATURE && str.startsWith("L1")){
+            if (level == PercpModelEnums.FEATURE && str.startsWith("L1")) {
                 linksList.add(str);
             }
-            if(level==PercpModelEnums.DIMENSION && str.startsWith("L2")){
-                linksList.add(str);
-            }
-        }
-        
-        for(String str : tLinks){
-            if(level==PercpModelEnums.PERCEPTION && str.startsWith("L0")){
-                linksList.add(str);
-            }
-            if(level==PercpModelEnums.FEATURE && str.startsWith("L1")){
-                linksList.add(str);
-            }
-            if(level==PercpModelEnums.DIMENSION && str.startsWith("L2")){
+            if (level == PercpModelEnums.DIMENSION && str.startsWith("L2")) {
                 linksList.add(str);
             }
         }
-        
+
+        for (String str : tLinks) {
+            if (level == PercpModelEnums.PERCEPTION && str.startsWith("L0")) {
+                linksList.add(str);
+            }
+            if (level == PercpModelEnums.FEATURE && str.startsWith("L1")) {
+                linksList.add(str);
+            }
+            if (level == PercpModelEnums.DIMENSION && str.startsWith("L2")) {
+                linksList.add(str);
+            }
+        }
+
         return linksList;
     }
-    
+
     /**
-     * This method will be used to create the high-level perception using information
-     * available at the dimension level. Currently we're not interested in using
-     * perception model
+     * This method will be used to create the high-level perception using
+     * information available at the dimension level. Currently we're not
+     * interested in using perception model
      */
     public void fusePerceptions() {
     }
 
     /**
-     * Run the link generation task for two IKASL outputs. This method creates 
-     * Cross-feature linkes - between ikasl1 and ikasl2
-     * Temporal links for ikasl 1
-     * 
-     * @param ikaslStack1Location Folder where IKASL xml outputs are located. 
-     * By default for storing IKASL outputs we're using a folder structure like below,
-     * <project_path>\Stacks\<ikasl_ID> 
-     * @param ikaslStack2Location Folder where the other IKASL to generate cross-feature links
-     * with is located
+     * Run the link generation task for two IKASL outputs. This method creates
+     * Cross-feature linkes - between ikasl1 and ikasl2 Temporal links for ikasl
+     * 1
+     *
+     * @param ikaslStack1Location Folder where IKASL xml outputs are located. By
+     * default for storing IKASL outputs we're using a folder structure like
+     * below, <project_path>\Stacks\<ikasl_ID>
+     * @param ikaslStack2Location Folder where the other IKASL to generate
+     * cross-feature links with is located
      * @param temporalLinksIsSet Do you want temporal links to be generated?
      * @param crossFLinksIsSet Do you want cross feature links to be generated
      */
@@ -310,10 +318,10 @@ public class PercpModelFacade {
         VHLinkerFacade vHLinkerFacade = new VHLinkerFacade();
         VHLinkerCommand vHLinkerCommand = vHLinkerFacade.generateVHLinkerCommand("config.properties", false, true);
         vHLinkerFacade.runLinkersWithCommand(vHLinkerCommand);
-        
-        vhLinkerList.put(ikaslID1+"-"+ikaslID2, vHLinkerFacade);
+
+        vhLinkerList.put(ikaslID1 + "-" + ikaslID2, vHLinkerFacade);
     }
-    
+
     public void runTemporalLinkGeneration(String rootFolder, String ikaslID1) {
 
         Properties prop = new Properties();
@@ -333,57 +341,58 @@ public class PercpModelFacade {
         VHLinkerFacade vHLinkerFacade = new VHLinkerFacade();
         VHLinkerCommand vHLinkerCommand = vHLinkerFacade.generateVHLinkerCommand("config.properties", true, false);
         vHLinkerFacade.runLinkersWithCommand(vHLinkerCommand);
-        
+
         vhLinkerList.put(ikaslID1, vHLinkerFacade);
-        
+
     }
 
     /**
      * Assumption: We consider ikaslMainList[0] runs for Image color existence
-     * Assumption: ikaslMainList[1] runs for Text 
-     * TODO: We've to change this method to incorporate the correct IKASLMain component
-     * Without above ASSUMPTIONS! 0 & 1 are hard-coded here. Need to remove them.
+     * Assumption: ikaslMainList[1] runs for Text TODO: We've to change this
+     * method to incorporate the correct IKASLMain component Without above
+     * ASSUMPTIONS! 0 & 1 are hard-coded here. Need to remove them.
+     *
      * @param type The input type (e.g. Images/Text)
      * @param query feature vector of the input
-     * @return Winner node for the input which is in the Last IKASL layer 
+     * @return Winner node for the input which is in the Last IKASL layer
      */
     private String findGNodeFromIKASLForQuery(QueryObjectType type, double[] query, String ikaslID) {
 
         IKASLMain ikaslMain = null;
         /*
-        if (type == QueryObjectType.IMAGE) {
-            ikaslMain = getIkaslMainList().get(0); //color existence
-        } else {
-            ikaslMain = getIkaslMainList().get(1); //text
-        }*/
-        for(IKASLMain main : ikaslMainList){
-            if(main.getMyID().equals(ikaslID)){
+         if (type == QueryObjectType.IMAGE) {
+         ikaslMain = getIkaslMainList().get(0); //color existence
+         } else {
+         ikaslMain = getIkaslMainList().get(1); //text
+         }*/
+        for (IKASLMain main : ikaslMainList) {
+            if (main.getMyID().equals(ikaslID)) {
                 ikaslMain = main;
                 LastIKASLLayer l = ikaslMain.retrieveLastLayer();
                 return ikaslMain.getLastLayersWinnerNodeForQuery(query);
             }
         }
-        
+
         return null;
     }
 
-    public ArrayList<String> getDataOnTemporalLink(QueryObjectType type, double[] query, String ikaslID, int depth){
+    public ArrayList<String> getDataOnTemporalLink(QueryObjectType type, double[] query, String ikaslID, int depth) {
         String gNodeID = findGNodeFromIKASLForQuery(type, query, ikaslID);
-        
+
         VHLinkerFacade vHLinkerFacade = vhLinkerList.get(ikaslID);
         TemporalLinkData tData = vHLinkerFacade.getTemporalLinkObject();
-        
-        com.ikasl.objects.temporal.Tree tree =tData.getTemporalNodeList();
-        com.ikasl.objects.temporal.TreeNode node=null;
-        
-        for(com.ikasl.objects.temporal.TreeNode n : tree.getNodeList()){
-            String currID = EntityIDGenerator.generateEntityIDString(((GNodeHitValTemplObject)n.getNode()).getId());
-            if(currID.equals(gNodeID)){
+
+        com.ikasl.objects.temporal.Tree tree = tData.getTemporalNodeList();
+        com.ikasl.objects.temporal.TreeNode node = null;
+
+        for (com.ikasl.objects.temporal.TreeNode n : tree.getNodeList()) {
+            String currID = EntityIDGenerator.generateEntityIDString(((GNodeHitValTemplObject) n.getNode()).getId());
+            if (currID.equals(gNodeID)) {
                 node = n;
                 break;
             }
         }
-        
+
         if (node != null) {
             for (int i = 0; i < depth; i++) {
                 String id = EntityIDGenerator.generateEntityIDString(((GNodeHitValTemplObject) node.getParent().getNode()).getId());
@@ -393,40 +402,41 @@ public class PercpModelFacade {
                     return null;
                 }
             }
-        }else{
+        } else {
             return null;
         }
-        
+
         ArrayList<String> results = ((GNodeHitValTemplObject) node.getNode()).getDataList();
         //TODO: Read the necessary XML file and get the images
         return results;
     }
-    
+
     /**
      * Assumption: We consider ikaslMainList[0] runs for Image color existence
-     * Assumption: ikaslMainList[1] runs for Text 
-     * NEED TO GET RID OF THESE ASSUMPTIONS
-     * 
-     * This returns the horizontal links of the winner node of the given input query.
-     * Therefore, if we provide an image as a query,
-     * First, we can get winner node from the Image IKASL stack for the given input
-     * Then, we can find the related nodes in the Text IKASL stack through these links
-     * 
+     * Assumption: ikaslMainList[1] runs for Text NEED TO GET RID OF THESE
+     * ASSUMPTIONS
+     *
+     * This returns the horizontal links of the winner node of the given input
+     * query. Therefore, if we provide an image as a query, First, we can get
+     * winner node from the Image IKASL stack for the given input Then, we can
+     * find the related nodes in the Text IKASL stack through these links
+     *
      * @param type Type of the input (e.g. Image/Text)
      * @param query feature vector of the input
-     * @return Returns a String with all the related nodes from other IKASL stack
+     * @return Returns a String with all the related nodes from other IKASL
+     * stack
      */
-    public ArrayList<String> getHorizontalLinksForQuery(QueryObjectType type,String ikaslIDForQuery, String ikaslID2, double[] query) {
+    public ArrayList<String> getHorizontalLinksForQuery(QueryObjectType type, String ikaslIDForQuery, String ikaslID2, double[] query) {
         String winnerID = this.findGNodeFromIKASLForQuery(type, query, ikaslIDForQuery);
         System.out.println("--------------- Winner ID : " + winnerID + " -----------------------");
 
         VHLinkerFacade vhLinkerFacade;
-        vhLinkerFacade = vhLinkerList.get(ikaslIDForQuery+"-"+ikaslID2);
-        if(vhLinkerFacade == null){
-            vhLinkerFacade = vhLinkerList.get(ikaslID2+"-"+ikaslIDForQuery);
+        vhLinkerFacade = vhLinkerList.get(ikaslIDForQuery + "-" + ikaslID2);
+        if (vhLinkerFacade == null) {
+            vhLinkerFacade = vhLinkerList.get(ikaslID2 + "-" + ikaslIDForQuery);
         }
 
-        CrossFeatureData crossFeatureData = vhLinkerFacade.getCrossLinkObject();       
+        CrossFeatureData crossFeatureData = vhLinkerFacade.getCrossLinkObject();
 
         ArrayList<GNodeHitValueObjectList> gnHVList = crossFeatureData.getgNodeHitValueObjectList();
         ArrayList<ArrayList<String>> dataVals = new ArrayList<ArrayList<String>>();
@@ -455,9 +465,9 @@ public class PercpModelFacade {
      public ArrayList<ArrayList<String>> getVerticalLinksForQuery(QueryObjectType type, double[] query){
         
      }*/
-    
     /**
      * Returns the related images for the given input query
+     *
      * @param type Type of the input (e.g. Image/Text)
      * @param query feature vector of the input
      * @return ArrayList of String of image names
@@ -467,7 +477,7 @@ public class PercpModelFacade {
         IKASLMain ikaslMain;
         for (IKASLMain main : ikaslMainList) {
             if (main.getMyID().equals(ikaslID)) {
-                ikaslMain = main; 
+                ikaslMain = main;
                 ArrayList<String> imgList = ikaslMain.getDataForGNode(winnerID);
                 return imgList;
             }
@@ -481,5 +491,13 @@ public class PercpModelFacade {
      */
     public ArrayList<IKASLMain> getIkaslMainList() {
         return ikaslMainList;
+    }
+
+    /*
+     * Get number of learning cycles
+     */
+    public int getLearningCycleCount() {
+
+        return ikaslMainList.get(0).retrieveLastLayer().getLastLearningCycle();
     }
 }

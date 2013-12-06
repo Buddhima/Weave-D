@@ -65,12 +65,13 @@ preferredID = "queryTopComponent")
 public final class queryTopComponent extends TopComponent {
 
     public WeavedMain weavedMain;
-    public PercpModelFacade percpModelFacade;
+    //public PercpModelFacade percpModelFacade;
     // set up a stack to deal with layer navigation buttons 
     // Next and Back
     private Stack stack;
     private int depth = 0;
     private PercpModelFacade PERCEP_MODEL_FACADE;
+    int learningCycleCount;
 
     public queryTopComponent() {
         initComponents();
@@ -80,6 +81,7 @@ public final class queryTopComponent extends TopComponent {
 
         weavedMain = WeaveDMainHolder.weavedMain;
         PERCEP_MODEL_FACADE = weavedMain.getPercpModelFacade();
+        learningCycleCount = PERCEP_MODEL_FACADE.getLearningCycleCount();
 
         // Set percptLvlCmb combobox values 
         for (PercpModelEnums item : PercpModelEnums.values()) {
@@ -421,7 +423,7 @@ public final class queryTopComponent extends TopComponent {
             }
             ImageIcon imageIcon = new ImageIcon(image);
             browsedImageLbl.setIcon(imageIcon);
-        }else{
+        } else {
             browsedImageLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/weaved/server/query/Text_Document.png")));
         }
     }//GEN-LAST:event_browseBtnActionPerformed
@@ -600,11 +602,11 @@ public final class queryTopComponent extends TopComponent {
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
 
-        if(!weavedMain.getLinkGenExecuted()){
+        if (!weavedMain.getLinkGenExecuted()) {
             JOptionPane.showMessageDialog(null, "Link Generation not have been executed");
             return;
         }
-        
+
         jpanelImageGrid.removeAll();
         txtOutputPanel.removeAll();
         jLabelNoImages.setVisible(false);
@@ -638,9 +640,14 @@ public final class queryTopComponent extends TopComponent {
 
             String fullLoc = this.getFullQueryInputLoc(QueryObjectType.IMAGE, idToInputLocMap, primaryID, primaryLoc);
             double[] query = getInputFeatureVector(fullLoc);
-            depth=depth+1;
+            depth = depth + 1;
+            int ab = PERCEP_MODEL_FACADE.getLearningCycleCount();
+            if (depth >= learningCycleCount) {
+                JOptionPane.showMessageDialog(null, "You are in the first generalized layer!");
+                return;
+            }
             temporal = PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, query, primaryID, depth);
-            
+
         } else if (!image_type.isSelected() && text_type.isSelected()) {
 
             String primaryID = null;
@@ -653,11 +660,15 @@ public final class queryTopComponent extends TopComponent {
                     break;
                 }
             }
-            
+
             String fullLoc = this.getFullQueryInputLoc(QueryObjectType.TEXT, idToInputLocMap, primaryID, primaryLoc);
             double[] query = getInputFeatureVector(fullLoc);
-            
-            depth=depth+1;
+
+            depth = depth + 1;
+            if (depth >= learningCycleCount) {
+                JOptionPane.showMessageDialog(null, "You are in the first generalized layer!");
+                return;
+            }
             temporal = PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, query, primaryID, depth);
         }
 
@@ -691,24 +702,24 @@ public final class queryTopComponent extends TopComponent {
 
     private void nxtBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nxtBtnActionPerformed
         depth--;
-        if(stack.size()>1){            
-                stack.pop();
-        ArrayList<String> previousResults = ((ArrayList<String>) stack.peek());
-        jpanelImageGrid.removeAll();
-        jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, previousResults, 4, "Input\\Files\\Images");
-        // Set the scrollpane viewport
-        jImageScrollPane.setViewportView(jpanelImageGrid);
-        jpanelImageGrid.setVisible(true);
-        jImageScrollPane.setVisible(true);
+        if (stack.size() > 1) {
+            stack.pop();
+            ArrayList<String> previousResults = ((ArrayList<String>) stack.peek());
+            jpanelImageGrid.removeAll();
+            jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, previousResults, 4, "Input\\Files\\Images");
+            // Set the scrollpane viewport
+            jImageScrollPane.setViewportView(jpanelImageGrid);
+            jpanelImageGrid.setVisible(true);
+            jImageScrollPane.setVisible(true);
 
-        // Displaying text results
-        TextOutputCreator toc = new TextOutputCreator(previousResults, "Input\\Files\\Text\\");
-        txtOutputPanel = toc.getTextOutputPanel();
-        jScrollPane2.setViewportView(txtOutputPanel);
-        txtOutputPanel.setVisible(true);
-        jScrollPane2.setVisible(true);
-        }else{
-            JOptionPane.showMessageDialog(null,"You are in the last generalized layer!");
+            // Displaying text results
+            TextOutputCreator toc = new TextOutputCreator(previousResults, "Input\\Files\\Text\\");
+            txtOutputPanel = toc.getTextOutputPanel();
+            jScrollPane2.setViewportView(txtOutputPanel);
+            txtOutputPanel.setVisible(true);
+            jScrollPane2.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "You are in the last generalized layer!");
         }
     }//GEN-LAST:event_nxtBtnActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
