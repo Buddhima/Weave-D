@@ -81,7 +81,7 @@ public final class queryTopComponent extends TopComponent {
 
         weavedMain = WeaveDMainHolder.weavedMain;
         PERCEP_MODEL_FACADE = weavedMain.getPercpModelFacade();
-        learningCycleCount = PERCEP_MODEL_FACADE.getLearningCycleCount();
+        
 
         // Set percptLvlCmb combobox values 
         for (PercpModelEnums item : PercpModelEnums.values()) {
@@ -451,6 +451,8 @@ public final class queryTopComponent extends TopComponent {
             isCross = false;
             stacks[0] = selectedLink;
         }
+        
+        learningCycleCount = PERCEP_MODEL_FACADE.getLearningCycleCount();
 
         if (isCross) {
 
@@ -623,6 +625,7 @@ public final class queryTopComponent extends TopComponent {
             stacks[0] = selectedLink;
         }
 
+        
         // Get the related temporal link based on selected query object type
         if (image_type.isSelected() && !text_type.isSelected()) {
 
@@ -641,10 +644,10 @@ public final class queryTopComponent extends TopComponent {
             String fullLoc = this.getFullQueryInputLoc(QueryObjectType.IMAGE, idToInputLocMap, primaryID, primaryLoc);
             double[] query = getInputFeatureVector(fullLoc);
             depth = depth + 1;
-            int ab = PERCEP_MODEL_FACADE.getLearningCycleCount();
+            
             if (depth >= learningCycleCount) {
                 JOptionPane.showMessageDialog(null, "You are in the first generalized layer!");
-                depth--;
+                //depth--;
                 return;
             }
             temporal = PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, query, primaryID, depth);
@@ -668,7 +671,7 @@ public final class queryTopComponent extends TopComponent {
             depth = depth + 1;
             if (depth >= learningCycleCount) {
                 JOptionPane.showMessageDialog(null, "You are in the first generalized layer!");
-                depth--;
+                //depth--;
                 return;
             }
             temporal = PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, query, primaryID, depth);
