@@ -644,6 +644,7 @@ public final class queryTopComponent extends TopComponent {
             int ab = PERCEP_MODEL_FACADE.getLearningCycleCount();
             if (depth >= learningCycleCount) {
                 JOptionPane.showMessageDialog(null, "You are in the first generalized layer!");
+                depth--;
                 return;
             }
             temporal = PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.IMAGE, query, primaryID, depth);
@@ -667,6 +668,7 @@ public final class queryTopComponent extends TopComponent {
             depth = depth + 1;
             if (depth >= learningCycleCount) {
                 JOptionPane.showMessageDialog(null, "You are in the first generalized layer!");
+                depth--;
                 return;
             }
             temporal = PERCEP_MODEL_FACADE.getDataOnTemporalLink(QueryObjectType.TEXT, query, primaryID, depth);
