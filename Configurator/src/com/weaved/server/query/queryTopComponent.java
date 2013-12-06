@@ -691,7 +691,8 @@ public final class queryTopComponent extends TopComponent {
 
     private void nxtBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nxtBtnActionPerformed
         depth--;
-        stack.pop();
+        if(stack.size()>1){            
+                stack.pop();
         ArrayList<String> previousResults = ((ArrayList<String>) stack.peek());
         jpanelImageGrid.removeAll();
         jpanelImageGrid = ImageGridCreator.getImageGridPanel(jpanelImageGrid, previousResults, 4, "Input\\Files\\Images");
@@ -706,7 +707,9 @@ public final class queryTopComponent extends TopComponent {
         jScrollPane2.setViewportView(txtOutputPanel);
         txtOutputPanel.setVisible(true);
         jScrollPane2.setVisible(true);
-
+        }else{
+            JOptionPane.showMessageDialog(null,"You are in the last generalized layer!");
+        }
     }//GEN-LAST:event_nxtBtnActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
