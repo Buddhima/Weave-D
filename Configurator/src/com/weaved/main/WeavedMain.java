@@ -382,4 +382,8 @@ public class WeavedMain {
     public boolean getIKASLExecuted(){
         return ikaslExecuted;
     }
+    
+    public void resetInputCounter(){
+        counter = 1;
+    }
 }

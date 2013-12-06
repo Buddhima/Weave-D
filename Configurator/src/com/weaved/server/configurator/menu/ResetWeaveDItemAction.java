@@ -4,6 +4,8 @@
  */
 package com.weaved.server.configurator.menu;
 
+import com.weaved.main.WeaveDMainHolder;
+import com.weaved.main.WeavedMain;
 import com.weaved.utils.FileAndFolderNameList;
 import com.weaved.utils.FilesCleanup;
 import java.awt.event.ActionEvent;
@@ -24,6 +26,8 @@ public final class ResetWeaveDItemAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        WeavedMain weavedMain = WeaveDMainHolder.weavedMain;
+        weavedMain.resetInputCounter();
         FilesCleanup.cleanupConfigDirectory(FileAndFolderNameList.ikaslConfigFolder);
         FilesCleanup.deleteFilesInsideFolders(FileAndFolderNameList.ikaslOutputFolder);
     }
